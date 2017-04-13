@@ -4,12 +4,13 @@ public abstract class Edge {
 
 	private Vertex origin;
 	private Vertex destination;
-	private double value;
+	private double capacity;
+	private double flow;
 	
-	public Edge(Vertex origin, Vertex destination, double value) {
+	public Edge(Vertex origin, Vertex destination, double capacity) {
 		this.setOrigin(origin);
 		this.setDestination(destination);
-		this.setValue(value);
+		this.setCapacity(capacity);
 	}
 
 	public Vertex getOrigin() {
@@ -28,11 +29,19 @@ public abstract class Edge {
 		this.destination = destination;
 	}
 
-	public double getValue() {
-		return value;
+	public double getCapacity() {
+		return capacity;
 	}
 
-	public void setValue(double value) {
-		this.value = value;
+	public void setCapacity(double capacity) {
+		this.capacity = capacity;
+	}
+
+	public double getFlow() {
+		return flow;
+	}
+
+	public void setFlow(double flow) {
+		this.flow = flow;
 	}
 }
