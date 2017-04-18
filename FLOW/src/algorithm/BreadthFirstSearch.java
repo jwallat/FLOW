@@ -1,5 +1,5 @@
 package algorithm;
 
-public class BreathFirstSearch {
+public class BreadthFirstSearch {
 
 }
