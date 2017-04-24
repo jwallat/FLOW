@@ -47,6 +47,9 @@ public class Main extends Application {
 			AnchorPane flowScene = (AnchorPane) flowSceneLoader.load();
 
 			rootLayout.setCenter(flowScene);
+			
+			@SuppressWarnings("unused")
+			Controller controller = new Controller(null, flowSceneLoader.getController());
 
 		} catch (IOException e) {
 			e.printStackTrace();

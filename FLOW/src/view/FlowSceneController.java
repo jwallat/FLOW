@@ -42,5 +42,7 @@ public class FlowSceneController implements Initializable {
 		computationTypeChooser.setValue("Kanalsystem");
 	}
 
-	
+	public void showNetwork() {
+		// Male das Netzwerk und so
+	}
 }
