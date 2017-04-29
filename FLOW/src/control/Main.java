@@ -4,56 +4,49 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import view.FlowSceneController;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 
 
 public class Main extends Application {
 	
 	private Stage primaryStage;
-	private BorderPane rootLayout;
+	private Parent root;
 	
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("ComControl");
+		this.primaryStage.setTitle("BigFLOW");
 
-		initRootLayout();
-
-		showFlowScene();
-	}
-	
-	public void initRootLayout() {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/FlowScene.fxml"));
 		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main.class.getClassLoader().getResource("view/RootLayout.fxml"));
-			rootLayout = (BorderPane) loader.load();
-
-			Scene scene = new Scene(rootLayout);
-			primaryStage.setScene(scene);
-			primaryStage.show();
+			root = loader.load();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public void showFlowScene() {
-		try {
-			FXMLLoader flowSceneLoader = new FXMLLoader();
-			flowSceneLoader
-					.setLocation(Main.class.getClassLoader().getResource("view/FlowScene.fxml"));
-			AnchorPane flowScene = (AnchorPane) flowSceneLoader.load();
+		FlowSceneController fsc = (FlowSceneController) loader.getController();
+		fsc.init(primaryStage);
+		
+		
+		Scene scene = new Scene(root, 800, 800);
+		scene.getStylesheets().add("control/application.css");
+		
+		primaryStage.setScene(scene);
+		primaryStage.setTitle("Big FLOW");
+		
+		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
-			rootLayout.setCenter(flowScene);
-			
-			@SuppressWarnings("unused")
-			Controller controller = new Controller(null, flowSceneLoader.getController());
+        //set Stage boundaries to visible bounds of the main screen
+        primaryStage.setX(primaryScreenBounds.getMinX());
+        primaryStage.setY(primaryScreenBounds.getMinY());
+        primaryStage.setWidth(primaryScreenBounds.getWidth());
+        primaryStage.setHeight(primaryScreenBounds.getHeight());
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		primaryStage.show();
 	}
 	
 	public static void main(String[] args) {

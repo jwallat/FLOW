@@ -1,16 +1,17 @@
 package view;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ComboBox;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 
 public class FlowSceneController implements Initializable {
 
@@ -23,26 +24,37 @@ public class FlowSceneController implements Initializable {
 	@FXML
 	private GraphicsContext gc;
 	
-	@FXML
-	private ComboBox<String> computationTypeChooser;
+	private Stage stage;
+	private File file;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		gc = canvas.getGraphicsContext2D();
+	}
+	
+	public void init(Stage stage) {
+		//Stuff
+		this.stage = stage;
+	}
+	
+	public void openFile() {
+		System.out.println("OpenFile");
+		FileChooser fc = new FileChooser();
+		fc.setTitle("Big FLOW");
+		fc.setInitialDirectory(new File(System.getProperty("user.dir") + "/resource"));
+		fc.getExtensionFilters().add(new ExtensionFilter("XML Files", "*.xml"));
 		
-		//init ComboBox
-		computationTypeChooser.getItems().addAll("Kanalsystem", "Social Network Analysis");
-		computationTypeChooser.setOnMousePressed(new EventHandler<MouseEvent>(){
-		    @Override
-		    public void handle(MouseEvent event) {
-		    	computationTypeChooser.requestFocus();
-		    }
-		});
-		computationTypeChooser.setValue("Kanalsystem");
+		file = fc.showOpenDialog(stage);
+		
+		if (file != null) {
+			System.out.println("File: " + file);
+		}
 	}
 
 	public void showNetwork() {
 		// Male das Netzwerk und so
 	}
+
+	
 }
