@@ -57,9 +57,10 @@ public class Parser extends DefaultHandler {
 			System.out.println("***********************************************************");
 			System.out.println("*********************** PARSER ENDE ***********************\n\n");	
 			
+			System.out.println("log counter: " + errorLog.size());
 			if (showLog) {
 				for (int i = 0; i < errorLog.size(); i++) {
-					System.out.println(errorLog.get(i));
+					System.out.println("i: " + i + ", " + errorLog.get(i));
 				}
 			}
 		}
@@ -73,7 +74,7 @@ public class Parser extends DefaultHandler {
 	
 	public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
 		
-		if (localName.equals("person")) {
+		if (localName.equals("member")) {
 			createMember(uri, localName, qName, atts);
 			return;
 		}
@@ -85,43 +86,38 @@ public class Parser extends DefaultHandler {
 	
 	private void createMember(String uri, String localName, String qName, Attributes atts) {
 		Vertex newElement = null;
-		String name = atts.getValue("name"); 
-		int id = Integer.parseInt(atts.getValue("id"));
-		int x = Integer.parseInt(atts.getValue("x"));
-		int y = Integer.parseInt(atts.getValue("y"));
-		String type = atts.getValue("type");
-		if (atts.getValue("name") != null) {
-			if (atts.getValue("id") != null) {
-				if (atts.getValue("x") != null) {
-					if (atts.getValue("y") != null) {
-						if (type == "person") {
-							newElement = new Person(name, id, x, y);
+		
+		if (atts.getValue("name") != "") {
+			if (atts.getValue("id") != "") {
+				if (atts.getValue("x") != "") {
+					if (atts.getValue("y") != "") {
+						if (atts.getValue("type").equals("person")) {
+							newElement = new Person(atts.getValue("name"), Integer.parseInt(atts.getValue("id")), Integer.parseInt(atts.getValue("x")), Integer.parseInt(atts.getValue("y")));
 						}
-						else if (type == "document") {
-							newElement = new Document(name, id, x, y);
+						else if (atts.getValue("type").equals("document")) {
+							newElement = new Document(atts.getValue("name"), Integer.parseInt(atts.getValue("id")), Integer.parseInt(atts.getValue("x")), Integer.parseInt(atts.getValue("y")));
 						}
-						else if (type == "activity") {
-							newElement = new Activity(name, id, x , y);
+						else if (atts.getValue("type").equals("activity")) {
+							newElement = new Activity(atts.getValue("name"), Integer.parseInt(atts.getValue("id")), Integer.parseInt(atts.getValue("x")), Integer.parseInt(atts.getValue("y")));
 						}
 						else {
-							errorLog.add("Kein Typ bei: " + localName + ", " + name);
-							//System.out.println("Typ nicht erkannt bei: " + localName + ", " + name);
+							errorLog.add(("Kein Typ bei: " + localName + ", " + atts.getValue("name")));
 						}
 					}
 					else {
-						errorLog.add("Kein Y-Wert bei: " + localName + ", " + name);
+						errorLog.add("Kein Y-Wert bei: " + localName + ", " + atts.getValue("name"));
 					}
 				}
 				else {
-					errorLog.add("Kein X-Wert bei: " + localName + ", " + name);
+					errorLog.add("Kein X-Wert bei: " + localName + ", " + atts.getValue("name"));
 				}
 			}
 			else {
-				errorLog.add("Kein id-Wert bei: " + localName + ", " + name);
+				errorLog.add("Kein id-Wert bei: " + localName + ", " + atts.getValue("name"));
 			}
 		}
 		else {
-			errorLog.add("Kein name-Wert bei: " + localName + ", " + name);
+			errorLog.add("Kein name-Wert bei: " + localName + ", " + atts.getValue("name"));
 		}
 		
 		if (newElement != null) {
@@ -129,7 +125,7 @@ public class Parser extends DefaultHandler {
 			System.out.println("Vertex hinzugefügt: " + newElement);
 		}
 		else {
-			errorLog.add("Kein Member hinzugefügt: " + localName + ", " + name);
+			errorLog.add("Kein Member hinzugefügt: " + localName + ", " + atts.getValue("name"));
 		}
 	}
 	
@@ -138,23 +134,29 @@ public class Parser extends DefaultHandler {
 		Edge edge = null;
 		Vertex from = network.getVertexByName(atts.getValue("from"));
 		Vertex to = network.getVertexByName(atts.getValue("to"));
-		int id = Integer.parseInt(atts.getValue("id"));
-		
-		if (atts.getValue("id") != null) {
-			if (atts.getValue("from") != null) {
-				if (atts.getValue("to") != null) {
-					edge = new Edge(id, from, to, -1);
+		if (from == null) {
+			errorLog.add("Zu " + atts.getValue("from") + " existiert kein Vertex");
+		}
+		if (to == null) {
+			errorLog.add("Zu " + atts.getValue("to") + " existiert kein Vertex");
+		}
+		if (atts.getValue("id") != "") {
+			if (atts.getValue("from") != "") {
+				if (atts.getValue("to") != "") {
+					if ((from != null) && (to != null)) {
+						edge = new Edge(Integer.parseInt(atts.getValue("id")), from, to, -1);
+					}
 				}
 				else {
-					errorLog.add("Kein to-Wert bei: " + localName + ", ID: " + id);
+					errorLog.add("Kein to-Wert bei: " + localName + ", ID: " + Integer.parseInt(atts.getValue("id")));
 				}
 			}
 			else {
-				errorLog.add("Kein from-Wert bei: " + localName + ", ID: " + id);
+				errorLog.add("Kein from-Wert bei: " + localName + ", ID: " + Integer.parseInt(atts.getValue("id")));
 			}
 		}
 		else {
-			errorLog.add("Kein id-Wert bei Edge: " + localName + ", ID: " + id);
+			errorLog.add("Kein id-Wert bei Edge: " + localName + ", ID: " + Integer.parseInt(atts.getValue("id")));
 		}
 		
 		if (edge != null) {
@@ -162,7 +164,7 @@ public class Parser extends DefaultHandler {
 			System.out.println("Edge hinzugefügt: " + edge);
 		}
 		else {
-			errorLog.add("Keine Edge hinzugefügt: " + localName + ", ID: " + id);
+			errorLog.add("Keine Edge hinzugefügt: " + localName + ", ID: " + Integer.parseInt(atts.getValue("id")));
 		}
 	}
 	

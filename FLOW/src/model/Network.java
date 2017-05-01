@@ -24,7 +24,7 @@ public class Network {
 	
 	public Vertex getVertexByName(String name) {
 		for (Vertex v : vertices) {
-			if (v.getName() == name) {
+			if (v.getName().equals(name)) {
 				return v;
 			}
 		}

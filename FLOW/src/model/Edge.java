@@ -56,6 +56,6 @@ public class Edge {
 	}
 	
 	public String toString() {
-		return "Edge(" + id + ", " + origin.getName() + " --> " + destination.getName() + ", " + capacity + ")";
+		return "Edge(" + this.id + ", " + this.origin.getName() + " --> " + this.destination.getName() + ", " + this.capacity + ")";
 	}
 }

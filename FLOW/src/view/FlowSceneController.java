@@ -43,7 +43,6 @@ public class FlowSceneController implements Initializable {
 	}
 	
 	public void openFile() {
-		System.out.println("OpenFile");
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Big FLOW");
 		fc.setInitialDirectory(new File(System.getProperty("user.dir") + "/resource"));
