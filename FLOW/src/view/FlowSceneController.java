@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import control.Parser;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -12,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import model.Network;
 
 public class FlowSceneController implements Initializable {
 
@@ -26,6 +28,9 @@ public class FlowSceneController implements Initializable {
 	
 	private Stage stage;
 	private File file;
+	private Parser parser;
+	private Network network;
+	
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -34,7 +39,6 @@ public class FlowSceneController implements Initializable {
 	}
 	
 	public void init(Stage stage) {
-		//Stuff
 		this.stage = stage;
 	}
 	
@@ -50,6 +54,10 @@ public class FlowSceneController implements Initializable {
 		if (file != null) {
 			System.out.println("File: " + file);
 		}
+		
+		parser = new Parser(file);
+		parser.parse();
+		network = parser.getData();
 	}
 
 	public void showNetwork() {

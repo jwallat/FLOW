@@ -1,16 +1,18 @@
 package model;
 
-public abstract class Edge {
+public class Edge {
 
 	private Vertex origin;
 	private Vertex destination;
+	private int id;
 	private double capacity;
 	private double flow;
 	
-	public Edge(Vertex origin, Vertex destination, double capacity) {
+	public Edge(int id, Vertex origin, Vertex destination, double capacity) {
 		this.setOrigin(origin);
 		this.setDestination(destination);
 		this.setCapacity(capacity);
+		this.setId(id);
 	}
 
 	public Vertex getOrigin() {
@@ -43,5 +45,17 @@ public abstract class Edge {
 
 	public void setFlow(double flow) {
 		this.flow = flow;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public String toString() {
+		return "Edge(" + id + ", " + origin.getName() + " --> " + destination.getName() + ", " + capacity + ")";
 	}
 }

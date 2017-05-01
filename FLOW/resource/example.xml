@@ -1,1 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<BigFLOW>
+	<members>
+		<member name="Jonas" id="0" x="" y="" type="person"></member>
+		<member name="Martin" id="1" x="" y="" type=""></member>
+		<member name="Tom" id="2" x="" y="" type="person"></member>
+		<member name="Paper" id="3" x="" y="" type="document"></member>
+		<member name="Sitzung" id="4" x="" y="" type="activity"></member></members>
+	<egdes>
+		<edge from="Jonas" to="Paper" id="0"></edge></egdes></BigFLOW>

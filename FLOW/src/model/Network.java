@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Network {
@@ -9,6 +10,8 @@ public class Network {
 	
 	public Network() {
 		//Constructor
+		vertices = new ArrayList<Vertex>();
+		edges = new ArrayList<Edge>();
 	}
 
 	public List<Vertex> getVertices() {
@@ -17,6 +20,15 @@ public class Network {
 
 	public void setVertices(List<Vertex> vertices) {
 		this.vertices = vertices;
+	}
+	
+	public Vertex getVertexByName(String name) {
+		for (Vertex v : vertices) {
+			if (v.getName() == name) {
+				return v;
+			}
+		}
+		return null;
 	}
 	
 	public void addVertex(Vertex v) {
