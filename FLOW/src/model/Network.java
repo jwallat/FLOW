@@ -9,9 +9,8 @@ public class Network {
 	private List<Edge> edges;
 	
 	public Network() {
-		//Constructor
-		vertices = new ArrayList<Vertex>();
-		edges = new ArrayList<Edge>();
+		this.vertices = new ArrayList<Vertex>();
+		this.edges = new ArrayList<Edge>();
 	}
 
 	public List<Vertex> getVertices() {
@@ -45,5 +44,14 @@ public class Network {
 	
 	public void addEdge(Edge e) {
 		this.edges.add(e);
+	}
+	
+	public boolean containsVertexId(int id) {
+		for (Vertex v : vertices) {
+			if (v.getId() == id) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

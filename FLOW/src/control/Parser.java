@@ -123,13 +123,16 @@ public class Parser extends DefaultHandler {
 				if (atts.getValue("x") != "") {
 					if (atts.getValue("y") != "") {
 						if (atts.getValue("type").equals("person")) {
-							newElement = new Person(atts.getValue("name"), Integer.parseInt(atts.getValue("id")), Integer.parseInt(atts.getValue("x")), Integer.parseInt(atts.getValue("y")));
+							newElement = new Person(atts.getValue("name"), Integer.parseInt(atts.getValue("id")), 
+										Integer.parseInt(atts.getValue("x")), Integer.parseInt(atts.getValue("y")));
 						}
 						else if (atts.getValue("type").equals("document")) {
-							newElement = new Document(atts.getValue("name"), Integer.parseInt(atts.getValue("id")), Integer.parseInt(atts.getValue("x")), Integer.parseInt(atts.getValue("y")));
+							newElement = new Document(atts.getValue("name"), Integer.parseInt(atts.getValue("id")),
+										Integer.parseInt(atts.getValue("x")), Integer.parseInt(atts.getValue("y")));
 						}
 						else if (atts.getValue("type").equals("activity")) {
-							newElement = new Activity(atts.getValue("name"), Integer.parseInt(atts.getValue("id")), Integer.parseInt(atts.getValue("x")), Integer.parseInt(atts.getValue("y")));
+							newElement = new Activity(atts.getValue("name"), Integer.parseInt(atts.getValue("id")), 
+										Integer.parseInt(atts.getValue("x")), Integer.parseInt(atts.getValue("y")));
 						}
 						else {
 							errorLog.add(("Kein Typ bei: " + localName + ", " + atts.getValue("name")));
@@ -152,8 +155,14 @@ public class Parser extends DefaultHandler {
 		}
 		
 		if (newElement != null) {
-			network.addVertex(newElement);
-			System.out.println("Vertex hinzugefügt: " + newElement);
+			if (!network.containsVertexId(newElement.getId())) {
+				network.addVertex(newElement);
+				System.out.println("Vertex hinzugefügt: " + newElement);
+			}
+			else {
+				errorLog.add("Es ist bereits ein Member mit der Id " + newElement.getId() + " vorhanden. \n"
+						+ "--> Kein Member hinzugefuegt");
+			}
 		}
 		else {
 			errorLog.add("Kein Member hinzugefügt: " + localName + ", " + atts.getValue("name"));

@@ -24,7 +24,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Compute">
               <items>
-                <MenuItem mnemonicParsing="false" text="Network FLOW" />
+                <MenuItem mnemonicParsing="false" onAction="#computeNetworkFlow" text="Network FLOW" />
               </items>
             </Menu>
         </menus>
