@@ -13,10 +13,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.transform.Affine;
-import javafx.scene.transform.Transform;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -25,7 +21,7 @@ import model.Network;
 import model.Vertex;
 
 /**
- * Kontroller zur FlowScene.fxml. Hier werden alle Interaktionen mit dem UI ermoeglicht.
+ * Kontroller zur FlowScene.fxml. Hier werden alle Interaktionen mit dem UI ermöglicht.
  * 
  * @author Jonas Wallat
  *
@@ -53,24 +49,33 @@ public class FlowSceneController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-		gc = canvas.getGraphicsContext2D();
+		//gc = canvas.getGraphicsContext2D();
 	}
 	
 	/**
-	 * Uebergibt die Stage, sodass der FileChooser verwendet werden kann.
+	 * Übergibt die Stage, sodass der FileChooser verwendet werden kann.
 	 * 
 	 * @param stage Stage der FlowScene.fxml
 	 */
 	public void init(Stage stage) {
 		this.stage = stage;
+		gc = canvas.getGraphicsContext2D();
+		canvas.isResizable();
+		canvas.widthProperty().bind(anchor.widthProperty());
+		canvas.heightProperty().bind(anchor.heightProperty());;
 	}
 	
 	/**
-	 * Oeffnet einen FileChooser fuer XML-Dateien.
+	 * Öffnet einen FileChooser fuer XML-Dateien.
 	 * 
 	 */
 	public void openFile() {
+		
+		if (network != null) {
+			clearVertices();
+			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		}
+		
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Big FLOW");
 		fc.setInitialDirectory(new File(System.getProperty("user.dir") + "/resource"));
@@ -85,8 +90,6 @@ public class FlowSceneController implements Initializable {
 		parser = new Parser(file);
 		parser.parse();
 		network = parser.getData();
-		
-		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		
 		showNetwork();
 	}
@@ -111,11 +114,21 @@ public class FlowSceneController implements Initializable {
 	}
 	
 	/**
-	 * Funktion die das Programm beendet. Sie wird ueber das UI aufgerufen.
+	 * Funktion die das Programm beendet. Sie wird über das UI aufgerufen.
 	 * 
 	 */
 	public void close() {
 		System.exit(0);
+	}
+	
+	/**
+	 * Entfernt alle Vertices vom AnchorPane.
+	 * 
+	 */
+	private void clearVertices() {
+		for (Vertex v : network.getVertices()) {
+			anchor.getChildren().remove(v);
+		}
 	}
 
 	/**
@@ -123,67 +136,22 @@ public class FlowSceneController implements Initializable {
 	 * Wird aufgerufen, nachdem über den FileChooser eine Datei ausgewählt wurde.
 	 * 
 	 */
-	public void showNetwork() {
+	private void showNetwork() {
 		
 		List<Vertex> vertices = network.getVertices();
 		
 		for (Vertex v : vertices) {
-			gc.strokeOval(v.getX(), v.getY(), v.getWidth(), v.getHeight());
-			gc.strokeText(v.getName(), v.getX() - 10, v.getY() + 25);
+			//gc.strokeOval(v.getCenterX(), v.getCenterY(), v.getRadius(), v.getRadius());
+			gc.strokeText(v.getName(), v.getCenterX() - 15, v.getCenterY() + 25);
+			anchor.getChildren().add(v);
 		}
 		
 		List<Edge> edges = network.getEdges();
 		
 		for (Edge e : edges) {
-			Vertex origin = e.getOrigin();
-			Vertex destination = e.getDestination();
-		
-			int widthHalf = origin.getWidth() / 2;
-			int heightHalf = origin.getHeight() / 2;
-			drawArrow(gc, origin.getX() + widthHalf, origin.getY() + heightHalf, 
-						destination.getX() + widthHalf, destination.getY() + heightHalf);
+			e.draw(gc);
 		}
+		
+		System.out.println(gc.getFill().toString());
 	}
-
-	/**
-	 * Hilfsfunktion zum Zeichnen der Pfeile. 
-	 * 
-	 * @param gc - graphical Context
-	 * @param x1 - X-Position des Senders
-	 * @param y1 - Y-Position des Senders
-	 * @param x2 - X-Position des Empfängers
-	 * @param y2 - y-Position des Empfängers
-	 */
-	private void drawArrow(GraphicsContext gc, int x1, int y1, int x2, int y2) {
-	    gc.setFill(Color.BLACK);
-
-	    double dx = x2 - x1, dy = y2 - y1;
-	    double angle = Math.atan2(dy, dx);
-	    ////////////////////////// -5 hier fuer die halbe breite des knotens ////////////////////////////////
-	    int len = (int) Math.sqrt(dx * dx + dy * dy) - 5;
-	    int ARR_SIZE = 5;
-
-	    Transform transform2 = gc.getTransform();
-	    
-	    Transform transform = Transform.translate(x1, y1);
-	    transform = transform.createConcatenation(Transform.rotate(Math.toDegrees(angle), 0, 0));
-	    gc.setTransform(new Affine(transform));
-
-	    Paint old = gc.getStroke();
-	    gc.setStroke(Color.BLACK);	    
-	    gc.strokeLine(0, 0, len, 0);
-	    //////////////////////////////////////////////////////////////////////////////////////////////////
-	    if (Math.PI/2 > angle  && angle >= -Math.PI/2) {
-	    	gc.strokeText("0/0", (len/2) - 2, 15);
-	    }
-	    //////////////////////////////////////////////////////////////////////////////////////////////////
-	    gc.setStroke(old);
-	    
-	    gc.fillPolygon(new double[]{len, len - ARR_SIZE, len - ARR_SIZE, len}, new double[]{0, -ARR_SIZE, ARR_SIZE, 0},
-	            4);
-	    
-	    // Transofrmation rückgängig machen:
-	    gc.setTransform(new Affine(transform2));
-	}
-	
 }

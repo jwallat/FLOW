@@ -155,7 +155,7 @@ public class Parser extends DefaultHandler {
 		}
 		
 		if (newElement != null) {
-			if (!network.containsVertexId(newElement.getId())) {
+			if (!network.containsVertexID(newElement.getID())) {
 				network.addVertex(newElement);
 				System.out.println("Vertex hinzugefügt: " + newElement);
 			}

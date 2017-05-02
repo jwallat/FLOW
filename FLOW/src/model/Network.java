@@ -46,9 +46,9 @@ public class Network {
 		this.edges.add(e);
 	}
 	
-	public boolean containsVertexId(int id) {
+	public boolean containsVertexID(int id) {
 		for (Vertex v : vertices) {
-			if (v.getId() == id) {
+			if (v.getID() == id) {
 				return true;
 			}
 		}

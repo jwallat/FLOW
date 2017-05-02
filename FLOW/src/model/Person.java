@@ -1,16 +1,17 @@
 package model;
 
+
 public class Person extends Vertex {
 
 	private String name;
-	private int id;
+	private int ID;
 	private int x;
 	private int y;
 	
 	public Person(String name, int id, int x, int y) {
 		super(name, id, x, y);
 		this.name = name;
-		this.id = id;
+		this.ID = id;
 		this.x = x;
 		this.y = y;
 	}
@@ -19,8 +20,8 @@ public class Person extends Vertex {
 		return name;
 	}
 	
-	public int getId() {
-		return id;
+	public int getID() {
+		return ID;
 	}
 	
 	public int getX() {

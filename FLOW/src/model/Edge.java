@@ -60,11 +60,11 @@ public class Edge {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public void draw(GraphicsContext gc) {
-		//drawArrow()
+		drawArrow(gc, (int) origin.getCenterX(), (int) origin.getCenterY(), (int) destination.getCenterX(), (int) destination.getCenterY());
 	}
-	
+
 	/**
 	 * Hilfsfunktion zum Zeichnen der Pfeile. 
 	 * 
@@ -74,14 +74,13 @@ public class Edge {
 	 * @param x2 - X-Position des Empfängers
 	 * @param y2 - y-Position des Empfängers
 	 */
-	@SuppressWarnings("unused")
 	private void drawArrow(GraphicsContext gc, int x1, int y1, int x2, int y2) {
 	    gc.setFill(Color.BLACK);
 
 	    double dx = x2 - x1, dy = y2 - y1;
 	    double angle = Math.atan2(dy, dx);
 	    ////////////////////////// -5 hier fuer die halbe breite des knotens ////////////////////////////////
-	    int len = (int) Math.sqrt(dx * dx + dy * dy) - 5;
+	    int len = (int) Math.sqrt(dx * dx + dy * dy) - 9;
 	    int ARR_SIZE = 5;
 
 	    Transform transform2 = gc.getTransform();
@@ -106,7 +105,7 @@ public class Edge {
 	    // Transofrmation rückgängig machen:
 	    gc.setTransform(new Affine(transform2));
 	}
-	
+
 	public String toString() {
 		return "Edge(" + this.id + ", " + this.origin.getName() + " --> " + this.destination.getName() + ", " + this.capacity + ")";
 	}
