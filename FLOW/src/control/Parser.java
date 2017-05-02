@@ -20,6 +20,13 @@ import model.Network;
 import model.Person;
 import model.Vertex;
 
+/**
+ * XML-Parser für die XML-Dateien aus dem Tool.
+ * Es wird die SAX Library zum Parsen der XML verwendet.
+ * 
+ * @author Jonas Wallat
+ *
+ */
 public class Parser extends DefaultHandler {
 
 	private InputSource inputSource;
@@ -30,6 +37,11 @@ public class Parser extends DefaultHandler {
 	private List<String> errorLog;
 	private boolean showLog = true;
 	
+	/**
+	 * Konstruktor des Parsers.
+	 * 
+	 * @param file uebergebene XML-Datei
+	 */
 	public Parser(File file){
 		try {
 			this.file = file;
@@ -45,6 +57,11 @@ public class Parser extends DefaultHandler {
 		errorLog = new ArrayList<String>();
 	}
 	
+	/**
+	 * Funktion die das Parsen der Datei beginnt.
+	 * Wenn showLog = true wird auch der ErrorLog nach dem Parsen ausgegeben.
+	 * 
+	 */
 	public void parse() {
 		try {
 			XMLReader xmlReader = XMLReaderFactory.createXMLReader();
@@ -55,9 +72,9 @@ public class Parser extends DefaultHandler {
 			System.out.println("***********************************************************");
 			xmlReader.parse(inputSource);
 			System.out.println("***********************************************************");
-			System.out.println("*********************** PARSER ENDE ***********************\n\n");	
+			System.out.println("*********************** PARSER ENDE ***********************\n");	
 			
-			System.out.println("log counter: " + errorLog.size());
+			System.out.println("Beim Parsen der Datei sind " + errorLog.size() + " Fehler aufgetreten \n");
 			if (showLog) {
 				for (int i = 0; i < errorLog.size(); i++) {
 					System.out.println("i: " + i + ", " + errorLog.get(i));
@@ -72,6 +89,10 @@ public class Parser extends DefaultHandler {
 		}
 	}
 	
+	/**
+	 * Funktion des SAX-Parsers. Geht die einzelnen Elemente durch und erzeugt entweder neue Member oder Edges.
+	 * 
+	 */
 	public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
 		
 		if (localName.equals("member")) {
@@ -84,6 +105,16 @@ public class Parser extends DefaultHandler {
 		}
 	}
 	
+	/**
+	 * Erzeugt aus den uebergebenen Informationen eine neue Person/Document/Activity und fuegt sie dem 
+	 * Network hinzu, falls die Informationen vollstaendig sind. Ist das nicht der Fall wird dies in 
+	 * den ErrorLog geschrieben.
+	 * 
+	 * @param uri Die namespace uri
+	 * @param localName local name (ohne praefix)
+	 * @param qName qualified name (mit praefix)
+	 * @param atts Attribute des XML-Elements
+	 */
 	private void createMember(String uri, String localName, String qName, Attributes atts) {
 		Vertex newElement = null;
 		
@@ -129,6 +160,16 @@ public class Parser extends DefaultHandler {
 		}
 	}
 	
+	/**
+	 * Erzeugt aus den uebergebenen Informationen eine neue Edge und fuegt sie dem 
+	 * Network hinzu, falls die Informationen vollstaendig sind. Ist das nicht der Fall wird dies in 
+	 * den ErrorLog geschrieben.
+	 * 
+	 * @param uri Die namespace uri
+	 * @param localName local name (ohne praefix)
+	 * @param qName qualified name (mit praefix)
+	 * @param atts Attribute des XML-Elements
+	 */
 	private void createEdge(String uri, String localName, String qName, Attributes atts) {
 		
 		Edge edge = null;
@@ -168,6 +209,11 @@ public class Parser extends DefaultHandler {
 		}
 	}
 	
+	/**
+	 * Gibt das Netzwerk mit den Informationen aus der XML-Datei zurueck.
+	 * 
+	 * @return network
+	 */
 	public Network getData() {
 		return this.network;
 	}

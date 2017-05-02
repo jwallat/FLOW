@@ -11,12 +11,22 @@ import view.FlowSceneController;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-
+/**
+ * Main Klasse, die die Stage anzeigt und die Groesse des Fensters auf die 
+ * Bildschirm-masse setzt.
+ * 
+ * @author Jonas Wallat
+ *
+ */
 public class Main extends Application {
 	
 	private Stage primaryStage;
 	private Parent root;
 	
+	/**
+	 * Methode die aus der main(args) aufgerufen wird und die Stage und Scene setzt.
+	 * 
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -49,6 +59,11 @@ public class Main extends Application {
 		primaryStage.show();
 	}
 	
+	/**
+	 * FX-Methode. Fuehrt die start-Methode aus.
+	 * 
+	 * @param args 
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}

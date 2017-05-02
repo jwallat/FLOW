@@ -15,6 +15,12 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import model.Network;
 
+/**
+ * Kontroller zur FlowScene.fxml. Hier werden alle Interaktionen mit dem UI ermoeglicht.
+ * 
+ * @author Jonas Wallat
+ *
+ */
 public class FlowSceneController implements Initializable {
 
 	@FXML
@@ -31,17 +37,29 @@ public class FlowSceneController implements Initializable {
 	private Parser parser;
 	private Network network;
 	
-	
+	/**
+	 * Initialisierungs-Mehtode, die aufgerufen wird, wenn in der Main.java die FlowScene.fxml geladen wird.
+	 * 
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		gc = canvas.getGraphicsContext2D();
 	}
 	
+	/**
+	 * Uebergibt die Stage, sodass der FileChooser verwendet werden kann.
+	 * 
+	 * @param stage Stage der FlowScene.fxml
+	 */
 	public void init(Stage stage) {
 		this.stage = stage;
 	}
 	
+	/**
+	 * Oeffnet einen FileChooser fuer XML-Dateien.
+	 * 
+	 */
 	public void openFile() {
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Big FLOW");
@@ -57,6 +75,14 @@ public class FlowSceneController implements Initializable {
 		parser = new Parser(file);
 		parser.parse();
 		network = parser.getData();
+	}
+	
+	/**
+	 * Funktion die das Programm beendet. Sie wird ueber das UI aufgerufen.
+	 * 
+	 */
+	public void close() {
+		System.exit(0);
 	}
 
 	public void showNetwork() {
