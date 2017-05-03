@@ -134,7 +134,6 @@ public class Edge {
 	    Paint old = gc.getStroke();
 	    gc.setStroke(Color.BLACK);	    
 	    //gc.strokeLine(0, 0, len, 0);
-	    System.out.println(angle);
 	    if (Math.PI/2 > angle  && angle >= -Math.PI/2) {
 	    	gc.strokeText("0.01", (len/2) - 2, 15);
 	    }

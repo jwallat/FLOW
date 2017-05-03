@@ -5,14 +5,25 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import algorithm.EdmondsKarp;
 import control.Parser;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TitledPane;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -37,10 +48,31 @@ public class FlowSceneController implements Initializable {
 	@FXML
 	private GraphicsContext gc;
 	
+	@FXML
+	private TitledPane informationPane;
+	
+	@FXML
+	private Label sourceLabel;
+	
+	@FXML 
+	private Label sinkLabel;
+	
+	@FXML
+	private Label maxFlowLabel;
+	
+	@FXML 
+	private Button acceptButton;
+	
 	private Stage stage;
 	private File file;
 	private Parser parser;
 	private Network network;
+	private Vertex source;
+	private Vertex sink;
+	
+	private static final DropShadow highlightSource = new DropShadow(20, Color.GOLDENROD);
+	private static final DropShadow highlightSink = new DropShadow(20, Color.GREEN);
+
 	
 	
 	/**
@@ -49,7 +81,7 @@ public class FlowSceneController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		//gc = canvas.getGraphicsContext2D();
+		gc = canvas.getGraphicsContext2D();
 	}
 	
 	/**
@@ -59,12 +91,9 @@ public class FlowSceneController implements Initializable {
 	 */
 	public void init(Stage stage) {
 		this.stage = stage;
-		gc = canvas.getGraphicsContext2D();
-		//anchor.isResizable();
-		System.out.println(canvas.isResizable());
-		//canvas.isResizable();
-		//canvas.widthProperty().bind(stage.widthProperty());
-		//canvas.heightProperty().bind(stage.heightProperty());
+		
+		canvas.widthProperty().bind(anchor.widthProperty());
+		canvas.heightProperty().bind(anchor.heightProperty());
 		gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
 	}
 	
@@ -78,6 +107,7 @@ public class FlowSceneController implements Initializable {
 			clearVertices();
 			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		}
+		informationPane.visibleProperty().set(false);
 		
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Big FLOW");
@@ -103,18 +133,102 @@ public class FlowSceneController implements Initializable {
 	 * 
 	 */
 	public void computeNetworkFlow() {
+		
+		source = null;
+		sink = null;
+		
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Network Flow");
 		alert.setHeaderText(null);
-		alert.setContentText("Select the source!");
+		alert.setContentText("Select the source and sink!");
 
 		alert.showAndWait();
 		
 		//Select Source/Sink
+		//int nodesSelected = 0;
+		
+		selectSourceAndSink();
 		
 		
 		//EDMONDS-KARP
 	}
+	
+	private void selectSourceAndSink() {
+		informationPane.visibleProperty().set(true);
+
+        for (Vertex v : network.getVertices()) {
+        	Shape shape = v.getShape();
+        	
+        	shape.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    stage.getScene().setCursor(Cursor.HAND);
+                }
+            });
+        	
+        	shape.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					if (source == null) {
+						source = v;
+						v.getShape().setEffect(highlightSource);
+						sourceLabel.setText(v.getName());
+					}
+					else if (sink == null) {
+						sink = v;
+						v.getShape().setEffect(highlightSink);
+						sinkLabel.setText(v.getName());
+					}
+					else {
+						source.getShape().setEffect(null);
+						source = sink;
+						source.getShape().setEffect(highlightSource);
+						sourceLabel.setText(source.getName());
+						sink = v;
+						sink.getShape().setEffect(highlightSink);
+						sinkLabel.setText(v.getName());
+					}
+				}
+        	});
+
+            shape.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    //shape.setEffect(null);
+                    stage.getScene().setCursor(Cursor.DEFAULT);
+                }
+            });
+        }
+	}
+	
+	/**
+	 * Funktion die bei Klick auf den "Accept"-Button aufgerufen wird.
+	 * 
+	 * @param e
+	 */
+	public void sourceAndSinkAccepted(ActionEvent e) {
+		if (source != null && sink != null) {
+			for (Vertex v: network.getVertices()) {
+				Shape shape = v.getShape();
+				shape.setOnMouseEntered(null);
+				shape.setOnMouseClicked(null);
+				shape.setOnMouseExited(null);
+			}
+			
+			EdmondsKarp edmondsKarp = new EdmondsKarp(network, source, sink);
+			maxFlowLabel.setText(edmondsKarp.getMaxFlow() + "");
+			
+		}
+		else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Network Flow");
+			alert.setHeaderText(null);
+			alert.setContentText("Select the source AND sink!");
+
+			alert.showAndWait();
+		}
+	}
+	
 	
 	/**
 	 * Funktion die das Programm beendet. Sie wird über das UI aufgerufen.
