@@ -31,7 +31,7 @@
       </MenuBar>
    </top>
    <center>
-      <AnchorPane fx:id="anchor" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="anchor" BorderPane.alignment="CENTER">
          <children>
             <Canvas fx:id="canvas" height="625.0" width="1201.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>

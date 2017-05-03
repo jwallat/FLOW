@@ -60,9 +60,12 @@ public class FlowSceneController implements Initializable {
 	public void init(Stage stage) {
 		this.stage = stage;
 		gc = canvas.getGraphicsContext2D();
-		canvas.isResizable();
-		canvas.widthProperty().bind(anchor.widthProperty());
-		canvas.heightProperty().bind(anchor.heightProperty());;
+		//anchor.isResizable();
+		System.out.println(canvas.isResizable());
+		//canvas.isResizable();
+		//canvas.widthProperty().bind(stage.widthProperty());
+		//canvas.heightProperty().bind(stage.heightProperty());
+		gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
 	}
 	
 	/**
@@ -142,8 +145,8 @@ public class FlowSceneController implements Initializable {
 		
 		for (Vertex v : vertices) {
 			//gc.strokeOval(v.getCenterX(), v.getCenterY(), v.getRadius(), v.getRadius());
-			gc.strokeText(v.getName(), v.getCenterX() - 15, v.getCenterY() + 25);
-			anchor.getChildren().add(v);
+			gc.strokeText(v.getName(), v.getX() - 15, v.getY() + 25);
+			anchor.getChildren().add(v.getShape());
 		}
 		
 		List<Edge> edges = network.getEdges();

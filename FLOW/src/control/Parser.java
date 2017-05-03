@@ -160,7 +160,7 @@ public class Parser extends DefaultHandler {
 				System.out.println("Vertex hinzugefügt: " + newElement);
 			}
 			else {
-				errorLog.add("Es ist bereits ein Member mit der Id " + newElement.getId() + " vorhanden. \n"
+				errorLog.add("Es ist bereits ein Member mit der Id " + newElement.getID() + " vorhanden. \n"
 						+ "--> Kein Member hinzugefuegt");
 			}
 		}

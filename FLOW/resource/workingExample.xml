@@ -2,7 +2,7 @@
 <BigFLOW>
 	<members>
 		<member name="Jonas" id="0" x="100" y="100" type="person"></member>
-		<member name="Martin" id="1" x="100" y="300" type="person"></member>
+		<member name="Martin" id="1" x="800" y="300" type="person"></member>
 		<member name="Tom" id="2" x="300" y="500" type="person"></member>
 		<member name="Paper" id="3" x="700" y="500" type="document"></member>
 		<member name="Sitzung" id="4" x="400" y="550" type="activity"></member></members>

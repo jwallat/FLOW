@@ -1,13 +1,13 @@
 package model;
 
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.StrokeType;
+import javafx.scene.shape.Shape;
 
-public abstract class Vertex extends Circle {
+public abstract class Vertex {
 
 	private String name;
 	private int ID;
+	private Circle shape;
 	private int x;
 	private int y;
 	private int width;
@@ -18,19 +18,14 @@ public abstract class Vertex extends Circle {
 	}
 	
 	public Vertex(String name, int id, int x, int y) {
-		super(x, y, 10);
 		this.name = name;
 		this.setID(id);
 		this.setX(x);
 		this.setY(y);
-		this.setRadius(10);
 		this.height = 10;
 		this.width = 10;
 		
-		this.setStroke(Color.BLACK);
-		this.setStrokeWidth(2);
-		this.setStrokeType(StrokeType.INSIDE);
-		this.setFill(Color.WHITE);
+		this.shape = new Circle(x, y, 20);
 	}
 	
 	public String getName() {
@@ -67,6 +62,10 @@ public abstract class Vertex extends Circle {
 	
 	public int getHeight() {
 		return this.height;
+	}
+	
+	public Shape getShape() { 
+		return this.shape;
 	}
 	
 	public String toString() {
