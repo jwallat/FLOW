@@ -38,10 +38,7 @@ public class Main extends Application {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		FlowSceneController fsc = (FlowSceneController) loader.getController();
-		fsc.init(primaryStage);
-		
-		
+
 		Scene scene = new Scene(root, 800, 800);
 		scene.getStylesheets().add("control/application.css");
 		
@@ -58,6 +55,9 @@ public class Main extends Application {
 
         //primaryStage.setMaximized(true);
 		primaryStage.show();
+		
+		FlowSceneController fsc = (FlowSceneController) loader.getController();
+		fsc.init(primaryStage);
 	}
 	
 	/**

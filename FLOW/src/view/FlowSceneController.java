@@ -7,6 +7,8 @@ import java.util.ResourceBundle;
 
 import algorithm.EdmondsKarp;
 import control.Parser;
+import helper.PannablePane;
+import helper.SceneGestures;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,9 +20,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.TitledPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
@@ -40,9 +44,14 @@ import model.Vertex;
 public class FlowSceneController implements Initializable {
 
 	@FXML
-	private AnchorPane anchor;
+	private MenuBar menuBar;
 	
 	@FXML
+	private AnchorPane anchor;
+	
+	private PannablePane pannablePane;
+	
+	//@FXML
 	private Canvas canvas;
 	
 	@FXML
@@ -80,8 +89,8 @@ public class FlowSceneController implements Initializable {
 	 * 
 	 */
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		gc = canvas.getGraphicsContext2D();
+	public void initialize(URL arg0, ResourceBundle arg1) {		
+		
 	}
 	
 	/**
@@ -92,9 +101,39 @@ public class FlowSceneController implements Initializable {
 	public void init(Stage stage) {
 		this.stage = stage;
 		
-		canvas.widthProperty().bind(anchor.widthProperty());
-		canvas.heightProperty().bind(anchor.heightProperty());
-		gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		//Order Elements and set size-Properties
+		menuBar.toFront();
+		menuBar.prefWidthProperty().bind(anchor.widthProperty());
+		
+		pannablePane = new PannablePane();
+		anchor.getChildren().add(pannablePane);
+		
+		anchor.setPrefWidth(stage.getScene().getWidth());
+		anchor.setPrefHeight(stage.getScene().getHeight());
+		anchor.autosize();
+		anchor.toBack();
+		
+		informationPane.toFront();
+		
+		pannablePane.setPrefWidth(anchor.widthProperty().get());
+		pannablePane.setPrefHeight(anchor.heightProperty().get());
+		pannablePane.autosize();
+		
+		canvas = new Canvas();
+		pannablePane.getChildren().add(canvas);		
+		
+		canvas.widthProperty().bind(pannablePane.widthProperty());
+		canvas.heightProperty().bind(pannablePane.heightProperty());
+		canvas.autosize();
+		
+		gc = canvas.getGraphicsContext2D();
+		gc.setFill(Color.BEIGE);
+		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		
+		SceneGestures sceneGestures = new SceneGestures(pannablePane);
+		stage.getScene().addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
+        stage.getScene().addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
+        stage.getScene().addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
 	}
 	
 	/**
@@ -134,8 +173,17 @@ public class FlowSceneController implements Initializable {
 	 */
 	public void computeNetworkFlow() {
 		
-		source = null;
-		sink = null;
+		if (source != null) {
+			source.getShape().setEffect(null);
+			source = null;
+		}
+		if (sink != null) {
+			sink.getShape().setEffect(null);
+			sink = null;
+		}
+		maxFlowLabel.setText("");
+		sourceLabel.setText("");
+		sinkLabel.setText("");
 		
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Network Flow");
@@ -143,9 +191,6 @@ public class FlowSceneController implements Initializable {
 		alert.setContentText("Select the source and sink!");
 
 		alert.showAndWait();
-		
-		//Select Source/Sink
-		//int nodesSelected = 0;
 		
 		selectSourceAndSink();
 		
@@ -244,7 +289,7 @@ public class FlowSceneController implements Initializable {
 	 */
 	private void clearVertices() {
 		for (Vertex v : network.getVertices()) {
-			anchor.getChildren().remove(v);
+			pannablePane.getChildren().remove(v);
 		}
 	}
 
@@ -260,7 +305,7 @@ public class FlowSceneController implements Initializable {
 		for (Vertex v : vertices) {
 			//gc.strokeOval(v.getCenterX(), v.getCenterY(), v.getRadius(), v.getRadius());
 			gc.strokeText(v.getName(), v.getX() - 15, v.getY() + 25);
-			anchor.getChildren().add(v.getShape());
+			pannablePane.getChildren().add(v.getShape());
 		}
 		
 		List<Edge> edges = network.getEdges();
