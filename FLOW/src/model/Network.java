@@ -54,4 +54,39 @@ public class Network {
 		}
 		return false;
 	}
+	
+	/**
+	 * Fügt den Kanten des Netzwerks die Kapazitäten hinzu, die aus dem FLOW-Netzwerk ableitbar sind:
+	 * Mensch --> Mensch:		1/0,3
+	 * Mensch --> Document:		1/0,5
+	 * Dokument --> Mensch:		1/0,6
+	 * Dokument --> Dokument:	1/1
+	 * 
+	 * Ist eine Aktivität beteiligt wird: ******************************************************************************************************
+	 * 
+	 */
+	public void prepareNetwork() {
+		System.out.println("Preparing:");
+		for (Edge e : edges) {
+			if (e.getDestination().getClass().toString().contains("Activity") || e.getOrigin().getClass().toString().contains("Activity")) {
+				//System.out.println("Edge mit activity: " + e);
+				e.setCapacity(100);
+			}
+			else if (e.getOrigin().getClass().toString().contains("Person") && e.getDestination().getClass().toString().contains("Person")) {
+				e.setCapacity(333);
+			}
+			else if (e.getOrigin().getClass().toString().contains("Person") && e.getDestination().getClass().toString().contains("Document")) {
+				e.setCapacity(200);
+			}
+			else if (e.getOrigin().getClass().toString().contains("Document") && e.getDestination().getClass().toString().contains("Person")) {
+				e.setCapacity(166);
+			}
+			else if (e.getOrigin().getClass().toString().contains("Document") && e.getDestination().getClass().toString().contains("Document")) {
+				e.setCapacity(100);
+			}
+			else {
+				System.out.println("Problem beim Vorbereiten des Netzwerks: Capacity konnte nicht gersetzt werden");
+			}
+		}
+	}
 }

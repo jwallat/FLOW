@@ -8,6 +8,7 @@ public abstract class Vertex {
 	private String name;
 	private int ID;
 	private Circle shape;
+	private boolean visited;
 	private int x;
 	private int y;
 	private int width;
@@ -24,6 +25,7 @@ public abstract class Vertex {
 		this.setY(y);
 		this.height = 10;
 		this.width = 10;
+		this.setVisited(false);
 		
 		this.shape = new Circle(x, y, 20);
 	}
@@ -70,5 +72,13 @@ public abstract class Vertex {
 	
 	public String toString() {
 		return "Vertex(" + name + ", " + ID + ", " + x + ", " + y +")";
+	}
+
+	public boolean isVisited() {
+		return visited;
+	}
+
+	public void setVisited(boolean visited) {
+		this.visited = visited;
 	}
 }

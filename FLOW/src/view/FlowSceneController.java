@@ -126,6 +126,9 @@ public class FlowSceneController implements Initializable {
 		canvas.heightProperty().bind(pannablePane.heightProperty());
 		canvas.autosize();
 		
+		//canvas.setWidth(5000);
+		//canvas.setHeight(5000);
+		
 		gc = canvas.getGraphicsContext2D();
 		gc.setFill(Color.BEIGE);
 		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -301,6 +304,7 @@ public class FlowSceneController implements Initializable {
 	private void showNetwork() {
 		
 		List<Vertex> vertices = network.getVertices();
+		network.prepareNetwork();
 		
 		for (Vertex v : vertices) {
 			//gc.strokeOval(v.getCenterX(), v.getCenterY(), v.getRadius(), v.getRadius());
