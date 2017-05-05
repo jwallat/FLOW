@@ -54,7 +54,7 @@
                         <Label fx:id="sinkLabel" layoutX="134.0" layoutY="41.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="17.0" />
                         <Button fx:id="acceptButton" layoutX="68.0" layoutY="124.0" mnemonicParsing="false" onAction="#sourceAndSinkAccepted" text="Accept" />
                         <Label layoutX="18.0" layoutY="82.0" text="Maximal Flow: " />
-                        <Label fx:id="maxFlowLabel" layoutX="128.0" layoutY="82.0" AnchorPane.leftAnchor="130.0" />
+                        <Label fx:id="maxFlowLabel" layoutX="129.6" layoutY="82.0" prefHeight="17.0" prefWidth="71.0" text="                             " AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
                      </children>
                   </AnchorPane>
               </content>

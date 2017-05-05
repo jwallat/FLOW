@@ -55,6 +55,15 @@ public class Network {
 		return false;
 	}
 	
+	public void clearNetwork() {
+		for (Edge e : edges) {
+			edges.remove(e);
+		}
+		for (Vertex v : vertices) {
+			vertices.remove(v);
+		}
+	}
+	
 	/**
 	 * Fügt den Kanten des Netzwerks die Kapazitäten hinzu, die aus dem FLOW-Netzwerk ableitbar sind:
 	 * Mensch --> Mensch:		1/0,3
@@ -88,5 +97,6 @@ public class Network {
 				System.out.println("Problem beim Vorbereiten des Netzwerks: Capacity konnte nicht gersetzt werden");
 			}
 		}
+		System.out.println("Network prepared\n");
 	}
 }

@@ -51,7 +51,6 @@ public class FlowSceneController implements Initializable {
 	
 	private PannablePane pannablePane;
 	
-	//@FXML
 	private Canvas canvas;
 	
 	@FXML
@@ -201,6 +200,10 @@ public class FlowSceneController implements Initializable {
 		//EDMONDS-KARP
 	}
 	
+	/**
+	 * 
+	 * 
+	 */
 	private void selectSourceAndSink() {
 		informationPane.visibleProperty().set(true);
 
@@ -264,8 +267,12 @@ public class FlowSceneController implements Initializable {
 			}
 			
 			EdmondsKarp edmondsKarp = new EdmondsKarp(network, source, sink);
-			maxFlowLabel.setText(edmondsKarp.getMaxFlow() + "");
-			
+			if (!edmondsKarp.areConnected(source, sink)) {
+				maxFlowLabel.setText("Not connected");
+			}
+			else {
+				maxFlowLabel.setText(edmondsKarp.getMaxFlow() + "");
+			}
 		}
 		else {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -275,6 +282,13 @@ public class FlowSceneController implements Initializable {
 
 			alert.showAndWait();
 		}
+	}
+	
+	/**
+	 * 
+	 */
+	public void calculateMaxFlow() {
+		
 	}
 	
 	
@@ -306,6 +320,12 @@ public class FlowSceneController implements Initializable {
 		List<Vertex> vertices = network.getVertices();
 		network.prepareNetwork();
 		
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/*BreadthFirstSearch bfs = new BreadthFirstSearch(network);
+		bfs.run(network.getVertexByName("Jonas"), network.getVertexByName("Tom"));
+		bfs.printPath();*/
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 		for (Vertex v : vertices) {
 			//gc.strokeOval(v.getCenterX(), v.getCenterY(), v.getRadius(), v.getRadius());
 			gc.strokeText(v.getName(), v.getX() - 15, v.getY() + 25);
@@ -317,7 +337,5 @@ public class FlowSceneController implements Initializable {
 		for (Edge e : edges) {
 			e.draw(gc);
 		}
-		
-		System.out.println(gc.getFill().toString());
 	}
 }

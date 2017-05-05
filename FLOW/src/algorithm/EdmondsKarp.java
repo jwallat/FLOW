@@ -14,6 +14,7 @@ public class EdmondsKarp {
 
 	private Network network;
 	private Network residualNetwork;
+	private BreadthFirstSearch bfs;
 	private Vertex source;
 	private Vertex  sink;
 	private int maxFlow;
@@ -31,11 +32,12 @@ public class EdmondsKarp {
 		this.sink = sink;
 		this.maxFlow = -1;
 		
+		this.bfs = new BreadthFirstSearch(network);
 		createResidualNetwork();
 		
 		calculateMaxFlow();
 	}
-	
+
 	/**
 	 * Diese Methode enthält den eigentlichen Algorithmus.
 	 * 
@@ -43,7 +45,7 @@ public class EdmondsKarp {
 	private void calculateMaxFlow() {
 		//Algorithmus
 	}
-	
+
 	/**
 	 * Erzeugt das residual network, welches für den Algorithmus benötigt wird.
 	 * Dazu wird zu jeder Kante eine entgegenlaufende Kante erzeugt.
@@ -61,6 +63,13 @@ public class EdmondsKarp {
 		}
 	}
 	
+	public boolean areConnected(Vertex source, Vertex sink) {
+		if (bfs.areConntected(source, sink)) {
+			return true;
+		}
+		return false;
+	}
+
 	public int getMaxFlow() {
 		return this.maxFlow;
 	}
