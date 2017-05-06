@@ -7,9 +7,6 @@ import java.util.ResourceBundle;
 
 import algorithm.EdmondsKarp;
 import control.Parser;
-import helper.PannablePane;
-import helper.SceneGestures;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -34,6 +31,8 @@ import javafx.stage.Stage;
 import model.Edge;
 import model.Network;
 import model.Vertex;
+import util.PannablePane;
+import util.SceneGestures;
 
 /**
  * Kontroller zur FlowScene.fxml. Hier werden alle Interaktionen mit dem UI ermöglicht.
@@ -157,8 +156,8 @@ public class FlowSceneController implements Initializable {
 		
 		file = fc.showOpenDialog(stage);
 		
-		if (file != null) {
-			System.out.println("File: " + file);
+		if (file == null) {
+			System.out.println("Fehler beim lesen der Datei!");
 		}
 		
 		parser = new Parser(file);
@@ -255,9 +254,8 @@ public class FlowSceneController implements Initializable {
 	/**
 	 * Funktion die bei Klick auf den "Accept"-Button aufgerufen wird.
 	 * 
-	 * @param e
 	 */
-	public void sourceAndSinkAccepted(ActionEvent e) {
+	public void sourceAndSinkAccepted() {
 		if (source != null && sink != null) {
 			for (Vertex v: network.getVertices()) {
 				Shape shape = v.getShape();
@@ -266,11 +264,12 @@ public class FlowSceneController implements Initializable {
 				shape.setOnMouseExited(null);
 			}
 			
-			EdmondsKarp edmondsKarp = new EdmondsKarp(network, source, sink);
+			EdmondsKarp edmondsKarp = new EdmondsKarp(network); 
 			if (!edmondsKarp.areConnected(source, sink)) {
 				maxFlowLabel.setText("Not connected");
 			}
 			else {
+				edmondsKarp.run(source, sink);
 				maxFlowLabel.setText(edmondsKarp.getMaxFlow() + "");
 			}
 		}

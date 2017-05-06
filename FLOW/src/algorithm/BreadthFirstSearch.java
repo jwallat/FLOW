@@ -8,6 +8,12 @@ import model.Edge;
 import model.Network;
 import model.Vertex;
 
+/**
+ * Implementation der Breitensuche.
+ * 
+ * @author Jonas
+ *
+ */
 public class BreadthFirstSearch {
 
 	private Network network;
@@ -17,6 +23,11 @@ public class BreadthFirstSearch {
 	private Network visitedNetwork;
 	private Stack<Edge> path;
 	
+	/**
+	 * Konstruktor
+	 * 
+	 * @param network Das Netzwerk auf dem die Breitensuche durchgehführt werden soll
+	 */
 	public BreadthFirstSearch(Network network) {
 		this.network = network;
 		
@@ -25,6 +36,14 @@ public class BreadthFirstSearch {
 		this.path = new Stack<Edge>();
 	}
 	
+	/**
+	 * Der eigentliche Algorithmus der Breitensuche.
+	 * Konstruiert gleichzeitig das visitedNetwork, ein Graph in dem alle besuchten Knoten/Kanten
+	 * vorhanden sind. Dieses wird benötigt um später den genauen Pfad zu finden.
+	 * 
+	 * @param start Knoten von dem die Breitensuche starten soll
+	 * @param goal Knoten, zu dem die Breitensuche einen Pfad finden soll
+	 */
 	public void run(Vertex start, Vertex goal) {
 		this.start = start;
 		this.goal = goal;
@@ -59,6 +78,10 @@ public class BreadthFirstSearch {
 		System.out.println("Kein Pfad gefunden!");
 	}
 	
+	/**
+	 * Berechnet nach Erreichen des Zielknotens einen Pfad, der von den MaxFlowAlgorithmen verwendet werden kann.
+	 * 
+	 */
 	private void calculatePath() {
 		
 		Vertex currentVertex = goal;
@@ -75,6 +98,13 @@ public class BreadthFirstSearch {
 		}
 	}
 	
+	/** 
+	 * Gibt einen boolschen Wert zurück, der angibt ob die übergebenen Knoten verbunden sin.
+	 * 
+	 * @param start Start-Knoten
+	 * @param goal Ziel-Knoten
+	 * @return true/false wenn es Pfad existiert/nicht existiert
+	 */
 	public boolean areConntected(Vertex start, Vertex goal) {
 		
 		run(start, goal);

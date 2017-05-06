@@ -10,12 +10,14 @@ import model.Vertex;
  * @author Jonas Wallat
  *
  */
-public class EdmondsKarp {
+public class EdmondsKarp extends MaxFlowAlgorithm {
 
 	private Network network;
 	private Network residualNetwork;
 	private BreadthFirstSearch bfs;
+	@SuppressWarnings("unused")
 	private Vertex source;
+	@SuppressWarnings("unused")
 	private Vertex  sink;
 	private int maxFlow;
 	
@@ -23,27 +25,30 @@ public class EdmondsKarp {
 	 * Konstruktor
 	 * 
 	 * @param network Netzwerk auf dem der maximale Fluss berechnet werden soll
-	 * @param source Die Quelle
-	 * @param sink Die Senke
 	 */
-	public EdmondsKarp(Network network, Vertex source, Vertex sink) {
+	public EdmondsKarp(Network network) {
+		super(network);
 		this.network = network;
-		this.source = source;
-		this.sink = sink;
 		this.maxFlow = -1;
 		
 		this.bfs = new BreadthFirstSearch(network);
 		createResidualNetwork();
-		
-		calculateMaxFlow();
 	}
 
 	/**
 	 * Diese Methode enthält den eigentlichen Algorithmus.
 	 * 
+	 * @param source Quelle
+	 * @param sink Senke
 	 */
-	private void calculateMaxFlow() {
+	public void run(Vertex source, Vertex sink) {
 		//Algorithmus
+		this.source = source;
+		this.sink = sink;
+		
+		if (bfs.areConntected(source, sink)) {
+			
+		}
 	}
 
 	/**
@@ -63,6 +68,13 @@ public class EdmondsKarp {
 		}
 	}
 	
+	/** 
+	 * Gibt einen boolschen Wert zurück, der angibt ob die übergebenen Knoten verbunden sin.
+	 * 
+	 * @param source Start-Knoten
+	 * @param sink Ziel-Knoten
+	 * @return true/false wenn es Pfad existiert/nicht existiert
+	 */
 	public boolean areConnected(Vertex source, Vertex sink) {
 		if (bfs.areConntected(source, sink)) {
 			return true;
