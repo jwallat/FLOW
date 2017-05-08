@@ -47,7 +47,7 @@ public class EdmondsKarp extends MaxFlowAlgorithm {
 		this.sink = sink;
 		
 		if (bfs.areConntected(source, sink)) {
-			
+			System.out.println("Algorithm!");
 		}
 	}
 

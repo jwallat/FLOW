@@ -1,7 +1,7 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Network {
 
@@ -9,8 +9,8 @@ public class Network {
 	private List<Edge> edges;
 	
 	public Network() {
-		this.vertices = new ArrayList<Vertex>();
-		this.edges = new ArrayList<Edge>();
+		this.vertices = new CopyOnWriteArrayList<Vertex>();
+		this.edges =  new CopyOnWriteArrayList<Edge>();
 	}
 
 	public List<Vertex> getVertices() {

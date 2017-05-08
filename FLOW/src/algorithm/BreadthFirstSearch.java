@@ -52,7 +52,7 @@ public class BreadthFirstSearch {
 		this.queue.clear();
 		this.path.clear();
 		this.visitedNetwork.clearNetwork();
-		
+				
 		queue.add(start);
 		visitedNetwork.addVertex(start);
 		
