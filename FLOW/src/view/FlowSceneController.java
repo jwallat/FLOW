@@ -23,6 +23,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
@@ -44,6 +45,9 @@ public class FlowSceneController implements Initializable {
 
 	@FXML
 	private MenuBar menuBar;
+	
+	@FXML
+	private HBox hBox;
 	
 	@FXML
 	private AnchorPane anchor;
@@ -100,6 +104,11 @@ public class FlowSceneController implements Initializable {
 		this.stage = stage;
 		
 		//Order Elements and set size-Properties
+		hBox.setPrefWidth(stage.getScene().getWidth());
+		hBox.setPrefHeight(stage.getScene().getHeight());
+		hBox.autosize();
+		hBox.toBack();
+		
 		menuBar.toFront();
 		menuBar.prefWidthProperty().bind(anchor.widthProperty());
 		
@@ -124,8 +133,8 @@ public class FlowSceneController implements Initializable {
 		canvas.heightProperty().bind(pannablePane.heightProperty());
 		canvas.autosize();
 		
-		//canvas.setWidth(5000);
-		//canvas.setHeight(5000);
+		//canvas.setWidth(1920*2);
+		//canvas.setHeight(1080*2);
 		
 		gc = canvas.getGraphicsContext2D();
 		gc.setFill(Color.BEIGE);
