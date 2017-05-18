@@ -279,6 +279,7 @@ public class FlowSceneController implements Initializable {
 			}
 			else {
 				edmondsKarp.run(source, sink);
+				updateGraphics();
 				maxFlowLabel.setText(edmondsKarp.getMaxFlow() + "");
 			}
 		}
@@ -344,6 +345,21 @@ public class FlowSceneController implements Initializable {
 		
 		for (Edge e : edges) {
 			e.draw(gc);
+		}
+	}
+	
+	private void updateGraphics() {
+		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		
+		List<Edge> edges = network.getEdges();
+		for (Edge e : edges) {
+			e.draw(gc);
+		}
+		
+		List<Vertex> vertices = network.getVertices();
+		for (Vertex v : vertices) {
+			gc.strokeText(v.getName(), v.getX() - 15, v.getY() + 25);
+			//pannablePane.getChildren().add(v.getShape());
 		}
 	}
 }

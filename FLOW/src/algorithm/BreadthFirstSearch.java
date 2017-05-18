@@ -1,8 +1,9 @@
 package algorithm;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
-import java.util.Stack;
 
 import model.Edge;
 import model.Network;
@@ -16,12 +17,13 @@ import model.Vertex;
  */
 public class BreadthFirstSearch {
 
+	@SuppressWarnings("unused")
 	private Network network;
 	private Queue<Vertex> queue;
 	private Vertex start;
 	private Vertex goal;
 	private Network visitedNetwork;
-	private Stack<Edge> path;
+	private List<Edge> path;
 	
 	/**
 	 * Konstruktor
@@ -29,11 +31,11 @@ public class BreadthFirstSearch {
 	 * @param network Das Netzwerk auf dem die Breitensuche durchgehführt werden soll
 	 */
 	public BreadthFirstSearch(Network network) {
-		this.network = network;
+		//this.network = network;
 		
 		this.visitedNetwork = new Network();
 		queue = new LinkedList<Vertex>();
-		this.path = new Stack<Edge>();
+		this.path = new ArrayList<Edge>();
 	}
 	
 	/**
@@ -44,7 +46,8 @@ public class BreadthFirstSearch {
 	 * @param start Knoten von dem die Breitensuche starten soll
 	 * @param goal Knoten, zu dem die Breitensuche einen Pfad finden soll
 	 */
-	public void run(Vertex start, Vertex goal) {
+	public void run(Network network, Vertex start, Vertex goal) {
+		this.network = network;
 		this.start = start;
 		this.goal = goal;
 		
@@ -62,20 +65,23 @@ public class BreadthFirstSearch {
 			for (Edge e : network.getEdges()) {
 				if (v == e.getOrigin()) {
 					if (!visitedNetwork.containsVertexID(e.getDestination().getID())) {
-
-						visitedNetwork.addEdge(e);
-						queue.add(e.getDestination());
-						visitedNetwork.addVertex(e.getDestination());
-						
-						if (e.getDestination() == goal) {
-							calculatePath();
-							return;
+						if (e.getCapacity() > e.getFlow()) {
+							visitedNetwork.addEdge(e);
+							queue.add(e.getDestination());
+							visitedNetwork.addVertex(e.getDestination());
+							
+							if (e.getDestination() == goal) {
+								calculatePath();
+								return;
+							}
 						}
+
+						
 					}
 				}
 			}
 		}
-		System.out.println("Kein Pfad gefunden!");
+		//System.out.println("Kein Pfad gefunden!");
 	}
 	
 	/**
@@ -88,7 +94,7 @@ public class BreadthFirstSearch {
 		while (true) {
 			for (Edge e : visitedNetwork.getEdges()) {
 				if (e.getDestination() == currentVertex) {
-					path.push(e);
+					path.add(e);
 					currentVertex = e.getOrigin();
 				}
 				if (currentVertex == start) {
@@ -105,24 +111,24 @@ public class BreadthFirstSearch {
 	 * @param goal Ziel-Knoten
 	 * @return true/false wenn es Pfad existiert/nicht existiert
 	 */
-	public boolean areConntected(Vertex start, Vertex goal) {
+	public boolean areConntected(Network network, Vertex start, Vertex goal) {
 		
-		run(start, goal);
+		run(network, start, goal);
 		if (!visitedNetwork.containsVertexID(goal.getID())) {
 			return false;
 		}
 		return true;
 	}
 	
-	public Stack<Edge> getPath() {
+	public List<Edge> getPath() {
 		return this.path;
 	}
 	
 	public void printPath() {
 		
 		System.out.println("Path:");
-		while (!path.isEmpty()) {
-			System.out.println(path.pop().toString());
+		for (int i = 0; i < path.size(); i++) {
+			System.out.println(path.get(i).toString());
 		}
 	}
 }
