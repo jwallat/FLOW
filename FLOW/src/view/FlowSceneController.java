@@ -115,26 +115,43 @@ public class FlowSceneController implements Initializable {
 		pannablePane = new PannablePane();
 		anchor.getChildren().add(pannablePane);
 		
-		anchor.setPrefWidth(stage.getScene().getWidth());
-		anchor.setPrefHeight(stage.getScene().getHeight());
+		anchor.setPrefWidth(hBox.getWidth());
+		anchor.setPrefHeight(hBox.getHeight());
 		anchor.autosize();
-		anchor.toBack();
+		/*
+		Canvas anchorCanvas = new Canvas();
+		anchorCanvas.widthProperty().bind(anchor.widthProperty());
+		anchorCanvas.heightProperty().bind(anchor.heightProperty());
+		anchorCanvas.autosize();
 		
-		informationPane.toFront();
+		GraphicsContext gc2 = anchorCanvas.getGraphicsContext2D();
+		gc2 = anchorCanvas.getGraphicsContext2D();
+		gc2.setFill(Color.RED);
+		gc2.fillRect(0, 0, anchorCanvas.getWidth(), anchorCanvas.getHeight());
+		
+		anchor.getChildren().add(anchorCanvas);
+		*/
+		anchor.toBack();
 		
 		pannablePane.setPrefWidth(anchor.widthProperty().get());
 		pannablePane.setPrefHeight(anchor.heightProperty().get());
+		//pannablePane.setPrefWidth(3000);
+		//pannablePane.setPrefHeight(3000);
 		pannablePane.autosize();
+		
+		pannablePane.toFront();
+		informationPane.toFront();
+		
 		
 		canvas = new Canvas();
 		pannablePane.getChildren().add(canvas);		
 		
 		canvas.widthProperty().bind(pannablePane.widthProperty());
 		canvas.heightProperty().bind(pannablePane.heightProperty());
+		//canvas.setWidth(1900);
+		//canvas.setHeight(1000);
 		canvas.autosize();
 		
-		//canvas.setWidth(1920*2);
-		//canvas.setHeight(1080*2);
 		
 		gc = canvas.getGraphicsContext2D();
 		gc.setFill(Color.BEIGE);
@@ -144,7 +161,8 @@ public class FlowSceneController implements Initializable {
 		stage.getScene().addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
         stage.getScene().addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
         stage.getScene().addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
-	}
+        
+ 	}
 	
 	/**
 	 * Öffnet einen FileChooser fuer XML-Dateien.
@@ -350,6 +368,8 @@ public class FlowSceneController implements Initializable {
 	
 	private void updateGraphics() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		gc.setFill(Color.BEIGE);
+		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		
 		List<Edge> edges = network.getEdges();
 		for (Edge e : edges) {

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FlowSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FlowSceneController">
    <top>
       <HBox BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
@@ -46,7 +46,7 @@
          <children>
             <AnchorPane fx:id="anchor">
                <children>
-                  <TitledPane fx:id="informationPane" animated="false" layoutX="985.0" layoutY="14.0" text="Network FLOW" visible="false" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                  <TitledPane fx:id="informationPane" animated="false" text="Network FLOW" visible="false" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
