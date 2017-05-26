@@ -2,6 +2,7 @@ package view;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -353,9 +354,32 @@ public class FlowSceneController implements Initializable {
 		}
 		
 		List<Edge> edges = network.getEdges();
+		boolean weightingDrawn = false;
+		List<Edge> drawnEdges = new ArrayList<Edge>();
 		
 		for (Edge e : edges) {
 			e.draw(gc);
+			weightingDrawn = false;
+			for (Edge e2 : edges) {
+				if ((e.getOrigin() == e2.getDestination()) && (e.getDestination() == e2.getOrigin())) {
+					
+					if (!drawnEdges.contains(e2) && !drawnEdges.contains(e)) {
+						
+						e.drawBidirectionalWeighting(gc, (int) e.getOrigin().getX(), (int) e.getOrigin().getY(), (int) e.getFlow(), (int) e.getCapacity(),
+							(int) e.getDestination().getX(), (int) e.getDestination().getY(), (int) e2.getFlow(), (int) e2.getCapacity());
+						drawnEdges.add(e);
+						System.out.println("BI:");
+						System.out.println(e);
+						System.out.println(e2);
+						System.out.println("/BI");
+					}	
+					weightingDrawn = true;
+				}
+			}
+			if (!weightingDrawn) {
+				e.drawWeighting(gc, e.getOrigin().getX(), e.getOrigin().getY(), e.getDestination().getX(), e.getDestination().getY());
+				drawnEdges.add(e);
+			}
 		}
 	}
 	
@@ -364,14 +388,38 @@ public class FlowSceneController implements Initializable {
 		gc.setFill(Color.BEIGE);
 		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		
-		List<Edge> edges = network.getEdges();
-		for (Edge e : edges) {
-			e.draw(gc);
-		}
-		
 		List<Vertex> vertices = network.getVertices();
 		for (Vertex v : vertices) {
 			gc.strokeText(v.getName(), v.getX() - ((v.getName().length() / 2) * 6), v.getY() + 25);
+		}
+		
+		List<Edge> edges = network.getEdges();
+		boolean weightingDrawn = false;
+		List<Edge> drawnEdges = new ArrayList<Edge>();
+		
+		for (Edge e : edges) {
+			e.draw(gc);
+			weightingDrawn = false;
+			for (Edge e2 : edges) {
+				if ((e.getOrigin() == e2.getDestination()) && (e.getDestination() == e2.getOrigin())) {
+					
+					if (!drawnEdges.contains(e2) && !drawnEdges.contains(e)) {
+						
+						e.drawBidirectionalWeighting(gc, (int) e.getOrigin().getX(), (int) e.getOrigin().getY(), (int) e.getFlow(), (int) e.getCapacity(),
+							(int) e.getDestination().getX(), (int) e.getDestination().getY(), (int) e2.getFlow(), (int) e2.getCapacity());
+						drawnEdges.add(e);
+						System.out.println("BI:");
+						System.out.println(e);
+						System.out.println(e2);
+						System.out.println("/BI");
+					}	
+					weightingDrawn = true;
+				}
+			}
+			if (!weightingDrawn) {
+				e.drawWeighting(gc, e.getOrigin().getX(), e.getOrigin().getY(), e.getDestination().getX(), e.getDestination().getY());
+				drawnEdges.add(e);
+			}
 		}
 	}
 }

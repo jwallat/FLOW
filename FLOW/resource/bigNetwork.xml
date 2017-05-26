@@ -12,7 +12,7 @@
 		<member name="Berater" id="8" x="750" y="170" type="person"></member>
 		<member name="Testfaelle" id="9" x="950" y="20" type="document"></member>
 		<member name="Ticketsystem" id="10" x="1050" y="220" type="activity"></member>
-		<member name="Storycards" id="11" x="1050" y="420" type="document"></member>
+		<member name="Storycards" id="11" x="1050" y="400" type="document"></member>
 		<member name="Qualitaetssicherung" id="12" x="1200" y="20" type="person"></member>
 		<member name="Teamleiter Informatik" id="13" x="600" y="610" type="person"></member>
 		<member name="Stellvertretender Teamleiter" id="14" x="850" y="610" type="person"></member>
@@ -72,7 +72,6 @@
 		<edge from="Berater" to="Testfaelle" id="48"></edge>
 		<edge from="Testfaelle" to="Qualitaetssicherung" id="49"></edge>
 		<edge from="Ticketsystem" to="Qualitaetssicherung" id="50"></edge>
-		<edge from="Qualitaetssicherung" to="Ticketsystem" id="51"></edge>
-		<edge from="Kunde (D)" to="Anforderungen" id="52"></edge>
+		<edge from="Kunde (D)" to="Anforderungen" id="51"></edge>
 	</egdes>
 </BigFLOW>

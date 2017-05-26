@@ -69,7 +69,6 @@ public class Edge {
 
 	public void draw(GraphicsContext gc) {
 		drawArrow(gc, (int) origin.getX(), (int) origin.getY(), (int) destination.getX(), (int) destination.getY());
-		drawWeighting(gc, (int) origin.getX(), (int) origin.getY(), (int) destination.getX(), (int) destination.getY());
 	}
 
 	/**
@@ -117,7 +116,7 @@ public class Edge {
 	 * @param x2 - X-Position des Empfängers
 	 * @param y2 - y-Position des Empfängers
 	 */
-	private void drawWeighting(GraphicsContext gc, int x1, int y1, int x2, int y2) {
+	public void drawWeighting(GraphicsContext gc, int x1, int y1, int x2, int y2) {
 		gc.setFill(Color.BLACK);
 
 	    double dx = x2 - x1, dy = y2 - y1;
@@ -154,7 +153,7 @@ public class Edge {
 	 * @param x2 - X-Position des Empfängers
 	 * @param y2 - y-Position des Empfängers
 	 */
-	private void drawBidirectionalWeighting(GraphicsContext gc, int x1, int y1, int flow1, int capacity1, int x2, int y2, int flow2, int capacity2) {
+	public void drawBidirectionalWeighting(GraphicsContext gc, int x1, int y1, int flow1, int capacity1, int x2, int y2, int flow2, int capacity2) {
 		boolean bidirectional = false;
 		gc.setFill(Color.BLACK);
 
@@ -174,7 +173,7 @@ public class Edge {
 	    if (Math.PI/2 > angle  && angle >= -Math.PI/2) {
 	    	bidirectional = true;
 	    	if (bidirectional == true) {
-	    		gc.strokeText("<-1 " + (int) flow + "/" + (int) capacity + "\t " + (int) flow + "/" + (int) capacity + " 2->", (len/2) - 24, 13);
+	    		gc.strokeText("<- " + (int) flow2 + "/" + (int) capacity2 + "\t\t" + (int) flow + "/" + (int) capacity + " ->", (len/2) - 17, 13);
 	    	}
 	    	else {
 	    		gc.strokeText((int) flow + "/" + (int) capacity, (len/2) - 2, 13);
