@@ -6,7 +6,7 @@
 		<member name="Geschaeftsfuehrer" id="2" x="200" y="220" type="person"></member>
 		<member name="Kunde (D)" id="3" x="250" y="300" type="person"></member>
 		<member name="Anforderungen" id="4" x="270" y="420" type="document"></member>
-		<member name="Workshop" id="5" x="150" y="620" type="activity"></member>
+		<member name="Workshop" id="5" x="150" y="610" type="activity"></member>
 		<member name="Protokoll" id="6" x="450" y="470" type="document"></member>
 		<member name="Anforderungskatalog" id="7" x="550" y="470" type="document"></member>
 		<member name="Berater" id="8" x="750" y="170" type="person"></member>
@@ -14,9 +14,9 @@
 		<member name="Ticketsystem" id="10" x="1050" y="220" type="activity"></member>
 		<member name="Storycards" id="11" x="1050" y="420" type="document"></member>
 		<member name="Qualitaetssicherung" id="12" x="1200" y="20" type="person"></member>
-		<member name="Teamleiter Informatik" id="13" x="600" y="620" type="person"></member>
-		<member name="Stellvertretender Teamleiter" id="14" x="850" y="620" type="person"></member>
-		<member name="Entwickler" id="15" x="1200" y="620" type="person"></member>
+		<member name="Teamleiter Informatik" id="13" x="600" y="610" type="person"></member>
+		<member name="Stellvertretender Teamleiter" id="14" x="850" y="610" type="person"></member>
+		<member name="Entwickler" id="15" x="1200" y="610" type="person"></member>
 		<member name="Konzept" id="16" x="750" y="520" type="document"></member>
 		<member name="Click-Dummy" id="17" x="830" y="520" type="document"></member>		
 	</members>
