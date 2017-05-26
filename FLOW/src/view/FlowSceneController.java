@@ -333,7 +333,7 @@ public class FlowSceneController implements Initializable {
 	 */
 	private void clearVertices() {
 		for (Vertex v : network.getVertices()) {
-			pannablePane.getChildren().remove(v);
+			pannablePane.getChildren().remove(v.getShape());
 		}
 	}
 
@@ -347,15 +347,8 @@ public class FlowSceneController implements Initializable {
 		List<Vertex> vertices = network.getVertices();
 		network.prepareNetwork();
 		
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		/*BreadthFirstSearch bfs = new BreadthFirstSearch(network);
-		bfs.run(network.getVertexByName("Jonas"), network.getVertexByName("Tom"));
-		bfs.printPath();*/
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
 		for (Vertex v : vertices) {
-			//gc.strokeOval(v.getCenterX(), v.getCenterY(), v.getRadius(), v.getRadius());
-			gc.strokeText(v.getName(), v.getX() - 15, v.getY() + 25);
+			gc.strokeText(v.getName(), v.getX() - ((v.getName().length() / 2) * 6), v.getY() + 25);
 			pannablePane.getChildren().add(v.getShape());
 		}
 		
@@ -378,8 +371,7 @@ public class FlowSceneController implements Initializable {
 		
 		List<Vertex> vertices = network.getVertices();
 		for (Vertex v : vertices) {
-			gc.strokeText(v.getName(), v.getX() - 15, v.getY() + 25);
-			//pannablePane.getChildren().add(v.getShape());
+			gc.strokeText(v.getName(), v.getX() - ((v.getName().length() / 2) * 6), v.getY() + 25);
 		}
 	}
 }

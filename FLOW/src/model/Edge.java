@@ -135,7 +135,7 @@ public class Edge {
 	    gc.setStroke(Color.BLACK);	    
 	    //gc.strokeLine(0, 0, len, 0);
 	    if (Math.PI/2 > angle  && angle >= -Math.PI/2) {
-	    	gc.strokeText(flow + "/" + capacity, (len/2) - 2, 15);
+	    	gc.strokeText((int) flow + "/" + (int) capacity, (len/2) - 18, 15);
 	    }
 	    else {
 	    	wrong = true;
