@@ -118,7 +118,44 @@ public class Edge {
 	 * @param y2 - y-Position des Empfängers
 	 */
 	private void drawWeighting(GraphicsContext gc, int x1, int y1, int x2, int y2) {
-		boolean wrong = false;
+		gc.setFill(Color.BLACK);
+
+	    double dx = x2 - x1, dy = y2 - y1;
+	    double angle = Math.atan2(dy, dx);
+	    int len = (int) Math.sqrt(dx * dx + dy * dy) - 25;
+
+	    Transform transform2 = gc.getTransform();
+	    
+	    Transform transform = Transform.translate(x1, y1);
+	    transform = transform.createConcatenation(Transform.rotate(Math.toDegrees(angle), 0, 0));
+	    gc.setTransform(new Affine(transform));
+
+	    Paint old = gc.getStroke();
+	    gc.setStroke(Color.BLACK);	    
+	    //gc.strokeLine(0, 0, len, 0);
+	    if (Math.PI/2 > angle  && angle >= -Math.PI/2) {	
+	    	gc.strokeText((int) flow + "/" + (int) capacity, (len/2) - 2, 13);
+	    }
+	    else {
+	    	drawWeighting(gc, x2, y2, x1, y1);
+	    }
+	    gc.setStroke(old);
+	    
+	    // Transofrmation rückgängig machen:
+	    gc.setTransform(new Affine(transform2));
+	}
+	
+	/**
+	 * Hilfsfunktion zum Zeichnen der Kantengewichte. 
+	 * 
+	 * @param gc - graphical Context
+	 * @param x1 - X-Position des Senders
+	 * @param y1 - Y-Position des Senders
+	 * @param x2 - X-Position des Empfängers
+	 * @param y2 - y-Position des Empfängers
+	 */
+	private void drawBidirectionalWeighting(GraphicsContext gc, int x1, int y1, int flow1, int capacity1, int x2, int y2, int flow2, int capacity2) {
+		boolean bidirectional = false;
 		gc.setFill(Color.BLACK);
 
 	    double dx = x2 - x1, dy = y2 - y1;
@@ -135,19 +172,21 @@ public class Edge {
 	    gc.setStroke(Color.BLACK);	    
 	    //gc.strokeLine(0, 0, len, 0);
 	    if (Math.PI/2 > angle  && angle >= -Math.PI/2) {
-	    	gc.strokeText((int) flow + "/" + (int) capacity, (len/2) - 18, 15);
+	    	bidirectional = true;
+	    	if (bidirectional == true) {
+	    		gc.strokeText("<-1 " + (int) flow + "/" + (int) capacity + "\t " + (int) flow + "/" + (int) capacity + " 2->", (len/2) - 24, 13);
+	    	}
+	    	else {
+	    		gc.strokeText((int) flow + "/" + (int) capacity, (len/2) - 2, 13);
+	    	}
 	    }
 	    else {
-	    	wrong = true;
+	    	drawBidirectionalWeighting(gc, x2, y2, flow2, capacity2, x1, y1, flow1, capacity1);
 	    }
 	    gc.setStroke(old);
 	    
 	    // Transofrmation rückgängig machen:
 	    gc.setTransform(new Affine(transform2));
-		
-	    if (wrong) {
-	    	drawWeighting(gc, x2, y2, x1, y1);
-	    }
 	}
 
 	public String toString() {
