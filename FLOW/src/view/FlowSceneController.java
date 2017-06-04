@@ -405,10 +405,10 @@ public class FlowSceneController implements Initializable {
 						e.drawBidirectionalWeighting(gc, (int) e.getOrigin().getX(), (int) e.getOrigin().getY(), (int) e.getFlow(), (int) e.getCapacity(),
 							(int) e.getDestination().getX(), (int) e.getDestination().getY(), (int) e2.getFlow(), (int) e2.getCapacity());
 						drawnEdges.add(e);
-						System.out.println("BI:");
+						/*System.out.println("BI:");
 						System.out.println(e);
 						System.out.println(e2);
-						System.out.println("/BI");
+						System.out.println("/BI");*/
 					}	
 					weightingDrawn = true;
 				}
