@@ -155,8 +155,9 @@ public class FlowSceneController implements Initializable {
 		
 		
 		gc = canvas.getGraphicsContext2D();
-		gc.setFill(Color.BEIGE);
-		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		//gc.setFill(Color.BEIGE);
+		//gc.setFill(Color.WHITE);
+		//gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		
 		SceneGestures sceneGestures = new SceneGestures(pannablePane);
 		stage.getScene().addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
@@ -313,14 +314,6 @@ public class FlowSceneController implements Initializable {
 	}
 	
 	/**
-	 * 
-	 */
-	public void calculateMaxFlow() {
-		
-	}
-	
-	
-	/**
 	 * Funktion die das Programm beendet. Sie wird über das UI aufgerufen.
 	 * 
 	 */
@@ -383,10 +376,14 @@ public class FlowSceneController implements Initializable {
 		}
 	}
 	
+	/**
+	 * Aktualisiert die Elemente des Canvas, nach einer Änderung.
+	 * 
+	 */
 	private void updateGraphics() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		gc.setFill(Color.BEIGE);
-		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		//gc.setFill(Color.WHITE);
+		//gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		
 		List<Vertex> vertices = network.getVertices();
 		for (Vertex v : vertices) {

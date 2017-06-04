@@ -60,7 +60,6 @@
 		<edge from="Click-Dummy" to="Entwickler" id="36"></edge>
 		<edge from="Berater" to="Entwickler" id="37"></edge>
 		<edge from="Entwickler" to="Berater" id="38"></edge>
-		<edge from="Berater" to="Konzept" id="39"></edge>+
 		<edge from="Entwickler" to="Storycards" id="40"></edge>
 		<edge from="Entwickler" to="Storycards" id="41"></edge>
 		<edge from="Entwickler" to="Ticketsystem" id="42"></edge>
