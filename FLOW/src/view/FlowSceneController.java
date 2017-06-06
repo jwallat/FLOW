@@ -82,8 +82,8 @@ public class FlowSceneController implements Initializable {
 	private Vertex source;
 	private Vertex sink;
 	
-	private static final DropShadow highlightSource = new DropShadow(20, Color.GOLDENROD);
-	private static final DropShadow highlightSink = new DropShadow(20, Color.GREEN);
+	private static final DropShadow highlightSource = new DropShadow(30, Color.GOLDENROD);
+	private static final DropShadow highlightSink = new DropShadow(30, Color.GREEN);
 
 	
 	
