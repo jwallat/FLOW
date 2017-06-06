@@ -65,10 +65,13 @@ public class EdmondsKarp extends MaxFlowAlgorithm {
 		int i = 0;
 		while (bfs.areConntected(network, source, sink) && (i < 100)) {
 			
+			System.out.println("Loop " + i + " **********************************************************");
 			i++;
-			System.out.println("Loop **********************************************************");
+			
 			bfs.run(network, source, sink);
 			path = bfs.getPath();
+			
+			edges = network.getEdges();
 			
 			System.out.println("Pfad gefunden: ");
 			for (Edge e : path) {
@@ -76,11 +79,11 @@ public class EdmondsKarp extends MaxFlowAlgorithm {
 			}
 			System.out.println("Ende des Pfades\n");
 			
-			//finde minimale pfad-capacität
-			double minCapacity = path.get(0).getCapacity();
+			//finde minimale freie path-capacity
+			double minCapacity = path.get(0).getCapacity() - path.get(0).getFlow();
 			for (Edge e : path) {
-				if (e.getCapacity() < minCapacity) {
-					minCapacity = e.getCapacity();
+				if ((e.getCapacity() - e.getFlow()) < minCapacity) {
+					minCapacity = e.getCapacity() - e.getFlow();
 				}
 			}
 			System.out.println("MinCapacity: " + minCapacity);
@@ -88,7 +91,7 @@ public class EdmondsKarp extends MaxFlowAlgorithm {
 			// setze flow im richtigen Netzwerk
  			for (Edge e : path) {
  				for (Edge networkEdge : edges) {
- 					if (e.equals(networkEdge)) {
+ 					if (networkEdge.equals(e)) {
  						if (networkEdge.getCapacity() >= networkEdge.getFlow() + minCapacity) {
  							networkEdge.setFlow(networkEdge.getFlow() + minCapacity);
  							System.out.println("added flow of: " + minCapacity + " to Edge: " + networkEdge);
@@ -97,7 +100,7 @@ public class EdmondsKarp extends MaxFlowAlgorithm {
  				}
  			}
 			
-			// setze capacitäten im residualNetwork
+			// setze kapazitäten im residualNetwork
  			for (Edge e : path) {
  				for (Edge e2 : residualNetwork.getEdges()) {
  					if ((e.getOrigin() == e2.getDestination()) && (e.getDestination() == e2.getOrigin())) {

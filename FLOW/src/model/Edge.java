@@ -15,6 +15,7 @@ public class Edge {
 	private int id;
 	private double capacity;
 	private double flow;
+	private Color edgeColor = Color.BLACK;
 	
 	public Edge(int id, Vertex origin, Vertex destination, double capacity) {
 		this.setOrigin(origin);
@@ -68,7 +69,11 @@ public class Edge {
 	}
 
 	public void draw(GraphicsContext gc) {
+		if (flow == 0) {
+			edgeColor = Color.GRAY;
+		}
 		drawArrow(gc, (int) origin.getX(), (int) origin.getY(), (int) destination.getX(), (int) destination.getY());
+		edgeColor = Color.BLACK;
 	}
 
 	/**
@@ -81,7 +86,7 @@ public class Edge {
 	 * @param y2 - y-Position des Empfängers
 	 */
 	private void drawArrow(GraphicsContext gc, int x1, int y1, int x2, int y2) {
-	    gc.setFill(Color.BLACK);
+	    gc.setFill(edgeColor);
 
 	    double dx = x2 - x1, dy = y2 - y1;
 	    double angle = Math.atan2(dy, dx);
@@ -96,7 +101,7 @@ public class Edge {
 	    gc.setTransform(new Affine(transform));
 
 	    Paint old = gc.getStroke();
-	    gc.setStroke(Color.BLACK);	    
+	    gc.setStroke(edgeColor);	    
 	    gc.strokeLine(0, 0, len, 0);
 	    gc.setStroke(old);
 	    
@@ -117,7 +122,7 @@ public class Edge {
 	 * @param y2 - y-Position des Empfängers
 	 */
 	public void drawWeighting(GraphicsContext gc, int x1, int y1, int x2, int y2) {
-		gc.setFill(Color.BLACK);
+		gc.setFill(edgeColor);
 
 	    double dx = x2 - x1, dy = y2 - y1;
 	    double angle = Math.atan2(dy, dx);
@@ -130,7 +135,7 @@ public class Edge {
 	    gc.setTransform(new Affine(transform));
 
 	    Paint old = gc.getStroke();
-	    gc.setStroke(Color.BLACK);	    
+	    gc.setStroke(edgeColor);	    
 	    //gc.strokeLine(0, 0, len, 0);
 	    if (Math.PI/2 > angle  && angle >= -Math.PI/2) {	
 	    	gc.strokeText((int) flow + "/" + (int) capacity, (len/2) - 2, 13);
@@ -155,7 +160,7 @@ public class Edge {
 	 */
 	public void drawBidirectionalWeighting(GraphicsContext gc, int x1, int y1, int flow1, int capacity1, int x2, int y2, int flow2, int capacity2) {
 		boolean bidirectional = false;
-		gc.setFill(Color.BLACK);
+		gc.setFill(edgeColor);
 
 	    double dx = x2 - x1, dy = y2 - y1;
 	    double angle = Math.atan2(dy, dx);
@@ -168,7 +173,7 @@ public class Edge {
 	    gc.setTransform(new Affine(transform));
 
 	    Paint old = gc.getStroke();
-	    gc.setStroke(Color.BLACK);	    
+	    gc.setStroke(edgeColor);	    
 	    //gc.strokeLine(0, 0, len, 0);
 	    if (Math.PI/2 > angle  && angle >= -Math.PI/2) {
 	    	bidirectional = true;
@@ -189,6 +194,6 @@ public class Edge {
 	}
 
 	public String toString() {
-		return "Edge(" + this.id + ", " + this.origin.getName() + " --> " + this.destination.getName() + ", " + this.capacity + ")";
+		return "Edge(" + this.id + ", " + this.origin.getName() + " --> " + this.destination.getName() + ", " + this.flow + "/" + this.capacity + ")";
 	}
 }
