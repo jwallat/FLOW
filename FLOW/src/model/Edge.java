@@ -64,14 +64,15 @@ public class Edge {
 		this.id = id;
 	}
 	
+	public void setColor(Color c) {
+		this.edgeColor = c;
+	}
+	
 	public Line getShape() {
 		return this.line;
 	}
 
 	public void draw(GraphicsContext gc) {
-		if (flow == 0) {
-			edgeColor = Color.GRAY;
-		}
 		drawArrow(gc, (int) origin.getX(), (int) origin.getY(), (int) destination.getX(), (int) destination.getY());
 		edgeColor = Color.BLACK;
 	}
@@ -122,7 +123,14 @@ public class Edge {
 	 * @param y2 - y-Position des Empfängers
 	 */
 	public void drawWeighting(GraphicsContext gc, int x1, int y1, int x2, int y2) {
-		gc.setFill(edgeColor);
+		Color color;
+		if (flow != 0) {
+			color = Color.BLACK;
+		}
+		else {
+			color = Color.GRAY;
+		}
+		gc.setFill(color);
 
 	    double dx = x2 - x1, dy = y2 - y1;
 	    double angle = Math.atan2(dy, dx);
@@ -135,7 +143,7 @@ public class Edge {
 	    gc.setTransform(new Affine(transform));
 
 	    Paint old = gc.getStroke();
-	    gc.setStroke(edgeColor);	    
+	    gc.setStroke(color);	    
 	    //gc.strokeLine(0, 0, len, 0);
 	    if (Math.PI/2 > angle  && angle >= -Math.PI/2) {	
 	    	gc.strokeText((int) flow + "/" + (int) capacity, (len/2) - 2, 13);

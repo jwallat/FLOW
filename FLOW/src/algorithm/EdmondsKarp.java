@@ -33,6 +33,11 @@ public class EdmondsKarp extends MaxFlowAlgorithm {
 		this.network = network;
 		this.maxFlow = 0;
 		
+		
+		for (Edge edge : network.getEdges()) {
+			edge.setFlow(0.0);
+		}
+		
 		this.bfs = new BreadthFirstSearch(network);
 		createResidualNetwork();
 	}

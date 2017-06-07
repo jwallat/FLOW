@@ -229,7 +229,8 @@ public class FlowSceneController implements Initializable {
 	}
 	
 	/**
-	 * 
+	 * Öffnet das InformationPane und lässt den Nutzer Source/Sink mit klick
+	 * auswählen.
 	 * 
 	 */
 	private void selectSourceAndSink() {
@@ -346,34 +347,7 @@ public class FlowSceneController implements Initializable {
 			pannablePane.getChildren().add(v.getShape());
 		}
 		
-		List<Edge> edges = network.getEdges();
-		boolean weightingDrawn = false;
-		List<Edge> drawnEdges = new ArrayList<Edge>();
-		
-		for (Edge e : edges) {
-			e.draw(gc);
-			weightingDrawn = false;
-			for (Edge e2 : edges) {
-				if ((e.getOrigin() == e2.getDestination()) && (e.getDestination() == e2.getOrigin())) {
-					
-					if (!drawnEdges.contains(e2) && !drawnEdges.contains(e)) {
-						
-						e.drawBidirectionalWeighting(gc, (int) e.getOrigin().getX(), (int) e.getOrigin().getY(), (int) e.getFlow(), (int) e.getCapacity(),
-							(int) e.getDestination().getX(), (int) e.getDestination().getY(), (int) e2.getFlow(), (int) e2.getCapacity());
-						drawnEdges.add(e);
-						/*System.out.println("BI:");
-						System.out.println(e);
-						System.out.println(e2);
-						System.out.println("/BI");*/
-					}	
-					weightingDrawn = true;
-				}
-			}
-			if (!weightingDrawn) {
-				e.drawWeighting(gc, e.getOrigin().getX(), e.getOrigin().getY(), e.getDestination().getX(), e.getDestination().getY());
-				drawnEdges.add(e);
-			}
-		}
+		drawEdges();
 	}
 	
 	/**
@@ -390,25 +364,48 @@ public class FlowSceneController implements Initializable {
 			gc.strokeText(v.getName(), v.getX() - ((v.getName().length() / 2) * 6), v.getY() + 25);
 		}
 		
+		drawEdges();
+	}
+	
+	/**
+	 * Zeichnet die Edges auf das Canvas.
+	 * Besonders ist dabei zu beachten, dass für bidirektionale Edges besonders vorgegangen wird:
+	 * Das Weighting soll 2x gezeichnet werden, so dass jeweils Flow/Kapazität in Flussrichtung
+	 * zeigen.
+	 * 
+	 */
+	private void drawEdges() {
 		List<Edge> edges = network.getEdges();
 		boolean weightingDrawn = false;
 		List<Edge> drawnEdges = new ArrayList<Edge>();
 		
 		for (Edge e : edges) {
+			if (e.getFlow() > 0)  {
+				e.setColor(Color.BLACK);
+			}
+			else {
+				e.setColor(Color.GREY);
+			}
 			e.draw(gc);
 			weightingDrawn = false;
 			for (Edge e2 : edges) {
 				if ((e.getOrigin() == e2.getDestination()) && (e.getDestination() == e2.getOrigin())) {
+					
+					if (e.getFlow() > 0 || e2.getFlow() > 0) {
+						e.setColor(Color.BLACK);
+						e.draw(gc);
+						e2.setColor(Color.BLACK);
+						e2.draw(gc);
+					}
+					else {
+						e.setColor(Color.GREY);
+					}
 					
 					if (!drawnEdges.contains(e2) && !drawnEdges.contains(e)) {
 						
 						e.drawBidirectionalWeighting(gc, (int) e.getOrigin().getX(), (int) e.getOrigin().getY(), (int) e.getFlow(), (int) e.getCapacity(),
 							(int) e.getDestination().getX(), (int) e.getDestination().getY(), (int) e2.getFlow(), (int) e2.getCapacity());
 						drawnEdges.add(e);
-						/*System.out.println("BI:");
-						System.out.println(e);
-						System.out.println(e2);
-						System.out.println("/BI");*/
 					}	
 					weightingDrawn = true;
 				}
