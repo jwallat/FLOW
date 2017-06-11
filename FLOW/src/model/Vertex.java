@@ -1,6 +1,7 @@
 package model;
 
 
+import javafx.scene.control.Label;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
@@ -9,6 +10,7 @@ public abstract class Vertex {
 	private String name;
 	private int ID;
 	private Circle shape;
+	private Label nameLabel;
 	private boolean visited;
 	private int x;
 	private int y;
@@ -29,6 +31,9 @@ public abstract class Vertex {
 		this.setVisited(false);
 		
 		this.shape = new Circle(x, y, 20);
+		this.nameLabel = new Label(name);
+		this.nameLabel.setId("name-label");
+		//this.nameLabel.setStyle("-fx-background-color: #24d24d24d");
 	}
 	
 	public String getName() {
@@ -69,6 +74,10 @@ public abstract class Vertex {
 	
 	public Shape getShape() { 
 		return this.shape;
+	}
+	
+	public Label getNameLabel() {
+		return this.nameLabel;
 	}
 	
 	public String toString() {

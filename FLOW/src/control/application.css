@@ -1,1 +1,9 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+#name-label {
+	-fx-background-color: -fx-background;
+	-fx-opacity: 0.8; 
+	-fx-font-size: 10pt;
+	-fx-font-weight: bold;
+	-fx-font-family: "Courier New", Times, sanf-serif;
+	-fx-background-radius: 4px, 0 ;
+}

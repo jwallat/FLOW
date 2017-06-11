@@ -176,7 +176,6 @@ public class FlowSceneController implements Initializable {
 		//canvas.setHeight(1000);
 		canvas.autosize();
 		
-		
 		gc = canvas.getGraphicsContext2D();
 		//gc.setFill(Color.BEIGE);
 		//gc.setFill(Color.WHITE);
@@ -404,6 +403,7 @@ public class FlowSceneController implements Initializable {
 	private void clearVertices() {
 		for (Vertex v : network.getVertices()) {
 			pannablePane.getChildren().remove(v.getShape());
+			pannablePane.getChildren().remove(v.getNameLabel());
 		}
 	}
 
@@ -415,11 +415,14 @@ public class FlowSceneController implements Initializable {
 	private void showNetwork() {
 		
 		List<Vertex> vertices = network.getVertices();
-		network.prepareNetwork();
+		//network.prepareNetwork();
 		
 		for (Vertex v : vertices) {
-			gc.strokeText(v.getName(), v.getX() - ((v.getName().length() / 2) * 6), v.getY() + 25);
+			//gc.strokeText(v.getName(), v.getX() - ((v.getName().length() / 2) * 6), v.getY() + 25);
 			pannablePane.getChildren().add(v.getShape());
+			v.getNameLabel().setLayoutX(v.getX() - ((v.getName().length() / 2) * 8));
+			v.getNameLabel().setLayoutY(v.getY() + 18);
+			pannablePane.getChildren().add(v.getNameLabel());
 		}
 		
 		drawEdges();
@@ -433,11 +436,6 @@ public class FlowSceneController implements Initializable {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		//gc.setFill(Color.WHITE);
 		//gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		
-		List<Vertex> vertices = network.getVertices();
-		for (Vertex v : vertices) {
-			gc.strokeText(v.getName(), v.getX() - ((v.getName().length() / 2) * 6), v.getY() + 25);
-		}
 		
 		drawEdges();
 	}
