@@ -4,6 +4,7 @@
 	-fx-opacity: 0.8; 
 	-fx-font-size: 10pt;
 	-fx-font-weight: bold;
+	-fx-text-fill: black;
 	-fx-font-family: "Courier New", Times, sanf-serif;
 	-fx-background-radius: 4px, 0 ;
 }
