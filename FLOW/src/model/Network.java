@@ -80,18 +80,23 @@ public class Network {
 			if (e.getDestination().getClass().toString().contains("Activity") || e.getOrigin().getClass().toString().contains("Activity")) {
 				//System.out.println("Edge mit activity: " + e);
 				e.setCapacity(100);
+				e.setFlowDistance(1.0);
 			}
 			else if (e.getOrigin().getClass().toString().contains("Person") && e.getDestination().getClass().toString().contains("Person")) {
 				e.setCapacity(333);
+				e.setFlowDistance(0.3);
 			}
 			else if (e.getOrigin().getClass().toString().contains("Person") && e.getDestination().getClass().toString().contains("Document")) {
 				e.setCapacity(200);
+				e.setFlowDistance(0.5);
 			}
 			else if (e.getOrigin().getClass().toString().contains("Document") && e.getDestination().getClass().toString().contains("Person")) {
 				e.setCapacity(166);
+				e.setFlowDistance(0.6);
 			}
 			else if (e.getOrigin().getClass().toString().contains("Document") && e.getDestination().getClass().toString().contains("Document")) {
 				e.setCapacity(100);
+				e.setFlowDistance(1);
 			}
 			else {
 				System.out.println("Problem beim Vorbereiten des Netzwerks: Capacity konnte nicht gersetzt werden");

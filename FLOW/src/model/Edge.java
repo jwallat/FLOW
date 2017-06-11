@@ -6,6 +6,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Transform;
+import view.FlowSceneController.visualizationType;
 
 public class Edge {
 
@@ -15,6 +16,7 @@ public class Edge {
 	private int id;
 	private double capacity;
 	private double flow;
+	private double flowDistance;
 	private Color edgeColor = Color.BLACK;
 	
 	public Edge(int id, Vertex origin, Vertex destination, double capacity) {
@@ -46,6 +48,14 @@ public class Edge {
 
 	public void setCapacity(double capacity) {
 		this.capacity = capacity;
+	}
+	
+	public double getFlowDistance() {
+		return flowDistance;
+	}
+
+	public void setFlowDistance(double flowDistance) {
+		this.flowDistance = flowDistance;
 	}
 
 	public double getFlow() {
@@ -122,7 +132,7 @@ public class Edge {
 	 * @param x2 - X-Position des Empfängers
 	 * @param y2 - y-Position des Empfängers
 	 */
-	public void drawWeighting(GraphicsContext gc, int x1, int y1, int x2, int y2) {
+	public void drawWeighting(GraphicsContext gc, int x1, int y1, int x2, int y2, visualizationType type) {
 		Color color;
 		if (flow != 0) {
 			color = Color.BLACK;
@@ -145,11 +155,16 @@ public class Edge {
 	    Paint old = gc.getStroke();
 	    gc.setStroke(color);	    
 	    //gc.strokeLine(0, 0, len, 0);
-	    if (Math.PI/2 > angle  && angle >= -Math.PI/2) {	
-	    	gc.strokeText((int) flow + "/" + (int) capacity, (len/2) - 2, 13);
+	    if (Math.PI/2 > angle  && angle >= -Math.PI/2) {
+	    	if (type == visualizationType.NETWORKFLOW) {
+	    		gc.strokeText((int) flow + "/" + (int) capacity, (len/2) - 2, 13);
+	    	}
+	    	else {
+	    		gc.strokeText(flowDistance + "", (len / 2) - 2, 13);
+	    	}
 	    }
 	    else {
-	    	drawWeighting(gc, x2, y2, x1, y1);
+	    	drawWeighting(gc, x2, y2, x1, y1, type);
 	    }
 	    gc.setStroke(old);
 	    
@@ -166,8 +181,7 @@ public class Edge {
 	 * @param x2 - X-Position des Empfängers
 	 * @param y2 - y-Position des Empfängers
 	 */
-	public void drawBidirectionalWeighting(GraphicsContext gc, int x1, int y1, int flow1, int capacity1, int x2, int y2, int flow2, int capacity2) {
-		boolean bidirectional = false;
+	public void drawBidirectionalWeighting(GraphicsContext gc, int x1, int y1, int flow1, int capacity1, int x2, int y2, int flow2, int capacity2, visualizationType type) {
 		gc.setFill(edgeColor);
 
 	    double dx = x2 - x1, dy = y2 - y1;
@@ -184,16 +198,15 @@ public class Edge {
 	    gc.setStroke(edgeColor);	    
 	    //gc.strokeLine(0, 0, len, 0);
 	    if (Math.PI/2 > angle  && angle >= -Math.PI/2) {
-	    	bidirectional = true;
-	    	if (bidirectional == true) {
-	    		gc.strokeText("<- " + (int) flow2 + "/" + (int) capacity2 + "\t\t" + (int) flow + "/" + (int) capacity + " ->", (len/2) - 17, 13);
+	    	if (type == visualizationType.NETWORKFLOW) {
+	    		gc.strokeText("<- " + (int) flow2 + "/" + (int) capacity2 + "\t\t" + (int) flow + "/" + (int) capacity + " ->", (len/2) - 50, 13);
 	    	}
 	    	else {
-	    		gc.strokeText((int) flow + "/" + (int) capacity, (len/2) - 2, 13);
+	    		gc.strokeText("<- " + flowDistance + "\t\t" + flowDistance + " ->", (len/2) - 45, 13);
 	    	}
 	    }
 	    else {
-	    	drawBidirectionalWeighting(gc, x2, y2, flow2, capacity2, x1, y1, flow1, capacity1);
+	    	drawBidirectionalWeighting(gc, x2, y2, flow2, capacity2, x1, y1, flow1, capacity1, type);
 	    }
 	    gc.setStroke(old);
 	    

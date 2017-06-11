@@ -17,10 +17,6 @@ public class EdmondsKarp extends MaxFlowAlgorithm {
 	private Network network;
 	private Network residualNetwork;
 	private BreadthFirstSearch bfs;
-	@SuppressWarnings("unused")
-	private Vertex source;
-	@SuppressWarnings("unused")
-	private Vertex  sink;
 	private int maxFlow;
 	
 	/**
@@ -49,9 +45,6 @@ public class EdmondsKarp extends MaxFlowAlgorithm {
 	 * @param sink Senke
 	 */
 	public void run(Vertex source, Vertex sink) {
-		//Algorithmus
-		this.source = source;
-		this.sink = sink;
 		
 		///////////////////////////////// Antiparallel edges!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import algorithm.EdmondsKarp;
+import algorithm.FlowDistance;
 import control.Parser;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,7 +20,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -57,11 +60,13 @@ public class FlowSceneController implements Initializable {
 	
 	private Canvas canvas;
 	
-	@FXML
 	private GraphicsContext gc;
 	
 	@FXML
 	private TitledPane informationPane;
+	
+	@FXML
+	private Label fileNameLabel;
 	
 	@FXML
 	private Label sourceLabel;
@@ -72,8 +77,20 @@ public class FlowSceneController implements Initializable {
 	@FXML
 	private Label maxFlowLabel;
 	
+	@FXML
+	private Label flowDistanceLabel;
+	
 	@FXML 
 	private Button acceptButton;
+	
+	@FXML
+	private RadioButton networkFlowRadioButton;
+	
+	@FXML
+	private RadioButton flowDistanceRadioButton;
+	
+	@FXML
+	private ToggleButton highlightFlowButton;
 	
 	private Stage stage;
 	private File file;
@@ -81,11 +98,17 @@ public class FlowSceneController implements Initializable {
 	private Network network;
 	private Vertex source;
 	private Vertex sink;
+	private boolean highlightFlow = false;
+	
+	public enum visualizationType {
+		NETWORKFLOW, FLOWDISTANCE 
+	}
+	
+	private visualizationType edgeWeighting = visualizationType.NETWORKFLOW;
 	
 	private static final DropShadow highlightSource = new DropShadow(30, Color.GOLDENROD);
 	private static final DropShadow highlightSink = new DropShadow(30, Color.GREEN);
 
-	
 	
 	/**
 	 * Initialisierungs-Mehtode, die aufgerufen wird, wenn in der Main.java die FlowScene.fxml geladen wird.
@@ -162,8 +185,7 @@ public class FlowSceneController implements Initializable {
 		SceneGestures sceneGestures = new SceneGestures(pannablePane);
 		stage.getScene().addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
         stage.getScene().addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
-        stage.getScene().addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
-        
+        stage.getScene().addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());        
  	}
 	
 	/**
@@ -176,7 +198,6 @@ public class FlowSceneController implements Initializable {
 			clearVertices();
 			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		}
-		informationPane.visibleProperty().set(false);
 		
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Big FLOW");
@@ -189,19 +210,81 @@ public class FlowSceneController implements Initializable {
 			System.out.println("Fehler beim lesen der Datei!");
 		}
 		
+		fileNameLabel.setText(file.getName());
+		
 		parser = new Parser(file);
 		parser.parse();
 		network = parser.getData();
-		
+		network.prepareNetwork();
+
 		showNetwork();
+		
+		//informationPane.visibleProperty().set(false);
+		informationPane.expandedProperty().set(true);
 	}
 	
 	/**
-	 * Funktion die beim Klicken von Compute --> network flow aufgerufen wird.
-	 * In dieser Funktion sollen Quelle und Senke gewählt und der Algrithmus gestartet werden.
+	 * Funktion die das Programm beendet. Sie wird über das UI aufgerufen.
 	 * 
 	 */
-	public void computeNetworkFlow() {
+	public void close() {
+		System.exit(0);
+	}
+	
+	/**
+	 * Funktion die bei Auswahl des Radiobuttons ausgeführt wird. 
+	 * Die beiden Radiobuttons schließen sich gegenseitig aus und geben an, welche Information auf den 
+	 * Kanten angezeigt wird.
+	 * 
+	 */
+	public void networkFlowRadioButtonClicked() {
+		if (flowDistanceRadioButton.isSelected()) {
+			flowDistanceRadioButton.setSelected(false);
+			edgeWeighting = visualizationType.NETWORKFLOW;
+			
+			updateGraphics();
+		}
+		else {
+			networkFlowRadioButton.setSelected(true);
+		}
+	}
+	
+	/**
+	 * Funktion die bei Auswahl des Radiobuttons ausgeführt wird. 
+	 * Die beiden Radiobuttons schließen sich gegenseitig aus und geben an, welche Information auf den 
+	 * Kanten angezeigt wird.
+	 * 
+	 */
+	public void flowDistanceRadioButtonClicked() {
+		if (networkFlowRadioButton.isSelected()) {
+			networkFlowRadioButton.setSelected(false);
+			edgeWeighting = visualizationType.FLOWDISTANCE;
+			
+			updateGraphics();
+		}
+		else {
+			flowDistanceRadioButton.setSelected(true);
+		}
+	}
+	
+	/**
+	 * Öffnet das InformationPane und lässt den Nutzer Source/Sink mit klick
+	 * auswählen. Wird ausgeführt, wenn der "select vertices" Button geklickt wird.
+	 * 
+	 */
+	@FXML
+	private void selectSourceAndSink() {
+		
+		if (network == null) {
+			
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Network Flow");
+			alert.setHeaderText(null);
+			alert.setContentText("Please open a network first!");
+
+			alert.showAndWait();
+			return;
+		}
 		
 		if (source != null) {
 			source.getShape().setEffect(null);
@@ -211,30 +294,14 @@ public class FlowSceneController implements Initializable {
 			sink.getShape().setEffect(null);
 			sink = null;
 		}
+		
 		maxFlowLabel.setText("");
+		flowDistanceLabel.setText("");
 		sourceLabel.setText("");
 		sinkLabel.setText("");
 		
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Network Flow");
-		alert.setHeaderText(null);
-		alert.setContentText("Select the source and sink!");
-
-		alert.showAndWait();
-		
-		selectSourceAndSink();
-		
-		
-		//EDMONDS-KARP
-	}
-	
-	/**
-	 * Öffnet das InformationPane und lässt den Nutzer Source/Sink mit klick
-	 * auswählen.
-	 * 
-	 */
-	private void selectSourceAndSink() {
-		informationPane.visibleProperty().set(true);
+		//informationPane.visibleProperty().set(true);
+		informationPane.expandedProperty().set(true);
 
         for (Vertex v : network.getVertices()) {
         	Shape shape = v.getShape();
@@ -282,10 +349,10 @@ public class FlowSceneController implements Initializable {
 	}
 	
 	/**
-	 * Funktion die bei Klick auf den "Accept"-Button aufgerufen wird.
+	 * Funktion die bei Klick auf den "Calculate"-Button aufgerufen wird.
 	 * 
 	 */
-	public void sourceAndSinkAccepted() {
+	public void calculateButtonClicked() {
 		if (source != null && sink != null) {
 			for (Vertex v: network.getVertices()) {
 				Shape shape = v.getShape();
@@ -295,18 +362,24 @@ public class FlowSceneController implements Initializable {
 			}
 			
 			EdmondsKarp edmondsKarp = new EdmondsKarp(network); 
+			FlowDistance flowDistance = new FlowDistance(network);
+			
 			if (!edmondsKarp.areConnected(source, sink)) {
 				maxFlowLabel.setText("Not connected");
+				flowDistanceLabel.setText("Not connected");
 			}
 			else {
 				edmondsKarp.run(source, sink);
 				updateGraphics();
 				maxFlowLabel.setText(edmondsKarp.getMaxFlow() + "");
+				
+				flowDistance.run(source, sink);
+				flowDistanceLabel.setText(flowDistance.getFlowDistance() + "");
 			}
 		}
 		else {
 			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Network Flow");
+			alert.setTitle("Calculation ERROR");
 			alert.setHeaderText(null);
 			alert.setContentText("Select the source AND sink!");
 
@@ -315,13 +388,15 @@ public class FlowSceneController implements Initializable {
 	}
 	
 	/**
-	 * Funktion die das Programm beendet. Sie wird über das UI aufgerufen.
+	 * Funktion die bei Klick des Toggle-Buttons ausgeführt wird.
 	 * 
 	 */
-	public void close() {
-		System.exit(0);
+	public void highlightFlowButtonClicked() {
+		highlightFlow = highlightFlowButton.isSelected();
+		
+		updateGraphics();
 	}
-	
+
 	/**
 	 * Entfernt alle Vertices vom AnchorPane.
 	 * 
@@ -352,7 +427,7 @@ public class FlowSceneController implements Initializable {
 	
 	/**
 	 * Aktualisiert die Elemente des Canvas, nach einer Änderung.
-	 * 
+	 * Das Netzwerk aus der XML wird angezeigt.
 	 */
 	private void updateGraphics() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -375,27 +450,44 @@ public class FlowSceneController implements Initializable {
 	 * 
 	 */
 	private void drawEdges() {
+		
 		List<Edge> edges = network.getEdges();
 		boolean weightingDrawn = false;
 		List<Edge> drawnEdges = new ArrayList<Edge>();
 		
 		for (Edge e : edges) {
+			
 			if (e.getFlow() > 0)  {
-				e.setColor(Color.BLACK);
+				if (highlightFlow) {
+					e.setColor(Color.RED);
+				}
+				else {
+					e.setColor(Color.BLACK);
+				}
 			}
 			else {
 				e.setColor(Color.GREY);
 			}
+			
 			e.draw(gc);
 			weightingDrawn = false;
 			for (Edge e2 : edges) {
 				if ((e.getOrigin() == e2.getDestination()) && (e.getDestination() == e2.getOrigin())) {
 					
 					if (e.getFlow() > 0 || e2.getFlow() > 0) {
-						e.setColor(Color.BLACK);
-						e.draw(gc);
-						e2.setColor(Color.BLACK);
-						e2.draw(gc);
+						if (highlightFlow) {
+							e.setColor(Color.RED);
+							e.draw(gc);
+							e2.setColor(Color.RED);
+							e2.draw(gc);
+						}
+						else {
+							e.setColor(Color.BLACK);
+							e.draw(gc);
+							e2.setColor(Color.BLACK);
+							e2.draw(gc);
+						}
+						
 					}
 					else {
 						e.setColor(Color.GREY);
@@ -404,14 +496,14 @@ public class FlowSceneController implements Initializable {
 					if (!drawnEdges.contains(e2) && !drawnEdges.contains(e)) {
 						
 						e.drawBidirectionalWeighting(gc, (int) e.getOrigin().getX(), (int) e.getOrigin().getY(), (int) e.getFlow(), (int) e.getCapacity(),
-							(int) e.getDestination().getX(), (int) e.getDestination().getY(), (int) e2.getFlow(), (int) e2.getCapacity());
+							(int) e.getDestination().getX(), (int) e.getDestination().getY(), (int) e2.getFlow(), (int) e2.getCapacity(), edgeWeighting);
 						drawnEdges.add(e);
 					}	
 					weightingDrawn = true;
 				}
 			}
 			if (!weightingDrawn) {
-				e.drawWeighting(gc, e.getOrigin().getX(), e.getOrigin().getY(), e.getDestination().getX(), e.getDestination().getY());
+				e.drawWeighting(gc, e.getOrigin().getX(), e.getOrigin().getY(), e.getDestination().getX(), e.getDestination().getY(), edgeWeighting);
 				drawnEdges.add(e);
 			}
 		}
