@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FlowSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FlowSceneController">
    <top>
       <HBox BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
@@ -57,7 +57,7 @@
                               <Label fx:id="sourceLabel" layoutX="100.0" layoutY="103.0" textAlignment="CENTER" AnchorPane.leftAnchor="90.0" />
                               <Label layoutX="20.0" layoutY="130.0" text="Sink:" AnchorPane.leftAnchor="10.0" />
                               <Label fx:id="sinkLabel" layoutX="100.0" layoutY="130.0" textAlignment="CENTER" AnchorPane.leftAnchor="90.0" />
-                              <Button fx:id="acceptButton" layoutX="24.0" layoutY="158.0" mnemonicParsing="false" onAction="#calculateButtonClicked" text="Calculate" AnchorPane.leftAnchor="10.0" />
+                              <Button fx:id="acceptButton" layoutX="115.99999999999999" layoutY="158.0" mnemonicParsing="false" onAction="#calculateButtonClicked" text="Calculate" AnchorPane.leftAnchor="115.99999999999999" />
                               <Label layoutX="18.0" layoutY="248.0" text="Max Flow: " AnchorPane.leftAnchor="10.0" />
                               <Label fx:id="maxFlowLabel" layoutX="98.0" layoutY="248.0" prefHeight="17.0" prefWidth="88.0" text="               " textAlignment="CENTER" AnchorPane.leftAnchor="90.0" />
                               <ToggleButton fx:id="highlightFlowButton" layoutX="34.0" layoutY="452.0" mnemonicParsing="false" onAction="#highlightFlowButtonClicked" prefHeight="25.0" prefWidth="102.0" text="Highlight flow" AnchorPane.leftAnchor="10.0" />
@@ -71,7 +71,7 @@
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="16.0" layoutY="61.0" mnemonicParsing="false" onAction="#selectSourceAndSink" text="Select vertices" AnchorPane.leftAnchor="10.0" />
+                              <Button layoutX="21.0" layoutY="158.0" mnemonicParsing="false" onAction="#selectSourceAndSink" text="Select vertices" AnchorPane.leftAnchor="10.0" />
                               <Label layoutX="18.0" layoutY="211.0" text="Network flow:" AnchorPane.leftAnchor="10.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
@@ -91,6 +91,11 @@
                                  </font>
                               </Label>
                               <RadioButton fx:id="flowDistanceRadioButton" layoutX="33.0" layoutY="419.0" mnemonicParsing="false" onAction="#flowDistanceRadioButtonClicked" text="FLOW distance" AnchorPane.leftAnchor="10.0" />
+                              <Label layoutX="18.0" layoutY="68.0" text="Current vertices:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                     </content>
