@@ -8,3 +8,8 @@
 	-fx-font-family: "Courier New", Times, sanf-serif;
 	-fx-background-radius: 4px, 0 ;
 }
+
+#myHBox {
+	-fx-border-width: 0.0 0.0 1.0 0.0;
+	-fx-border-color: black;
+}
