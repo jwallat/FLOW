@@ -237,14 +237,16 @@ public class FlowSceneController implements Initializable {
 	 * 
 	 */
 	public void networkFlowRadioButtonClicked() {
-		if (flowDistanceRadioButton.isSelected()) {
-			flowDistanceRadioButton.setSelected(false);
-			edgeWeighting = visualizationType.NETWORKFLOW;
-			
-			updateGraphics();
-		}
-		else {
-			networkFlowRadioButton.setSelected(true);
+		if (file != null) {
+			if (flowDistanceRadioButton.isSelected()) {
+				flowDistanceRadioButton.setSelected(false);
+				edgeWeighting = visualizationType.NETWORKFLOW;
+				
+				updateGraphics();
+			}
+			else {
+				networkFlowRadioButton.setSelected(true);
+			}
 		}
 	}
 	
@@ -255,14 +257,16 @@ public class FlowSceneController implements Initializable {
 	 * 
 	 */
 	public void flowDistanceRadioButtonClicked() {
-		if (networkFlowRadioButton.isSelected()) {
-			networkFlowRadioButton.setSelected(false);
-			edgeWeighting = visualizationType.FLOWDISTANCE;
+		if (file != null) {
+			if (networkFlowRadioButton.isSelected()) {
+				networkFlowRadioButton.setSelected(false);
+				edgeWeighting = visualizationType.FLOWDISTANCE;
 			
-			updateGraphics();
-		}
-		else {
-			flowDistanceRadioButton.setSelected(true);
+				updateGraphics();
+			}
+			else {
+				flowDistanceRadioButton.setSelected(true);
+			}
 		}
 	}
 	
@@ -391,9 +395,12 @@ public class FlowSceneController implements Initializable {
 	 * 
 	 */
 	public void highlightFlowButtonClicked() {
-		highlightFlow = highlightFlowButton.isSelected();
 		
-		updateGraphics();
+		if (file != null) {
+			highlightFlow = highlightFlowButton.isSelected();
+		
+			updateGraphics();
+		}
 	}
 
 	/**

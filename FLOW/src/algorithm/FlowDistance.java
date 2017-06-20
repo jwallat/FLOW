@@ -1,5 +1,8 @@
 package algorithm;
 
+import java.util.HashSet;
+
+import model.Edge;
 import model.Network;
 import model.Vertex;
 
@@ -29,7 +32,34 @@ public class FlowDistance {
 	 */
 	public void run(Vertex sender, Vertex reciever) {
 		//to-do
+		System.out.println("\n\n FLOW Distance:");
+		System.out.println("Found paths: ");
+		//HashSet<String> memorie = new HashSet<String>();
+		//findAllPaths(sender, reciever, sender, memorie, "Path: ");
 	}
+	
+	// Loop durch bidirektionale Kanten
+	/*public void findAllPaths(Vertex start, Vertex goal, Vertex current, HashSet<String> memorie, String path) {
+		memorie.add(current.getName());
+		
+		if (current != goal) {
+			for (Edge e: network.getEdges()) {
+				if (e.getOrigin() == current) {
+					if (e.getDestination() != start) {
+						if (!memorie.contains(e.getDestination().getName())) {
+							if (e.getDestination() != previous) {
+								findAllPaths(start, goal, e.getDestination(), current, path + ", " + current.getName());
+							}
+						}
+					}
+				}
+			}
+		}
+		else {
+			path += ", " + goal.getName();
+			System.out.println(path);
+		}
+	}*/
 	
 	/**
 	 * Gibt die berechnete FLOW Distanz zwischen Sender und Empfänger zurück.
