@@ -43,7 +43,6 @@
 		<edge from="Protokoll" to="Kunde (D)" id="19"></edge>
 		<edge from="Anforderungskatalog" to="Kunde (D)" id="20"></edge>
 		<edge from="Anforderungskatalog" to="Berater" id="21"></edge>
-		<edge from="Anforderungskatalog" to="Kunde (D)" id="22"></edge>
 		<edge from="Teamleiter Informatik" to="Workshop" id="23"></edge>
 		<edge from="Anforderungskatalog" to="Kunde (D)" id="24"></edge>
 		<edge from="Berater" to="Teamleiter Informatik" id="25"></edge>

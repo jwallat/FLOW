@@ -1,6 +1,8 @@
 package algorithm;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import model.Edge;
 import model.Network;
@@ -11,6 +13,8 @@ public class FlowDistance {
 	private Network network;
 	private BreadthFirstSearch bfs;
 	private int flowDistance;
+	private int maxDepth;
+	private HashSet<List<Edge>> allPaths;
 	
 	/**
 	 * Konstruktor
@@ -32,34 +36,50 @@ public class FlowDistance {
 	 */
 	public void run(Vertex sender, Vertex reciever) {
 		//to-do
-		System.out.println("\n\n FLOW Distance:");
+		System.out.println("\n\nFLOW Distance:");
 		System.out.println("Found paths: ");
-		//HashSet<String> memorie = new HashSet<String>();
-		//findAllPaths(sender, reciever, sender, memorie, "Path: ");
+		
+		maxDepth = network.getVertices().size();
+		
+		allPaths = new HashSet<List<Edge>>();
+		findAllPaths(sender, reciever, sender, 0, new ArrayList<Edge>());
+		
+		System.out.println("Num allPaths: " + allPaths.size());
+		allPaths.stream().forEach(System.out::println);
+		for (List<Edge> path: allPaths) {
+			
+		}
 	}
 	
 	// Loop durch bidirektionale Kanten
-	/*public void findAllPaths(Vertex start, Vertex goal, Vertex current, HashSet<String> memorie, String path) {
-		memorie.add(current.getName());
-		
+	public void findAllPaths(Vertex start, Vertex goal, Vertex current, int depth, ArrayList<Edge> path) {
+		if (depth >= maxDepth - 1) {
+		//if (depth > 10) {
+			return;
+		}
+ 		
 		if (current != goal) {
 			for (Edge e: network.getEdges()) {
 				if (e.getOrigin() == current) {
-					if (e.getDestination() != start) {
-						if (!memorie.contains(e.getDestination().getName())) {
-							if (e.getDestination() != previous) {
-								findAllPaths(start, goal, e.getDestination(), current, path + ", " + current.getName());
-							}
-						}
+					if (!path.stream().anyMatch(edge -> (e.getDestination().getName().equals(edge.getOrigin().getName())))) {
+						path.add(e);
+						findAllPaths(start, goal, e.getDestination(), depth + 1, path);
 					}
 				}
 			}
 		}
 		else {
-			path += ", " + goal.getName();
-			System.out.println(path);
+			List<Edge> persistentPath = new ArrayList<Edge>();
+			persistentPath.addAll(path);
+			allPaths.add(persistentPath);
+			
+			for (Edge e: path) {
+				System.out.print(e.getOrigin().getName() + " -> " + e.getDestination().getName());
+			}
+			System.out.println("\n");
+			path.clear();
 		}
-	}*/
+	}
 	
 	/**
 	 * Gibt die berechnete FLOW Distanz zwischen Sender und Empfänger zurück.
