@@ -60,10 +60,8 @@
 		<edge from="Berater" to="Entwickler" id="37"></edge>
 		<edge from="Entwickler" to="Berater" id="38"></edge>
 		<edge from="Entwickler" to="Storycards" id="40"></edge>
-		<edge from="Entwickler" to="Storycards" id="41"></edge>
 		<edge from="Entwickler" to="Ticketsystem" id="42"></edge>
 		<edge from="Qualitaetssicherung" to="Entwickler" id="43"></edge>
-		<edge from="Entwickler" to="Storycards" id="44"></edge>
 		<edge from="Berater" to="Storycards" id="45"></edge>
 		<edge from="Berater" to="Ticketsystem" id="46"></edge>
 		<edge from="Storycards" to="Ticketsystem" id="47"></edge>

@@ -46,24 +46,22 @@ public class FlowDistance {
 		
 		System.out.println("Num allPaths: " + allPaths.size());
 		allPaths.stream().forEach(System.out::println);
-		for (List<Edge> path: allPaths) {
-			
-		}
 	}
 	
 	// Loop durch bidirektionale Kanten
 	public void findAllPaths(Vertex start, Vertex goal, Vertex current, int depth, ArrayList<Edge> path) {
 		if (depth >= maxDepth - 1) {
-		//if (depth > 10) {
 			return;
 		}
  		
 		if (current != goal) {
 			for (Edge e: network.getEdges()) {
 				if (e.getOrigin() == current) {
-					if (!path.stream().anyMatch(edge -> (e.getDestination().getName().equals(edge.getOrigin().getName())))) {
-						path.add(e);
-						findAllPaths(start, goal, e.getDestination(), depth + 1, path);
+					if (!path.stream().anyMatch(edge -> (e.getDestination().getName().equals(edge.getOrigin().getName()) || (e.getDestination().getName().equals(edge.getDestination().getName()))))) {
+						ArrayList<Edge> newPath = new ArrayList<Edge>();
+						newPath.addAll(path);
+						newPath.add(e);
+						findAllPaths(start, goal, e.getDestination(), depth + 1, newPath);
 					}
 				}
 			}
@@ -72,11 +70,7 @@ public class FlowDistance {
 			List<Edge> persistentPath = new ArrayList<Edge>();
 			persistentPath.addAll(path);
 			allPaths.add(persistentPath);
-			
-			for (Edge e: path) {
-				System.out.print(e.getOrigin().getName() + " -> " + e.getDestination().getName());
-			}
-			System.out.println("\n");
+
 			path.clear();
 		}
 	}
