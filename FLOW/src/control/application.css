@@ -13,3 +13,9 @@
 	-fx-border-width: 0.0 0.0 1.0 0.0;
 	-fx-border-color: black;
 }
+
+*:focused {
+	-fx-focus-color: transparent; 
+	-fx-background-insets: -1.4, 0, 1, 2;
+}
+

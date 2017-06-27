@@ -24,6 +24,10 @@ public class Edge {
 		this.setDestination(destination);
 		this.setCapacity(capacity);
 		this.setId(id);
+		
+		
+		this.line = new Line();
+		//this.line = new Line(origin.getX(), origin.getY(), destination.getX(), destination.getY());
 	}
 
 	public Vertex getOrigin() {

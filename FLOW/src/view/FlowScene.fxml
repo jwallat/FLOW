@@ -189,6 +189,7 @@
                                              <children>
                                                 <RadioButton fx:id="networkFlowRadioButton" mnemonicParsing="false" onAction="#networkFlowRadioButtonClicked" onMouseClicked="#networkFlowRadioButtonClicked" selected="true" text="Network flow" />
                                                 <RadioButton fx:id="flowDistanceRadioButton" mnemonicParsing="false" onAction="#flowDistanceRadioButtonClicked" text="FLOW distance" />
+                                                <RadioButton fx:id="waterPipeRadioButton" mnemonicParsing="false" onAction="#waterPipeRadioButtonClicked" text="Water pipes" />
                                                 <ToggleButton fx:id="highlightFlowButton" mnemonicParsing="false" onAction="#highlightFlowButtonClicked" prefHeight="25.0" prefWidth="102.0" text="Highlight flow" />
                                              </children>
                                           </VBox>

@@ -9,10 +9,12 @@ import java.util.ResourceBundle;
 import algorithm.EdmondsKarp;
 import algorithm.FlowDistance;
 import control.Parser;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
@@ -23,13 +25,21 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
+import javafx.scene.transform.Affine;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Transform;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -90,6 +100,9 @@ public class FlowSceneController implements Initializable {
 	private RadioButton flowDistanceRadioButton;
 	
 	@FXML
+	private RadioButton waterPipeRadioButton;
+	
+	@FXML
 	private ToggleButton highlightFlowButton;
 	
 	private Stage stage;
@@ -101,13 +114,15 @@ public class FlowSceneController implements Initializable {
 	private boolean highlightFlow = false;
 	
 	public enum visualizationType {
-		NETWORKFLOW, FLOWDISTANCE 
+		NETWORKFLOW, FLOWDISTANCE, WATERPIPES 
 	}
 	
 	private visualizationType edgeWeighting = visualizationType.NETWORKFLOW;
 	
-	private static final DropShadow highlightSource = new DropShadow(30, Color.GOLDENROD);
-	private static final DropShadow highlightSink = new DropShadow(30, Color.GREEN);
+	//private static final DropShadow highlightSource = new DropShadow(50, Color.RED);
+	private static final DropShadow highlightSource = new DropShadow(BlurType.GAUSSIAN, Color.RED, 30, 0.7, 0, 0);
+	//private static final DropShadow highlightSink = new DropShadow(30, Color.GREEN);
+	private static final DropShadow highlightSink = new DropShadow(BlurType.GAUSSIAN, Color.GREEN, 30, 0.7, 0, 0);
 
 	
 	/**
@@ -238,8 +253,10 @@ public class FlowSceneController implements Initializable {
 	 */
 	public void networkFlowRadioButtonClicked() {
 		if (file != null) {
-			if (flowDistanceRadioButton.isSelected()) {
+			if (flowDistanceRadioButton.isSelected() || waterPipeRadioButton.isSelected()) {
 				flowDistanceRadioButton.setSelected(false);
+				waterPipeRadioButton.setSelected(false);
+				
 				edgeWeighting = visualizationType.NETWORKFLOW;
 				
 				updateGraphics();
@@ -258,14 +275,37 @@ public class FlowSceneController implements Initializable {
 	 */
 	public void flowDistanceRadioButtonClicked() {
 		if (file != null) {
-			if (networkFlowRadioButton.isSelected()) {
+			if (waterPipeRadioButton.isSelected() || networkFlowRadioButton.isSelected()) {
 				networkFlowRadioButton.setSelected(false);
+				waterPipeRadioButton.setSelected(false);
 				edgeWeighting = visualizationType.FLOWDISTANCE;
 			
 				updateGraphics();
 			}
 			else {
 				flowDistanceRadioButton.setSelected(true);
+			}
+		}
+	}
+	
+	/**
+	 * Funktion die bei Auswahl des Radiobuttons ausgeführt wird. 
+	 * Die drei Radiobuttons schließen sich gegenseitig aus und geben an, welche Information auf den 
+	 * Kanten angezeigt wird.
+	 * 
+	 */
+	public void waterPipeRadioButtonClicked() {
+		if (file != null) {
+			if (flowDistanceRadioButton.isSelected() || networkFlowRadioButton.isSelected()) {
+				networkFlowRadioButton.setSelected(false);
+				flowDistanceRadioButton.setSelected(false);
+				edgeWeighting = visualizationType.WATERPIPES;
+				
+				
+				updateGraphics();
+			}
+			else {
+				waterPipeRadioButton.setSelected(true);
 			}
 		}
 	}
@@ -413,6 +453,18 @@ public class FlowSceneController implements Initializable {
 			pannablePane.getChildren().remove(v.getNameLabel());
 		}
 	}
+	
+	/**
+	 * Entfernt alle WaterPipe-Lines vom Pane.
+	 * 
+	 */
+	private void clearLines() {
+
+		for (Edge e: network.getEdges()) {
+			e.getShape().getTransforms().clear();
+			pannablePane.getChildren().remove(e.getShape());
+		}	
+	}
 
 	/**
 	 * Visualisiert das Netzwerk aus der XML-Datei.
@@ -441,6 +493,7 @@ public class FlowSceneController implements Initializable {
 	 */
 	private void updateGraphics() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		clearLines();
 		//gc.setFill(Color.WHITE);
 		//gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		
@@ -456,6 +509,11 @@ public class FlowSceneController implements Initializable {
 	 */
 	private void drawEdges() {
 		
+		if (edgeWeighting == visualizationType.WATERPIPES) {
+			drawWaterPipes();
+			return;
+		}
+		
 		List<Edge> edges = network.getEdges();
 		boolean weightingDrawn = false;
 		List<Edge> drawnEdges = new ArrayList<Edge>();
@@ -464,7 +522,7 @@ public class FlowSceneController implements Initializable {
 			
 			if (e.getFlow() > 0)  {
 				if (highlightFlow) {
-					e.setColor(Color.RED);
+					e.setColor(Color.ORANGE);
 				}
 				else {
 					e.setColor(Color.BLACK);
@@ -481,9 +539,9 @@ public class FlowSceneController implements Initializable {
 					
 					if (e.getFlow() > 0 || e2.getFlow() > 0) {
 						if (highlightFlow) {
-							e.setColor(Color.RED);
+							e.setColor(Color.ORANGE);
 							e.draw(gc);
-							e2.setColor(Color.RED);
+							e2.setColor(Color.ORANGE);
 							e2.draw(gc);
 						}
 						else {
@@ -511,6 +569,61 @@ public class FlowSceneController implements Initializable {
 				e.drawWeighting(gc, e.getOrigin().getX(), e.getOrigin().getY(), e.getDestination().getX(), e.getDestination().getY(), edgeWeighting);
 				drawnEdges.add(e);
 			}
+		}
+	}
+	
+	/**
+	 * Methode die aufgerufen wird wenn der RadioButton für das Anzeigen des Kanalsystems ausgewählt wurde.
+	 * Hier werden die Kanten als 
+	 * 
+	 */
+	private void drawWaterPipes() {
+		for (Edge e: network.getEdges()) {
+			int x1 = e.getOrigin().getX();
+			int y1 = e.getOrigin().getY();
+			
+			int x2 = e.getDestination().getX();
+			int y2 = e.getDestination().getY();
+			
+			int dx = x2 - x1;
+			int dy = y2 - y1;
+			
+			int length = (int) Math.sqrt(dx * dx + dy * dy);
+			double angle = Math.atan2(dy, dx);
+			
+			
+			Line line = e.getShape();
+			
+			line.setStartX(e.getOrigin().getX());
+			line.setStartY(e.getOrigin().getY());
+			
+			line.setEndX(e.getOrigin().getX() + length);
+			line.setEndY(e.getOrigin().getY());
+			
+			line.getTransforms().add(new Rotate(Math.toDegrees(angle), x1,y1));
+	
+			double fillPercentage = e.getFlow() / e.getCapacity();
+			fillPercentage *= 0.6;
+			fillPercentage += 0.19998;
+			System.out.println("FillP: " + fillPercentage);
+			
+			//Scale stroke width by capacity!
+			line.setStrokeWidth(10);
+			line.setStroke(new LinearGradient(0d, -5d, 0d, 5d, false, CycleMethod.REFLECT, 
+					new Stop(0,Color.BLACK), 
+					new Stop(0.199,Color.BLACK), 
+					new Stop(0.2,Color.BLUE),
+					new Stop(fillPercentage,Color.BLUE),
+					new Stop(fillPercentage + 0.001, Color.WHITE),
+					new Stop(0.79999,Color.WHITE),
+					new Stop(0.8, Color.BLACK),
+					new Stop(1, Color.BLACK)));
+			
+			pannablePane.getChildren().add(line);
+			line.toBack();
+			
+			e.getOrigin().getShape().toFront();
+			e.getDestination().getShape().toFront();
 		}
 	}
 }
