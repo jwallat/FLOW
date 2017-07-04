@@ -120,9 +120,9 @@ public class FlowSceneController implements Initializable {
 	private visualizationType edgeWeighting = visualizationType.NETWORKFLOW;
 	
 	//private static final DropShadow highlightSource = new DropShadow(50, Color.RED);
-	private static final DropShadow highlightSource = new DropShadow(BlurType.GAUSSIAN, Color.RED, 30, 0.7, 0, 0);
+	private static final DropShadow highlightSource = new DropShadow(BlurType.GAUSSIAN, Color.VIOLET.darker().darker(), 30, 0.7, 0, 0);
 	//private static final DropShadow highlightSink = new DropShadow(30, Color.GREEN);
-	private static final DropShadow highlightSink = new DropShadow(BlurType.GAUSSIAN, Color.GREEN, 30, 0.7, 0, 0);
+	private static final DropShadow highlightSink = new DropShadow(BlurType.GAUSSIAN, Color.ORANGE, 30, 0.7, 0, 0);
 
 	
 	/**
@@ -215,7 +215,7 @@ public class FlowSceneController implements Initializable {
 		
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Big FLOW");
-		fc.setInitialDirectory(new File(System.getProperty("user.dir") + "/resource"));
+		fc.setInitialDirectory(new File(System.getProperty("user.dir") + "/resource/xmls"));
 		fc.getExtensionFilters().add(new ExtensionFilter("XML Files", "*.xml"));
 		
 		file = fc.showOpenDialog(stage);

@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import view.FlowSceneController;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 /**
  * Main Klasse, die die Stage anzeigt und die Groesse des Fensters auf die 
@@ -58,6 +59,14 @@ public class Main extends Application {
 		
 		FlowSceneController fsc = (FlowSceneController) loader.getController();
 		fsc.init(primaryStage);
+		
+		try {
+			primaryStage.getIcons().add(new Image("file:" + System.getProperty("user.dir") + "/resource/icons/se_logo.png"));
+		}
+		catch (Exception e) {
+			System.out.println("ERROR loading application icon");
+		}
+		
 	}
 	
 	/**
