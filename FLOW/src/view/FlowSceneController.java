@@ -9,12 +9,10 @@ import java.util.ResourceBundle;
 import algorithm.EdmondsKarp;
 import algorithm.FlowDistance;
 import control.Parser;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
@@ -37,9 +35,7 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
-import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Transform;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -119,9 +115,7 @@ public class FlowSceneController implements Initializable {
 	
 	private visualizationType edgeWeighting = visualizationType.NETWORKFLOW;
 	
-	//private static final DropShadow highlightSource = new DropShadow(50, Color.RED);
 	private static final DropShadow highlightSource = new DropShadow(BlurType.GAUSSIAN, Color.VIOLET.darker().darker(), 30, 0.7, 0, 0);
-	//private static final DropShadow highlightSink = new DropShadow(30, Color.GREEN);
 	private static final DropShadow highlightSink = new DropShadow(BlurType.GAUSSIAN, Color.ORANGE, 30, 0.7, 0, 0);
 
 	
@@ -233,7 +227,6 @@ public class FlowSceneController implements Initializable {
 
 		showNetwork();
 		
-		//informationPane.visibleProperty().set(false);
 		informationPane.expandedProperty().set(true);
 	}
 	
@@ -602,22 +595,34 @@ public class FlowSceneController implements Initializable {
 			
 			line.getTransforms().add(new Rotate(Math.toDegrees(angle), x1,y1));
 	
-			double fillPercentage = e.getFlow() / e.getCapacity();
-			fillPercentage *= 0.6;
-			fillPercentage += 0.19998;
-			System.out.println("FillP: " + fillPercentage);
-			
-			//Scale stroke width by capacity!
 			line.setStrokeWidth(10);
-			line.setStroke(new LinearGradient(0d, -5d, 0d, 5d, false, CycleMethod.REFLECT, 
+			
+			double fillPercentage = e.getFlow() / e.getCapacity();
+			if (fillPercentage == 1) {
+				
+				line.setStroke(new LinearGradient(0d, -5d, 0d, 5d, false, CycleMethod.REFLECT, 
+					new Stop(0,Color.BLACK),
+					new Stop(0.199,Color.BLACK),
+					new Stop(0.2,Color.BLUE),
+					new Stop(0.799,Color.BLUE),
+					new Stop(0.8, Color.BLACK),
+					new Stop(1, Color.BLACK)));
+			}
+			else {
+				fillPercentage *= 0.6;
+				fillPercentage += 0.19998;
+
+				line.setStroke(new LinearGradient(0d, -5d, 0d, 5d, false, CycleMethod.REFLECT, 
 					new Stop(0,Color.BLACK), 
 					new Stop(0.199,Color.BLACK), 
 					new Stop(0.2,Color.BLUE),
 					new Stop(fillPercentage,Color.BLUE),
 					new Stop(fillPercentage + 0.001, Color.WHITE),
-					new Stop(0.79999,Color.WHITE),
+					new Stop(0.79999999999999,Color.WHITE),
 					new Stop(0.8, Color.BLACK),
 					new Stop(1, Color.BLACK)));
+			}
+			
 			
 			pannablePane.getChildren().add(line);
 			line.toBack();
