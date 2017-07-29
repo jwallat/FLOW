@@ -7,7 +7,7 @@
 		<member name="Kunde (D)" id="3" x="250" y="300" type="person"></member>
 		<member name="Anforderungen" id="4" x="270" y="420" type="document"></member>
 		<member name="Workshop" id="5" x="150" y="610" type="activity"></member>
-		<member name="Protokoll" id="6" x="450" y="470" type="document"></member>
+		<member name="Protokoll" id="6" x="430" y="470" type="document"></member>
 		<member name="Anforderungskatalog" id="7" x="550" y="470" type="document"></member>
 		<member name="Berater" id="8" x="750" y="170" type="person"></member>
 		<member name="Testfaelle" id="9" x="950" y="20" type="document"></member>
