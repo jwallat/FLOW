@@ -3,6 +3,12 @@ package model;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Model-Klasse, die alle aus dem Parsen der XML-Datei gewonnenen Informationen enthält.
+ * 
+ * @author jwall
+ *
+ */
 public class Network {
 
 	private List<Vertex> vertices;

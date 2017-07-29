@@ -5,6 +5,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
 
+/**
+ * Implementation der Vertex-Klasse für Aktivitäten.
+ * 
+ * @author jwall
+ *
+ */
 public class Activity extends Vertex {
 
 	private String name;

@@ -9,6 +9,13 @@ import model.Edge;
 import model.Network;
 import model.Vertex;
 
+/**
+ * Implementation zur Berechnung der neuen FLOW-Distanz.
+ * Weitere Informationen sind der Bachelorarbeit "Algorithmen zur Analyse von Informationflussen in der Software Entwicklung".
+ * 
+ * @author jwall
+ *
+ */
 public class FlowDistance {
 
 	private Network network;
@@ -162,7 +169,15 @@ public class FlowDistance {
 		}*/
 		
 	}
-	
+	/**
+	 * Rekursive Methode, die alle zykel-freien Pfade zwischen 2 Knoten berechnet.
+	 * 
+	 * @param start - Startknoten
+	 * @param goal - Zielknoten
+	 * @param current - derzeitiger Knoten 
+	 * @param depth - Rekursionstiefe
+	 * @param path - aktueller Pfad zwischen start und goal, bei Erstaufruf null
+	 */
 	// Loop durch bidirektionale Kanten
 	public void findAllPaths(Vertex start, Vertex goal, Vertex current, int depth, ArrayList<Edge> path) {
 		if (depth >= maxDepth - 1) {

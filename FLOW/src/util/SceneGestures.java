@@ -4,6 +4,10 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 
+/**
+ * Helper-Klasse für Zoom und Verschiebe-Funktionalität des Panes.
+ *
+ */
 public class SceneGestures {
 
 	private static final double MAX_SCALE = 10.0d;

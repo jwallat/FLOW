@@ -5,6 +5,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
 
+/**
+ * Implementation der Vertex-Klasse für Dokumente.
+ * 
+ * @author jwall
+ *
+ */
 public class Document extends Vertex {
 
 	private String name;

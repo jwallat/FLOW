@@ -5,6 +5,12 @@ import javafx.scene.control.Label;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
+/**
+ * Abstrakte Basis Klasse, von der alle Knoten-Typen erben.
+ * 
+ * @author jwall
+ *
+ */
 public abstract class Vertex {
 
 	private String name;

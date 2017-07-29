@@ -8,6 +8,12 @@ import javafx.scene.transform.Affine;
 import javafx.scene.transform.Transform;
 import view.FlowSceneController.visualizationType;
 
+/**
+ * Klasse die Informationen zu den Kommunikationen kapselt.
+ * 
+ * @author jwall
+ *
+ */
 public class Edge {
 
 	private Vertex origin;
@@ -185,7 +191,7 @@ public class Edge {
 	 * @param x2 - X-Position des Empfängers
 	 * @param y2 - y-Position des Empfängers
 	 */
-	public void drawBidirectionalWeighting(GraphicsContext gc, int x1, int y1, int flow1, int capacity1, int x2, int y2, int flow2, int capacity2, visualizationType type) {
+	public void drawBidirectionalWeighting(GraphicsContext gc, int x1, int y1, int flow1, int capacity1, double flowDistance1, int x2, int y2, int flow2, int capacity2, double flowDistance2, visualizationType type) {
 		gc.setFill(edgeColor);
 
 	    double dx = x2 - x1, dy = y2 - y1;
@@ -206,11 +212,11 @@ public class Edge {
 	    		gc.strokeText("<- " + (int) flow2 + "/" + (int) capacity2 + "\t\t" + (int) flow + "/" + (int) capacity + " ->", (len/2) - 50, 13);
 	    	}
 	    	else {
-	    		gc.strokeText("<- " + flowDistance + "\t\t" + flowDistance + " ->", (len/2) - 45, 13);
+	    		gc.strokeText("<- " + flowDistance2 + "\t\t" + flowDistance1 + " ->", (len/2) - 45, 13);
 	    	}
 	    }
 	    else {
-	    	drawBidirectionalWeighting(gc, x2, y2, flow2, capacity2, x1, y1, flow1, capacity1, type);
+	    	drawBidirectionalWeighting(gc, x2, y2, flow2, capacity2, flowDistance2, x1, y1, flow1, capacity1, flowDistance1, type);
 	    }
 	    gc.setStroke(old);
 	    

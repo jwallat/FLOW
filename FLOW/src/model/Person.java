@@ -5,6 +5,12 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
 
+/**
+ * Implementation der Vertex-Klasse für Personen.
+ * 
+ * @author jwall
+ *
+ */
 public class Person extends Vertex {
 
 	private String name;

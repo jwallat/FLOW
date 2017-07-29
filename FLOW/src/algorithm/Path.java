@@ -6,6 +6,12 @@ import java.util.List;
 import model.Edge;
 import model.Vertex;
 
+/**
+ * Helfer-Klasse die die nötigen Informationen des Pfades zur Berechnung der FLOW-Distanz in einem Objekt kapselt.
+ * 
+ * @author jwall
+ *
+ */
 public class Path {
 
 	private double pathValue;

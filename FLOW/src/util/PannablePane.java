@@ -4,6 +4,10 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.layout.Pane;
 
+/**
+ * Helper-Klasse für Zoom und Verschiebe-Funktionalität des Panes.
+ *
+ */
 public class PannablePane extends Pane {
 
 	DoubleProperty myScale = new SimpleDoubleProperty(1.0);
