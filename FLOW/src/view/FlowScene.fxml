@@ -122,7 +122,7 @@
                                        <children>
                                           <HBox id="myHBox">
                                              <children>
-                                                <Label id="heading-label" prefHeight="19.0" prefWidth="190.0" text="Network flow: ">
+                                                <Label id="heading-label" prefHeight="19.0" prefWidth="190.0" text="MaxFLOW:">
                                                    <font>
                                                       <Font name="System Bold" size="13.0" />
                                                    </font>
@@ -137,7 +137,7 @@
                                           </HBox>
                                           <HBox>
                                              <children>
-                                                <Label text="Max Flow: " />
+                                                <Label text="MF:" />
                                                 <Label fx:id="maxFlowLabel" alignment="CENTER" prefHeight="17.0" prefWidth="135.0" text="               " />
                                              </children>
                                           </HBox>
@@ -147,7 +147,7 @@
                                        <children>
                                           <HBox id="myHBox">
                                              <children>
-                                                <Label id="heading-label" prefHeight="19.0" prefWidth="190.0" text="FLOW Distance: ">
+                                                <Label id="heading-label" prefHeight="19.0" prefWidth="190.0" text="FLOW-Space: ">
                                                    <font>
                                                       <Font name="System Bold" size="13.0" />
                                                    </font>
@@ -162,7 +162,7 @@
                                           </HBox>
                                           <HBox>
                                              <children>
-                                                <Label text="new FD: " />
+                                                <Label text="FS:" />
                                                 <Label fx:id="flowDistanceLabel" alignment="CENTER" prefHeight="17.0" prefWidth="146.0" text="           " />
                                              </children>
                                           </HBox>
@@ -187,9 +187,9 @@
                                           </HBox>
                                           <VBox spacing="10.0">
                                              <children>
-                                                <RadioButton fx:id="networkFlowRadioButton" mnemonicParsing="false" onAction="#networkFlowRadioButtonClicked" onMouseClicked="#networkFlowRadioButtonClicked" selected="true" text="Network flow" />
-                                                <RadioButton fx:id="flowDistanceRadioButton" mnemonicParsing="false" onAction="#flowDistanceRadioButtonClicked" text="FLOW distance" />
-                                                <RadioButton fx:id="waterPipeRadioButton" mnemonicParsing="false" onAction="#waterPipeRadioButtonClicked" text="Water pipes" />
+                                                <RadioButton fx:id="networkFlowRadioButton" mnemonicParsing="false" onAction="#networkFlowRadioButtonClicked" onMouseClicked="#networkFlowRadioButtonClicked" selected="true" text="Capacities" />
+                                                <RadioButton fx:id="flowDistanceRadioButton" mnemonicParsing="false" onAction="#flowDistanceRadioButtonClicked" text="FLOW-distances" />
+                                                <RadioButton fx:id="waterPipeRadioButton" mnemonicParsing="false" onAction="#waterPipeRadioButtonClicked" text="Water-pipes" />
                                                 <ToggleButton fx:id="highlightFlowButton" mnemonicParsing="false" onAction="#highlightFlowButtonClicked" prefHeight="25.0" prefWidth="102.0" text="Highlight flow" />
                                              </children>
                                           </VBox>
