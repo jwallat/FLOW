@@ -1,9 +1,12 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javafx.scene.Node;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Line;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Transform;
 import view.FlowSceneController.visualizationType;
@@ -18,7 +21,7 @@ public class Edge {
 
 	private Vertex origin;
 	private Vertex destination;
-	private Line line;
+	private List<Node> shapes;
 	private int id;
 	private double capacity;
 	private double flow;
@@ -32,7 +35,7 @@ public class Edge {
 		this.setId(id);
 		
 		
-		this.line = new Line();
+		this.shapes = new ArrayList<Node>();
 		//this.line = new Line(origin.getX(), origin.getY(), destination.getX(), destination.getY());
 	}
 
@@ -88,8 +91,8 @@ public class Edge {
 		this.edgeColor = c;
 	}
 	
-	public Line getShape() {
-		return this.line;
+	public List<Node> getShapes() {
+		return this.shapes;
 	}
 
 	public void draw(GraphicsContext gc) {

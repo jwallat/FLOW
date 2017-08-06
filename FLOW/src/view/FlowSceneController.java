@@ -3,6 +3,7 @@ package view;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -13,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
@@ -30,11 +32,9 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
-import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.transform.Rotate;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -204,6 +204,7 @@ public class FlowSceneController implements Initializable {
 		
 		if (network != null) {
 			clearVertices();
+			clearLines();
 			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		}
 		
@@ -454,8 +455,11 @@ public class FlowSceneController implements Initializable {
 	private void clearLines() {
 
 		for (Edge e: network.getEdges()) {
-			e.getShape().getTransforms().clear();
-			pannablePane.getChildren().remove(e.getShape());
+			//e.getShape().getTransforms().clear();
+			for (Node n : e.getShapes()) {
+				n.getTransforms().clear();
+				pannablePane.getChildren().remove(n);
+			}
 		}	
 	}
 
@@ -571,6 +575,31 @@ public class FlowSceneController implements Initializable {
 	 * 
 	 */
 	private void drawWaterPipes() {
+		
+		// Verteile die Kapazitäten auf eine strokeWidth zwischen 5 und 15
+		int minWidth = 6;
+		int maxWidth = 14;
+					
+		int minCapacity = Integer.MAX_VALUE;
+		int maxCapacity = Integer.MIN_VALUE;
+		
+		HashMap<Integer, Double> capacitiesHashMap = network.getCapacitiesHashMap();
+					
+		for (Integer capacity : network.getCapacities()) {
+			if (capacity > maxCapacity) {
+				maxCapacity = capacity;
+			}
+			if (capacity < minCapacity) {
+				minCapacity = capacity;
+			}
+		}
+		
+		for (Integer capacity : network.getCapacities()) {
+			double value = minWidth + (( (double) (capacity - minCapacity) / (maxCapacity - minCapacity)) * (maxWidth - minWidth));
+			capacitiesHashMap.replace(capacity, 0.0, value);	
+		}
+		
+		
 		for (Edge e: network.getEdges()) {
 			int x1 = e.getOrigin().getX();
 			int y1 = e.getOrigin().getY();
@@ -585,7 +614,36 @@ public class FlowSceneController implements Initializable {
 			double angle = Math.atan2(dy, dx);
 			
 			
-			Line line = e.getShape();
+			
+			
+			// try rects:
+			double width = capacitiesHashMap.get((int) e.getCapacity()); 
+						
+			
+			Rectangle baseRect = new Rectangle(x1, y1 - width/2, length, width);
+			baseRect.setFill(Color.WHITE);
+			baseRect.setStrokeType(StrokeType.OUTSIDE);
+			baseRect.setStroke(Color.BLACK);
+			baseRect.setStrokeWidth(2);
+			
+			Rectangle fillRect = new Rectangle(x1, y1 - width/2, length, width * (e.getFlow() / e.getCapacity()));
+			fillRect.setFill(Color.BLUE);
+			
+			//transform:
+			baseRect.getTransforms().add(new Rotate(Math.toDegrees(angle), x1,y1));
+			fillRect.getTransforms().add(new Rotate(Math.toDegrees(angle), x1,y1));
+			
+			e.getShapes().add(baseRect);
+			e.getShapes().add(fillRect);
+			
+			pannablePane.getChildren().add(baseRect);
+			pannablePane.getChildren().add(fillRect);
+			
+			fillRect.toFront();
+			baseRect.toBack();
+			
+			
+			/*Line line = e.getShape();
 			
 			line.setStartX(e.getOrigin().getX());
 			line.setStartY(e.getOrigin().getY());
@@ -593,42 +651,60 @@ public class FlowSceneController implements Initializable {
 			line.setEndX(e.getOrigin().getX() + length);
 			line.setEndY(e.getOrigin().getY());
 			
-			line.getTransforms().add(new Rotate(Math.toDegrees(angle), x1,y1));
-	
-			line.setStrokeWidth(10);
+			//line.getTransforms().add(new Rotate(Math.toDegrees(angle), x1,y1));
+			*/			
+			
+			/*System.out.println("Cap: " + e.getCapacity());
+			double strokeWidth = capacitiesHashMap.get((int) e.getCapacity());
+			strokeWidth = (double) Math.round(strokeWidth);
+			if (strokeWidth % 2 != 0) {
+				strokeWidth--;
+			}
+			strokeWidth = 15.0;
+			//line.setStrokeWidth(10);
+			line.setStrokeWidth(strokeWidth);
+			//double halfWidth = (double) strokeWidth / 2;
+			//halfWidth = (double) Math.round(halfWidth * 100) / 100;
+			int halfWidth = (int) (strokeWidth / 2);
+			//halfWidth = Math.round(halfWidth);
+			System.out.println(strokeWidth + ", " + halfWidth);
+			
+						
 			
 			double fillPercentage = e.getFlow() / e.getCapacity();
 			if (fillPercentage == 1) {
 				
-				line.setStroke(new LinearGradient(0d, -5d, 0d, 5d, false, CycleMethod.REFLECT, 
+				line.setStroke(new LinearGradient(0d, -halfWidth, 0d, halfWidth, false, CycleMethod.REFLECT,
 					new Stop(0,Color.BLACK),
-					new Stop(0.199,Color.BLACK),
-					new Stop(0.2,Color.BLUE),
-					new Stop(0.799,Color.BLUE),
-					new Stop(0.8, Color.BLACK),
+					new Stop(0.099,Color.BLACK),
+					new Stop(0.1,Color.BLUE),
+					new Stop(0.899,Color.BLUE),
+					new Stop(0.9, Color.BLACK),
 					new Stop(1, Color.BLACK)));
 			}
 			else {
-				fillPercentage *= 0.6;
-				fillPercentage += 0.19998;
+				fillPercentage *= 0.8;
+				fillPercentage += 0.09998;
 
-				line.setStroke(new LinearGradient(0d, -5d, 0d, 5d, false, CycleMethod.REFLECT, 
+				line.setStroke(new LinearGradient(0, -8, 0, 8, false, CycleMethod.REFLECT, 
 					new Stop(0,Color.BLACK), 
-					new Stop(0.199,Color.BLACK), 
-					new Stop(0.2,Color.BLUE),
+					new Stop(0.099,Color.BLACK), 
+					new Stop(0.1,Color.BLUE),
 					new Stop(fillPercentage,Color.BLUE),
 					new Stop(fillPercentage + 0.001, Color.WHITE),
-					new Stop(0.79999999999999,Color.WHITE),
-					new Stop(0.8, Color.BLACK),
+					new Stop(0.89999999999999,Color.WHITE),
+					new Stop(0.9, Color.BLACK),
 					new Stop(1, Color.BLACK)));
 			}
+			*/
 			
-			
-			pannablePane.getChildren().add(line);
-			line.toBack();
+			//pannablePane.getChildren().add(line);
+			//line.toBack();
 			
 			e.getOrigin().getShape().toFront();
+			e.getOrigin().getNameLabel().toFront();
 			e.getDestination().getShape().toFront();
+			e.getDestination().getNameLabel().toFront();
 		}
 	}
 }

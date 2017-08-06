@@ -1,6 +1,8 @@
 package model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -13,10 +15,12 @@ public class Network {
 
 	private List<Vertex> vertices;
 	private List<Edge> edges;
+	private HashMap<Integer, Double> capacities;
 	
 	public Network() {
 		this.vertices = new CopyOnWriteArrayList<Vertex>();
 		this.edges =  new CopyOnWriteArrayList<Edge>();
+		this.capacities = new HashMap<Integer, Double>();
 	}
 
 	public List<Vertex> getVertices() {
@@ -72,19 +76,26 @@ public class Network {
 	
 	/**
 	 * Fügt den Kanten des Netzwerks die Kapazitäten hinzu, die aus dem FLOW-Netzwerk ableitbar sind:
-	 * Mensch --> Mensch:		1/0,3
-	 * Mensch --> Document:		1/0,5
-	 * Dokument --> Mensch:		1/0,6
-	 * Dokument --> Dokument:	1/1
+	 * Mensch --> Mensch:		1/0,3 --> 333
+	 * Mensch --> Document:		1/0,5 --> 200
+	 * Dokument --> Mensch:		1/0,6 --> 166
+	 * Dokument --> Dokument:	1/1 --> 100
 	 * 
 	 * Ist eine Aktivität beteiligt wird: ******************************************************************************************************
 	 * 
 	 */
 	public void prepareNetwork() {
+		
+		// hier alle Kapazitäten einfügen
+		this.capacities.put(100, 0.0);
+		this.capacities.put(166, 0.0);
+		this.capacities.put(200, 0.0);
+		this.capacities.put(333, 0.0);
+		
+		
 		System.out.println("Preparing:");
 		for (Edge e : edges) {
 			if (e.getDestination().getClass().toString().contains("Activity") || e.getOrigin().getClass().toString().contains("Activity")) {
-				//System.out.println("Edge mit activity: " + e);
 				e.setCapacity(100);
 				e.setFlowDistance(1.0);
 			}
@@ -109,5 +120,13 @@ public class Network {
 			}
 		}
 		System.out.println("Network prepared\n");
+	}
+
+	public Set<Integer> getCapacities() {
+		return capacities.keySet();
+	}
+	
+	public HashMap<Integer, Double> getCapacitiesHashMap() {
+		return capacities;
 	}
 }
