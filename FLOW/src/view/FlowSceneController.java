@@ -179,10 +179,10 @@ public class FlowSceneController implements Initializable {
 		canvas = new Canvas();
 		pannablePane.getChildren().add(canvas);		
 		
-		canvas.widthProperty().bind(pannablePane.widthProperty());
-		canvas.heightProperty().bind(pannablePane.heightProperty());
-		//canvas.setWidth(1900);
-		//canvas.setHeight(1000);
+		//canvas.widthProperty().bind(pannablePane.widthProperty());
+		//canvas.heightProperty().bind(pannablePane.heightProperty());
+		canvas.setWidth(1900);
+		canvas.setHeight(1000);
 		canvas.autosize();
 		
 		gc = canvas.getGraphicsContext2D();
