@@ -438,6 +438,98 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
+	 * Funktion die bei Klick des Info-Expansion-Buttons ausgeführt wird.
+	 */
+	public void infoExpansionButtonClicked() {
+		
+	}
+	
+	/**
+	 * Funktion die bei Klicken des "Select Source" Buttons ausgeführt wird. 
+	 * Es die hier ausgewählte Source wird für die Informationsausbreitung verwendet.
+	 */
+	public void selectInformationSource() {
+		if (network == null) {
+			
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Network Flow");
+			alert.setHeaderText(null);
+			alert.setContentText("Please open a network first!");
+
+			alert.showAndWait();
+			return;
+		}
+		
+		if (source != null) {
+			source.getShape().setEffect(null);
+			source = null;
+		}
+		
+		
+		////////////////////////////////////////////////////////////////
+		// Update Label mit Namen der Ausgewählten Knotens?
+		///////////////////////////////////////////////////////////////
+		
+		
+		informationPane.expandedProperty().set(true);
+
+        for (Vertex v : network.getVertices()) {
+        	Shape shape = v.getShape();
+        	
+        	shape.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    stage.getScene().setCursor(Cursor.HAND);
+                }
+            });
+        	
+        	/*
+        	 * To be reworked
+        	 */
+        	shape.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					if (source == null) {
+						source = v;
+						v.getShape().setEffect(highlightSource);
+						sourceLabel.setText(v.getName());
+					}
+					else if (sink == null) {
+						sink = v;
+						v.getShape().setEffect(highlightSink);
+						sinkLabel.setText(v.getName());
+					}
+					else {
+						source.getShape().setEffect(null);
+						source = sink;
+						source.getShape().setEffect(highlightSource);
+						sourceLabel.setText(source.getName());
+						sink = v;
+						sink.getShape().setEffect(highlightSink);
+						sinkLabel.setText(v.getName());
+					}
+				}
+        	});
+
+            shape.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    //shape.setEffect(null);
+                    stage.getScene().setCursor(Cursor.DEFAULT);
+                }
+            });
+        }
+	}
+	
+	/**
+	 * InformationExpansion ausgehend vom übergebenen Knoten und gibt alle Knoten zurück die im nächsten Schritt erreicht werden.
+	 */
+	public List<Vertex> informationExpansion(Vertex v) {
+		
+		return new ArrayList<Vertex>();
+	}
+	
+	/**
 	 * Entfernt alle Vertices vom AnchorPane.
 	 * 
 	 */
