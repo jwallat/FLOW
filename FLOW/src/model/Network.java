@@ -74,6 +74,15 @@ public class Network {
 		}
 	}
 	
+	public boolean directlyConnected(Vertex v1, Vertex v2) {
+		for (Edge e: edges) {
+			if (e.getOrigin().equals(v1) && e.getDestination().equals(v2)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	/**
 	 * Fügt den Kanten des Netzwerks die Kapazitäten hinzu, die aus dem FLOW-Netzwerk ableitbar sind:
 	 * Mensch --> Mensch:		1/0,3 --> 333

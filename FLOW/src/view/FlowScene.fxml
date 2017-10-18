@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FlowSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FlowSceneController">
    <top>
       <HBox BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
@@ -46,7 +46,7 @@
          <children>
             <AnchorPane fx:id="anchor" prefHeight="625.0" prefWidth="1200.0">
                <children>
-                  <TitledPane fx:id="informationPane" animated="false" prefHeight="625.0" prefWidth="213.0" text="Information" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TitledPane fx:id="informationPane" prefHeight="625.0" prefWidth="213.0" text="Information" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -191,6 +191,53 @@
                                                 <RadioButton fx:id="flowDistanceRadioButton" mnemonicParsing="false" onAction="#flowDistanceRadioButtonClicked" text="FLOW-distances" />
                                                 <RadioButton fx:id="waterPipeRadioButton" mnemonicParsing="false" onAction="#waterPipeRadioButtonClicked" text="Water-pipes" />
                                                 <ToggleButton fx:id="highlightFlowButton" mnemonicParsing="false" onAction="#highlightFlowButtonClicked" prefHeight="25.0" prefWidth="102.0" text="Highlight flow" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </VBox>
+                                    <VBox spacing="15.0">
+                                       <children>
+                                          <HBox id="myHBox">
+                                             <children>
+                                                <Label id="heading-label" prefHeight="19.0" prefWidth="190.0" text="Information Expanse:">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                   <cursor>
+                                                      <Cursor fx:constant="DEFAULT" />
+                                                   </cursor>
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <VBox spacing="10.0">
+                                             <children>
+                                                <HBox spacing="20.0">
+                                                   <children>
+                                                      <VBox spacing="10.0">
+                                                         <children>
+                                                            <Label text="Center: " />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox prefHeight="44.0" prefWidth="132.0" spacing="10.0">
+                                                         <children>
+                                                            <Label fx:id="centerVertexLabel" prefHeight="17.0" prefWidth="148.0" text="                 " />
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </HBox>
+                                                <HBox>
+                                                   <children>
+                                                      <Button mnemonicParsing="false" onAction="#selectInformationSource" text="Select center" />
+                                                      <HBox alignment="CENTER" prefHeight="25.0" prefWidth="100.0">
+                                                         <children>
+                                                            <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#infoExpansionButtonClicked" text="Expand Information" />
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </HBox>
                                              </children>
                                           </VBox>
                                        </children>

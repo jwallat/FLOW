@@ -77,6 +77,9 @@ public class FlowSceneController implements Initializable {
 	@FXML
 	private Label sourceLabel;
 	
+	@FXML
+	private Label centerVertexLabel;
+	
 	@FXML 
 	private Label sinkLabel;
 	
@@ -107,6 +110,7 @@ public class FlowSceneController implements Initializable {
 	private Network network;
 	private Vertex source;
 	private Vertex sink;
+	private Vertex centerVertex;
 	private boolean highlightFlow = false;
 	
 	public enum visualizationType {
@@ -117,6 +121,8 @@ public class FlowSceneController implements Initializable {
 	
 	private static final DropShadow highlightSource = new DropShadow(BlurType.GAUSSIAN, Color.VIOLET.darker().darker(), 30, 0.7, 0, 0);
 	private static final DropShadow highlightSink = new DropShadow(BlurType.GAUSSIAN, Color.ORANGE, 30, 0.7, 0, 0);
+	
+	private static final DropShadow highlightInformationFlow = new DropShadow(BlurType.GAUSSIAN, Color.DARKGREEN.brighter(), 30, 0.7, 0, 0);
 
 	
 	/**
@@ -331,6 +337,13 @@ public class FlowSceneController implements Initializable {
 			sink.getShape().setEffect(null);
 			sink = null;
 		}
+		if (centerVertex != null) {
+			centerVertex.getShape().setEffect(null);
+			centerVertex = null;
+			centerVertexLabel.setText("");
+		}
+		
+		clearVertexHighlights();
 		
 		maxFlowLabel.setText("");
 		flowDistanceLabel.setText("");
@@ -441,7 +454,11 @@ public class FlowSceneController implements Initializable {
 	 * Funktion die bei Klick des Info-Expansion-Buttons ausgeführt wird.
 	 */
 	public void infoExpansionButtonClicked() {
-		
+		//highlight next vertices immer nur die nächste 
+		List<Vertex> verticesToHighlight = network.getVertices();
+		for (Object v : network.getVertices().stream().filter(vertex -> vertex.getShape().getEffect()  == highlightInformationFlow).toArray()) {
+			network.getEdges().stream().filter(e -> e.getOrigin().equals(v)).forEach(e -> e.getDestination().getShape().setEffect(highlightInformationFlow));;
+		}
 	}
 	
 	/**
@@ -462,14 +479,19 @@ public class FlowSceneController implements Initializable {
 		
 		if (source != null) {
 			source.getShape().setEffect(null);
+			sourceLabel.setText("");
 			source = null;
 		}
+		if (sink != null) {
+			sink.getShape().setEffect(null);
+			sinkLabel.setText("");
+			sink = null;
+		}
+		clearVertexHighlights();
 		
-		
-		////////////////////////////////////////////////////////////////
-		// Update Label mit Namen der Ausgewählten Knotens?
-		///////////////////////////////////////////////////////////////
-		
+		maxFlowLabel.setText("");
+		flowDistanceLabel.setText("");
+				
 		
 		informationPane.expandedProperty().set(true);
 
@@ -489,32 +511,15 @@ public class FlowSceneController implements Initializable {
         	shape.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
-					if (source == null) {
-						source = v;
-						v.getShape().setEffect(highlightSource);
-						sourceLabel.setText(v.getName());
-					}
-					else if (sink == null) {
-						sink = v;
-						v.getShape().setEffect(highlightSink);
-						sinkLabel.setText(v.getName());
-					}
-					else {
-						source.getShape().setEffect(null);
-						source = sink;
-						source.getShape().setEffect(highlightSource);
-						sourceLabel.setText(source.getName());
-						sink = v;
-						sink.getShape().setEffect(highlightSink);
-						sinkLabel.setText(v.getName());
-					}
+					centerVertex = v;
+					v.getShape().setEffect(highlightInformationFlow);
+					centerVertexLabel.setText(v.getName());
 				}
         	});
 
             shape.setOnMouseExited(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    //shape.setEffect(null);
                     stage.getScene().setCursor(Cursor.DEFAULT);
                 }
             });
@@ -574,6 +579,15 @@ public class FlowSceneController implements Initializable {
 		}
 		
 		drawEdges();
+	}
+	
+	/**
+	 * Clear Vertex highlightings.
+	 */
+	private void clearVertexHighlights() {
+		for (Vertex v : network.getVertices()) {
+			v.getShape().setEffect(null);
+		}
 	}
 	
 	/**
