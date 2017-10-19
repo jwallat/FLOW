@@ -350,7 +350,6 @@ public class FlowSceneController implements Initializable {
 		sourceLabel.setText("");
 		sinkLabel.setText("");
 		
-		//informationPane.visibleProperty().set(true);
 		informationPane.expandedProperty().set(true);
 
         for (Vertex v : network.getVertices()) {
@@ -454,8 +453,7 @@ public class FlowSceneController implements Initializable {
 	 * Funktion die bei Klick des Info-Expansion-Buttons ausgeführt wird.
 	 */
 	public void infoExpansionButtonClicked() {
-		//highlight next vertices immer nur die nächste 
-		List<Vertex> verticesToHighlight = network.getVertices();
+		//highlight next vertices immer nur die nächste
 		for (Object v : network.getVertices().stream().filter(vertex -> vertex.getShape().getEffect()  == highlightInformationFlow).toArray()) {
 			network.getEdges().stream().filter(e -> e.getOrigin().equals(v)).forEach(e -> e.getDestination().getShape().setEffect(highlightInformationFlow));;
 		}
@@ -525,15 +523,7 @@ public class FlowSceneController implements Initializable {
             });
         }
 	}
-	
-	/**
-	 * InformationExpansion ausgehend vom übergebenen Knoten und gibt alle Knoten zurück die im nächsten Schritt erreicht werden.
-	 */
-	public List<Vertex> informationExpansion(Vertex v) {
 		
-		return new ArrayList<Vertex>();
-	}
-	
 	/**
 	 * Entfernt alle Vertices vom AnchorPane.
 	 * 

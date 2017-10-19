@@ -8,6 +8,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.input.KeyCodeCombination?>
@@ -48,9 +49,9 @@
                <children>
                   <TitledPane fx:id="informationPane" prefHeight="625.0" prefWidth="213.0" text="Information" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <VBox layoutX="9.600000381469727" layoutY="21.0" spacing="45.0" AnchorPane.topAnchor="15.0">
+                        <ScrollPane centerShape="false" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" pannable="true" prefHeight="568.0" prefWidth="192.0" scaleShape="false">
+                           <content>
+                              <VBox spacing="45.0">
                                  <children>
                                     <HBox id="myHBox">
                                        <children>
@@ -233,7 +234,7 @@
                                                       <Button mnemonicParsing="false" onAction="#selectInformationSource" text="Select center" />
                                                       <HBox alignment="CENTER" prefHeight="25.0" prefWidth="100.0">
                                                          <children>
-                                                            <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#infoExpansionButtonClicked" text="Expand Information" />
+                                                            <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#infoExpansionButtonClicked" text="Expand" />
                                                          </children>
                                                       </HBox>
                                                    </children>
@@ -243,9 +244,12 @@
                                        </children>
                                     </VBox>
                                  </children>
+                                 <padding>
+                                    <Insets left="5.0" top="10.0" />
+                                 </padding>
                               </VBox>
-                           </children>
-                        </AnchorPane>
+                           </content>
+                        </ScrollPane>
                     </content>
                   </TitledPane>
                </children>
