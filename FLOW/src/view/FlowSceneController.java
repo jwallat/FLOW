@@ -122,7 +122,7 @@ public class FlowSceneController implements Initializable {
 	private static final DropShadow highlightSource = new DropShadow(BlurType.GAUSSIAN, Color.VIOLET.darker().darker(), 30, 0.7, 0, 0);
 	private static final DropShadow highlightSink = new DropShadow(BlurType.GAUSSIAN, Color.ORANGE, 30, 0.7, 0, 0);
 	
-	private static final DropShadow highlightInformationFlow = new DropShadow(BlurType.GAUSSIAN, Color.DARKGREEN.brighter(), 30, 0.7, 0, 0);
+	private static final DropShadow highlightInformationFlow = new DropShadow(BlurType.GAUSSIAN, Color.ORANGE.brighter(), 30, 0.7, 0, 0);
 
 	
 	/**
