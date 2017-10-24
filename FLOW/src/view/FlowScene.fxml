@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FlowSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FlowSceneController">
    <top>
       <HBox BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
@@ -93,14 +93,14 @@
                                                    <children>
                                                       <VBox spacing="10.0">
                                                          <children>
-                                                            <Label text="Source: " />
+                                                            <Label prefHeight="17.0" prefWidth="51.0" text="Source: " />
                                                             <Label text="Sink: " />
                                                          </children>
                                                       </VBox>
                                                       <VBox prefHeight="44.0" prefWidth="132.0" spacing="10.0">
                                                          <children>
-                                                            <Label fx:id="sourceLabel" prefHeight="17.0" prefWidth="148.0" text="                 " />
-                                                            <Label fx:id="sinkLabel" prefHeight="17.0" prefWidth="130.0" text="            " />
+                                                            <Label fx:id="sourceLabel" text="                 " />
+                                                            <Label fx:id="sinkLabel" text="            " />
                                                          </children>
                                                       </VBox>
                                                    </children>
@@ -215,11 +215,6 @@
                                           </HBox>
                                           <VBox spacing="10.0">
                                              <children>
-                                                <HBox prefHeight="100.0" prefWidth="200.0">
-                                                   <children>
-                                                      <Label text="Step:" />
-                                                   </children>
-                                                </HBox>
                                                 <HBox spacing="20.0">
                                                    <children>
                                                       <VBox spacing="10.0">
@@ -227,9 +222,9 @@
                                                             <Label text="Center: " />
                                                          </children>
                                                       </VBox>
-                                                      <VBox prefHeight="44.0" prefWidth="132.0" spacing="10.0">
+                                                      <VBox spacing="10.0">
                                                          <children>
-                                                            <Label fx:id="centerVertexLabel" prefHeight="17.0" prefWidth="148.0" text="                 " />
+                                                            <Label fx:id="centerVertexLabel" text="                 " />
                                                          </children>
                                                       </VBox>
                                                    </children>
@@ -242,6 +237,34 @@
                                                             <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#infoExpansionButtonClicked" text="Expand" />
                                                          </children>
                                                       </HBox>
+                                                   </children>
+                                                </HBox>
+                                                <HBox spacing="20.0">
+                                                   <children>
+                                                      <VBox spacing="10.0">
+                                                         <children>
+                                                            <Label text="Step:" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox spacing="10.0">
+                                                         <children>
+                                                            <Label fx:id="stepCounterLabel" />
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </HBox>
+                                                <HBox spacing="20.0">
+                                                   <children>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label text="Vertices reached:" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label fx:id="verticesReachedLabel" />
+                                                         </children>
+                                                      </VBox>
                                                    </children>
                                                 </HBox>
                                              </children>

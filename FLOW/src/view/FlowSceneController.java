@@ -81,6 +81,12 @@ public class FlowSceneController implements Initializable {
 	private Label centerVertexLabel;
 	
 	@FXML 
+	private Label stepCounterLabel;
+	
+	@FXML
+	private Label verticesReachedLabel;
+	
+	@FXML 
 	private Label sinkLabel;
 	
 	@FXML
@@ -457,6 +463,8 @@ public class FlowSceneController implements Initializable {
 		for (Object v : network.getVertices().stream().filter(vertex -> vertex.getShape().getEffect()  == highlightInformationFlow).toArray()) {
 			network.getEdges().stream().filter(e -> e.getOrigin().equals(v)).forEach(e -> e.getDestination().getShape().setEffect(highlightInformationFlow));;
 		}
+		
+		// speichere die Vertex sets für vor und zurück springen + steps hochzählen
 	}
 	
 	/**
@@ -489,6 +497,8 @@ public class FlowSceneController implements Initializable {
 		
 		maxFlowLabel.setText("");
 		flowDistanceLabel.setText("");
+		
+		stepCounterLabel.setText("0");
 				
 		
 		informationPane.expandedProperty().set(true);
