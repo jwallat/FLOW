@@ -463,7 +463,7 @@ public class FlowSceneController implements Initializable {
 	public void infoExpansionButtonClicked() {
 		if (iE != null) {
 			iE.iterateForewards();
-		}
+		} 
 	}
 	
 	/**
