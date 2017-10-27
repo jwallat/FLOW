@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 import algorithm.EdmondsKarp;
 import algorithm.FlowDistance;
+import algorithm.InformationExpense;
 import control.Parser;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -118,6 +119,7 @@ public class FlowSceneController implements Initializable {
 	private Vertex sink;
 	private Vertex centerVertex;
 	private boolean highlightFlow = false;
+	private InformationExpense iE;
 	
 	public enum visualizationType {
 		NETWORKFLOW, FLOWDISTANCE, WATERPIPES 
@@ -459,12 +461,9 @@ public class FlowSceneController implements Initializable {
 	 * Funktion die bei Klick des Info-Expansion-Buttons ausgeführt wird.
 	 */
 	public void infoExpansionButtonClicked() {
-		//highlight next vertices immer nur die nächste
-		for (Object v : network.getVertices().stream().filter(vertex -> vertex.getShape().getEffect()  == highlightInformationFlow).toArray()) {
-			network.getEdges().stream().filter(e -> e.getOrigin().equals(v)).forEach(e -> e.getDestination().getShape().setEffect(highlightInformationFlow));;
+		if (iE != null) {
+			iE.iterateForewards();
 		}
-		
-		// speichere die Vertex sets für vor und zurück springen + steps hochzählen
 	}
 	
 	/**
@@ -498,7 +497,7 @@ public class FlowSceneController implements Initializable {
 		maxFlowLabel.setText("");
 		flowDistanceLabel.setText("");
 		
-		stepCounterLabel.setText("0");
+		//stepCounterLabel.setText("0");
 				
 		
 		informationPane.expandedProperty().set(true);
@@ -520,7 +519,10 @@ public class FlowSceneController implements Initializable {
 				@Override
 				public void handle(MouseEvent event) {
 					centerVertex = v;
-					v.getShape().setEffect(highlightInformationFlow);
+					iE = new InformationExpense(network, v);
+					stepCounterLabel.textProperty().bind(iE.Step());
+					verticesReachedLabel.textProperty().bind(iE.PercentageReached());
+					//v.getShape().setEffect(highlightInformationFlow);
 					centerVertexLabel.setText(v.getName());
 				}
         	});
