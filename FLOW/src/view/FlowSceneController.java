@@ -47,7 +47,7 @@ import util.PannablePane;
 import util.SceneGestures;
 
 /**
- * Kontroller zur FlowScene.fxml. Hier werden alle Interaktionen mit dem UI ermöglicht.
+ * Kontroller zur FlowScene.fxml. Hier werden alle Interaktionen mit dem UI ermï¿½glicht.
  * 
  * @author Jonas Wallat
  *
@@ -130,7 +130,7 @@ public class FlowSceneController implements Initializable {
 	private static final DropShadow highlightSource = new DropShadow(BlurType.GAUSSIAN, Color.VIOLET.darker().darker(), 30, 0.7, 0, 0);
 	private static final DropShadow highlightSink = new DropShadow(BlurType.GAUSSIAN, Color.ORANGE, 30, 0.7, 0, 0);
 	
-	private static final DropShadow highlightInformationFlow = new DropShadow(BlurType.GAUSSIAN, Color.ORANGE.brighter(), 30, 0.7, 0, 0);
+	//private static final DropShadow highlightInformationFlow = new DropShadow(BlurType.GAUSSIAN, Color.ORANGE.brighter(), 30, 0.7, 0, 0);
 
 	
 	/**
@@ -143,7 +143,7 @@ public class FlowSceneController implements Initializable {
 	}
 	
 	/**
-	 * Übergibt die Stage, sodass der FileChooser verwendet werden kann.
+	 * ï¿½bergibt die Stage, sodass der FileChooser verwendet werden kann.
 	 * 
 	 * @param stage Stage der FlowScene.fxml
 	 */
@@ -211,7 +211,7 @@ public class FlowSceneController implements Initializable {
  	}
 	
 	/**
-	 * Öffnet einen FileChooser fuer XML-Dateien.
+	 * ï¿½ffnet einen FileChooser fuer XML-Dateien.
 	 * 
 	 */
 	public void openFile() {
@@ -246,7 +246,7 @@ public class FlowSceneController implements Initializable {
 	}
 	
 	/**
-	 * Funktion die das Programm beendet. Sie wird über das UI aufgerufen.
+	 * Funktion die das Programm beendet. Sie wird ï¿½ber das UI aufgerufen.
 	 * 
 	 */
 	public void close() {
@@ -254,8 +254,8 @@ public class FlowSceneController implements Initializable {
 	}
 	
 	/**
-	 * Funktion die bei Auswahl des Radiobuttons ausgeführt wird. 
-	 * Die beiden Radiobuttons schließen sich gegenseitig aus und geben an, welche Information auf den 
+	 * Funktion die bei Auswahl des Radiobuttons ausgefï¿½hrt wird. 
+	 * Die beiden Radiobuttons schlieï¿½en sich gegenseitig aus und geben an, welche Information auf den 
 	 * Kanten angezeigt wird.
 	 * 
 	 */
@@ -276,8 +276,8 @@ public class FlowSceneController implements Initializable {
 	}
 	
 	/**
-	 * Funktion die bei Auswahl des Radiobuttons ausgeführt wird. 
-	 * Die beiden Radiobuttons schließen sich gegenseitig aus und geben an, welche Information auf den 
+	 * Funktion die bei Auswahl des Radiobuttons ausgefï¿½hrt wird. 
+	 * Die beiden Radiobuttons schlieï¿½en sich gegenseitig aus und geben an, welche Information auf den 
 	 * Kanten angezeigt wird.
 	 * 
 	 */
@@ -297,8 +297,8 @@ public class FlowSceneController implements Initializable {
 	}
 	
 	/**
-	 * Funktion die bei Auswahl des Radiobuttons ausgeführt wird. 
-	 * Die drei Radiobuttons schließen sich gegenseitig aus und geben an, welche Information auf den 
+	 * Funktion die bei Auswahl des Radiobuttons ausgefï¿½hrt wird. 
+	 * Die drei Radiobuttons schlieï¿½en sich gegenseitig aus und geben an, welche Information auf den 
 	 * Kanten angezeigt wird.
 	 * 
 	 */
@@ -319,8 +319,8 @@ public class FlowSceneController implements Initializable {
 	}
 	
 	/**
-	 * Öffnet das InformationPane und lässt den Nutzer Source/Sink mit klick
-	 * auswählen. Wird ausgeführt, wenn der "select vertices" Button geklickt wird.
+	 * ï¿½ffnet das InformationPane und lï¿½sst den Nutzer Source/Sink mit klick
+	 * auswï¿½hlen. Wird ausgefï¿½hrt, wenn der "select vertices" Button geklickt wird.
 	 * 
 	 */
 	@FXML
@@ -445,7 +445,7 @@ public class FlowSceneController implements Initializable {
 	}
 	
 	/**
-	 * Funktion die bei Klick des Toggle-Buttons ausgeführt wird.
+	 * Funktion die bei Klick des Toggle-Buttons ausgefï¿½hrt wird.
 	 * 
 	 */
 	public void highlightFlowButtonClicked() {
@@ -458,17 +458,26 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Klick des Info-Expansion-Buttons ausgeführt wird.
+	 * Funktion die bei Klick des Info-Expansion-Forewards-Buttons ausgefï¿½hrt wird.
 	 */
-	public void infoExpansionButtonClicked() {
+	public void infoExpansionForewardsButtonClicked() {
 		if (iE != null) {
 			iE.iterateForewards();
 		} 
 	}
 	
 	/**
-	 * Funktion die bei Klicken des "Select Source" Buttons ausgeführt wird. 
-	 * Es die hier ausgewählte Source wird für die Informationsausbreitung verwendet.
+	 * Funktion die bei Klick des Info-Expansion-Backwards-Buttons ausgefï¿½hrt wird.
+	 */
+	public void infoExpansionBackwardsButtonClicked() {
+		if (iE != null) {
+			iE.iterateBackwards();
+		}
+	}
+	
+	/**
+	 * Funktion die bei Klicken des "Select Source" Buttons ausgefï¿½hrt wird. 
+	 * Es die hier ausgewï¿½hlte Source wird fï¿½r die Informationsausbreitung verwendet.
 	 */
 	public void selectInformationSource() {
 		if (network == null) {
@@ -564,7 +573,7 @@ public class FlowSceneController implements Initializable {
 
 	/**
 	 * Visualisiert das Netzwerk aus der XML-Datei.
-	 * Wird aufgerufen, nachdem über den FileChooser eine Datei ausgewählt wurde.
+	 * Wird aufgerufen, nachdem ï¿½ber den FileChooser eine Datei ausgewï¿½hlt wurde.
 	 * 
 	 */
 	private void showNetwork() {
@@ -593,7 +602,7 @@ public class FlowSceneController implements Initializable {
 	}
 	
 	/**
-	 * Aktualisiert die Elemente des Canvas, nach einer Änderung.
+	 * Aktualisiert die Elemente des Canvas, nach einer ï¿½nderung.
 	 * Das Netzwerk aus der XML wird angezeigt.
 	 */
 	private void updateGraphics() {
@@ -607,8 +616,8 @@ public class FlowSceneController implements Initializable {
 	
 	/**
 	 * Zeichnet die Edges auf das Canvas.
-	 * Besonders ist dabei zu beachten, dass für bidirektionale Edges besonders vorgegangen wird:
-	 * Das Weighting soll 2x gezeichnet werden, so dass jeweils Flow/Kapazität in Flussrichtung
+	 * Besonders ist dabei zu beachten, dass fï¿½r bidirektionale Edges besonders vorgegangen wird:
+	 * Das Weighting soll 2x gezeichnet werden, so dass jeweils Flow/Kapazitï¿½t in Flussrichtung
 	 * zeigen.
 	 * 
 	 */
@@ -678,13 +687,13 @@ public class FlowSceneController implements Initializable {
 	}
 	
 	/**
-	 * Methode die aufgerufen wird wenn der RadioButton für das Anzeigen des Kanalsystems ausgewählt wurde.
+	 * Methode die aufgerufen wird wenn der RadioButton fï¿½r das Anzeigen des Kanalsystems ausgewï¿½hlt wurde.
 	 * Hier werden die Kanten als 
 	 * 
 	 */
 	private void drawWaterPipes() {
 		
-		// Verteile die Kapazitäten auf eine strokeWidth zwischen 5 und 15
+		// Verteile die Kapazitï¿½ten auf eine strokeWidth zwischen 5 und 15
 		int minWidth = 6;
 		int maxWidth = 14;
 					

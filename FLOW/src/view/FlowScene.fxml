@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FlowSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FlowSceneController">
    <top>
       <HBox BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
@@ -234,7 +234,8 @@
                                                       <Button mnemonicParsing="false" onAction="#selectInformationSource" text="Select center" />
                                                       <HBox alignment="CENTER" prefHeight="25.0" prefWidth="100.0">
                                                          <children>
-                                                            <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#infoExpansionButtonClicked" text="Expand" />
+                                                            <Button mnemonicParsing="false" onAction="#infoExpansionBackwardsButtonClicked" text="&lt;" />
+                                                            <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#infoExpansionForewardsButtonClicked" text="&gt;" />
                                                          </children>
                                                       </HBox>
                                                    </children>
