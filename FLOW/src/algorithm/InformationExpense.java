@@ -20,11 +20,10 @@ public class InformationExpense {
 	private SimpleStringProperty step = new SimpleStringProperty();
 	private SimpleStringProperty percentageReached = new SimpleStringProperty();
 	private double percentage = 0.0;
-	private int numHighlightesVertices = 0;
+	private int numElements[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	private Network network;
 	private DecimalFormat dm = new DecimalFormat("#,##0.00");
 	
-	private Vertex center;
 	
 	private static final DropShadow highlightInformationFlow = new DropShadow(BlurType.GAUSSIAN, Color.ORANGE.brighter(), 30, 0.7, 0, 0);
 	private static final DropShadow d1 = new DropShadow(BlurType.GAUSSIAN ,Color.rgb(255, 0, 0), 30, 0.7, 0, 0);
@@ -43,15 +42,13 @@ public class InformationExpense {
 		center.getShape().setEffect(highlightInformationFlow);
 		List<Vertex> tmp = new ArrayList<Vertex>();
 		tmp.add(center);
-		numHighlightesVertices++;
 		informationExpenseStepContainer.add(tmp);
 		step.set("0");
 		percentageReached.set("0,00");
 		this.network = network;
 		
-		this.center = center;
 		
-		computeHighlightLists();
+		computeHighlightLists(center);
 		
 		dropShadowList.add(d1);
 		dropShadowList.add(d2);
@@ -66,21 +63,6 @@ public class InformationExpense {
 	
 	public void iterateForewards() {		
 		if (percentage < 1.0) {
-			List<Vertex> tmp = new ArrayList<Vertex>();
-			//tmp.addAll(informationExpenseStepContainer.get(Integer.parseInt(step.get())));
-						
-			for (Vertex v : informationExpenseStepContainer.get(Integer.parseInt(step.get()))) {
-				for (Edge e : network.getEdges()) {
-					if (e.getOrigin().equals(v) && !tmp.contains(e.getDestination())) {
-						System.out.println("Forewards, contained: " + tmp.size() + ", " + isInInformationExpenseStepContainer(e.getDestination()));
-						if (!isInInformationExpenseStepContainer(e.getDestination())) {
-							tmp.add(e.getDestination());
-						}
-					}
-				}
-			}
-			numHighlightesVertices += tmp.size();
-			informationExpenseStepContainer.add(tmp);
 			
 			DropShadow d;
 			if (dropShadowList.get(Integer.parseInt(step.get())) != null) {
@@ -89,63 +71,36 @@ public class InformationExpense {
 			else {
 				d = highlightInformationFlow;
 			}
-			// set visual effect to the preferred dropshadow
-			for (Vertex v : tmp) {
-				//v.getShape().setEffect(highlightInformationFlow);
-				
+
+			for (Vertex v : highlightLists.get(Integer.parseInt(step.get()) + 1)) {
 				v.getShape().setEffect(d);
 			}
 			
 			// calculate new percentage
-			percentage = (double) (numHighlightesVertices / (double) network.getVertices().size());
-			System.out.println("******************");
-			System.out.println("Num: " + numHighlightesVertices);
-			System.out.println(dm.format(percentage));
-			System.out.println("Network size: " + network.getVertices().size());
-			System.out.println("Tmp size: " + tmp.size());
+			percentage = (double) (numElements[Integer.parseInt(step.get()) + 1] / (double) network.getVertices().size());
 			percentageReached.set(dm.format(percentage));
 			
 			step.set(Integer.parseInt(step.get()) + 1 + "");
 		}
 	}
 	
-	private boolean isInInformationExpenseStepContainer(Vertex v) {
-		for (List<Vertex> list : informationExpenseStepContainer) {
-			for (Vertex vertex : list) {
-				if (v.equals(vertex)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	
 	public void iterateBackwards() {
 		if (Integer.parseInt(step.get()) > 0) {
 			
-			List<Vertex> verticesToUnhighlight = informationExpenseStepContainer.get(Integer.parseInt(step.get()));
-			verticesToUnhighlight.stream().forEach(v -> v.getShape().setEffect(null));
-			System.out.println("Num: " + numHighlightesVertices + "   -    " + verticesToUnhighlight.size());
-			numHighlightesVertices -= verticesToUnhighlight.size();
+			for (Vertex v : highlightLists.get(Integer.parseInt(step.get()))) {
+				v.getShape().setEffect(null);
+			}
 			
 			// verringere den stepCounter
 			step.set(Integer.parseInt(step.get()) - 1 + "");
 			
-			if (step.get().equals("0")) {
-				for (List<Vertex> l : informationExpenseStepContainer) {
-					l.clear();
-				}
-				//informationExpenseStepContainer.clear();
-				System.out.println("Lists cleared");
-			}
 			
-			percentage = (double) (numHighlightesVertices / (double) network.getVertices().size());
+			percentage = (double) (numElements[Integer.parseInt(step.get())] / (double) network.getVertices().size());
 			percentageReached.set(dm.format(percentage));
 		}
 	}
 	
-	// besseren Namen ausdenken 
-	private List<List<Vertex>> computeHighlightLists() {
+	public List<List<Vertex>> computeHighlightLists(Vertex center) {
 		
 		List<Vertex> firstList = new ArrayList<Vertex>();
 		firstList.add(center);
@@ -154,10 +109,10 @@ public class InformationExpense {
 		
 		for (int i = 1; numElements < network.getVertices().size(); i++) {
 			List<Vertex> stepIList = new ArrayList<Vertex>();
-			for (Vertex v : highlightLists.get(i)) {
+			for (Vertex v : highlightLists.get(i-1)) {
 				for (Edge e: network.getEdges()) {
 					if (e.getOrigin().equals(v)) {
-						if (!contains(highlightLists, e.getDestination())) {
+						if (!contains(highlightLists, e.getDestination()) && !stepIList.contains(e.getDestination())) {
 							stepIList.add(e.getDestination());
 							numElements++;
 						}
@@ -167,6 +122,20 @@ public class InformationExpense {
 			highlightLists.add(stepIList);
 		}
 		
+		this.numElements[0] = 1;
+		for (int i = 1; i < highlightLists.size(); i++) {
+			this.numElements[i] = this.numElements[i-1] + highlightLists.get(i).size();
+		}
+		
+		System.out.println("Total number: " + network.getVertices().size());
+		for (int i = 0; i < highlightLists.size(); i++) {
+			System.out.println("\n\n");
+			System.out.println("List: " + i + ", Size: " + highlightLists.get(i).size());
+			for (Vertex v : highlightLists.get(i)) {
+				System.out.println(v.getName());
+			}
+		}
+		
 		
 		return highlightLists;
 	}
@@ -174,7 +143,7 @@ public class InformationExpense {
 	private boolean contains(List<List<Vertex>> list, Vertex v) {
 		for (List<Vertex> l2 : list) {
 			for (Vertex v2 : l2) {
-				if (v.equals(v2)) {
+				if (v.getName().equals(v2.getName())) {
 					return true;
 				}
 			}
