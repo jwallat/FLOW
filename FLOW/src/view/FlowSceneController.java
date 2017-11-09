@@ -533,6 +533,13 @@ public class FlowSceneController implements Initializable {
 					verticesReachedLabel.textProperty().bind(iE.PercentageReached());
 					//v.getShape().setEffect(highlightInformationFlow);
 					centerVertexLabel.setText(v.getName());
+					
+					for (Vertex v: network.getVertices()) {
+						Shape shape = v.getShape();
+						shape.setOnMouseEntered(null);
+						shape.setOnMouseClicked(null);
+						shape.setOnMouseExited(null);
+					}
 				}
         	});
 

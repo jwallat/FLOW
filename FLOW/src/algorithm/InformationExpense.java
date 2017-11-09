@@ -24,17 +24,8 @@ public class InformationExpense {
 	private Network network;
 	private DecimalFormat dm = new DecimalFormat("#,##0.00");
 	
+	private static final DropShadow highlightInformationFlow = new DropShadow(BlurType.GAUSSIAN, Color.RED.interpolate(Color.BLUE, 0).darker(), 30, 0.7, 0, 0);
 	
-	private static final DropShadow highlightInformationFlow = new DropShadow(BlurType.GAUSSIAN, Color.ORANGE.brighter(), 30, 0.7, 0, 0);
-	private static final DropShadow d1 = new DropShadow(BlurType.GAUSSIAN ,Color.rgb(255, 0, 0), 30, 0.7, 0, 0);
-	private static final DropShadow d2 = new DropShadow(BlurType.GAUSSIAN ,Color.rgb(230, 0, 25), 30, 0.7, 0, 0);
-	private static final DropShadow d3 = new DropShadow(BlurType.GAUSSIAN ,Color.rgb(205, 0, 50), 30, 0.7, 0, 0);
-	private static final DropShadow d4 = new DropShadow(BlurType.GAUSSIAN ,Color.rgb(180, 0, 75), 30, 0.7, 0, 0);
-	private static final DropShadow d5 = new DropShadow(BlurType.GAUSSIAN ,Color.rgb(155, 0, 100), 30, 0.7, 0, 0);
-	private static final DropShadow d6 = new DropShadow(BlurType.GAUSSIAN ,Color.rgb(100, 0, 150), 30, 0.7, 0, 0);
-	private static final DropShadow d7 = new DropShadow(BlurType.GAUSSIAN ,Color.rgb(75, 0, 175), 30, 0.7, 0, 0);
-	private static final DropShadow d8 = new DropShadow(BlurType.GAUSSIAN ,Color.rgb(50, 0, 200), 30, 0.7, 0, 0);
-	private static final DropShadow d9 = new DropShadow(BlurType.GAUSSIAN ,Color.rgb(25, 0, 225), 30, 0.7, 0, 0);
 	
 	List<DropShadow> dropShadowList = new ArrayList<DropShadow>();
 	
@@ -48,32 +39,18 @@ public class InformationExpense {
 		this.network = network;
 		
 		
-		computeHighlightLists(center);
+		//computeHighlightLists(center);
 		
-		dropShadowList.add(d1);
-		dropShadowList.add(d2);
-		dropShadowList.add(d3);
-		dropShadowList.add(d4);
-		dropShadowList.add(d5);
-		dropShadowList.add(d6);
-		dropShadowList.add(d7);
-		dropShadowList.add(d8);
-		dropShadowList.add(d9);
+		getVerticesNotReached(2, 0.8);
 	}
 	
 	public void iterateForewards() {		
 		if (percentage < 1.0) {
 			
-			DropShadow d;
-			if (dropShadowList.get(Integer.parseInt(step.get())) != null) {
-				d = dropShadowList.get(Integer.parseInt(step.get()));
-			}
-			else {
-				d = highlightInformationFlow;
-			}
-
+			int s = Integer.parseInt(step.get());
+			
 			for (Vertex v : highlightLists.get(Integer.parseInt(step.get()) + 1)) {
-				v.getShape().setEffect(d);
+				v.getShape().setEffect(new DropShadow(BlurType.GAUSSIAN ,Color.RED.interpolate(Color.BLUE, (double) ((double) (s + 1) / (double) (highlightLists.size() - 1))), 30, 0.7, 0, 0));
 			}
 			
 			// calculate new percentage
@@ -102,10 +79,12 @@ public class InformationExpense {
 	
 	public List<List<Vertex>> computeHighlightLists(Vertex center) {
 		
+		//System.out.println("In function");
 		List<Vertex> firstList = new ArrayList<Vertex>();
 		firstList.add(center);
 		highlightLists.add(firstList);
 		int numElements = 1;
+		//System.out.println("After add first");
 		
 		for (int i = 1; numElements < network.getVertices().size(); i++) {
 			List<Vertex> stepIList = new ArrayList<Vertex>();
@@ -122,22 +101,26 @@ public class InformationExpense {
 			highlightLists.add(stepIList);
 		}
 		
+		//System.out.println("After Loop");
+		
 		this.numElements[0] = 1;
 		for (int i = 1; i < highlightLists.size(); i++) {
 			this.numElements[i] = this.numElements[i-1] + highlightLists.get(i).size();
 		}
 		
-		System.out.println("Total number: " + network.getVertices().size());
+		/*System.out.println("Total number: " + network.getVertices().size());
 		for (int i = 0; i < highlightLists.size(); i++) {
-			System.out.println("\n\n");
-			System.out.println("List: " + i + ", Size: " + highlightLists.get(i).size());
+			//System.out.println("\n\n");
+			//System.out.println("List: " + i + ", Size: " + highlightLists.get(i).size());
 			for (Vertex v : highlightLists.get(i)) {
 				System.out.println(v.getName());
 			}
-		}
+		}*/	
 		
+		List<List<Vertex>> resultList = new ArrayList<List<Vertex>>();
+		resultList.addAll(highlightLists);
 		
-		return highlightLists;
+		return resultList;
 	}
 	
 	private boolean contains(List<List<Vertex>> list, Vertex v) {
@@ -148,8 +131,45 @@ public class InformationExpense {
 				}
 			}
 		}
-		
 		return false;
+	}
+	
+	/**
+	 * Gibt eine Liste an Knoten zurück, die nach einer gegebenen Anzahl an Schritten 
+	 * weniger als eine gegebene Prozentzahl an Knoten erreicht haben.
+	 * 
+	 * @param steps - die Anzahl der Schritte
+	 * @param percentage - die Prozentzahl aller Knoten, die nach "steps" Schritten erreicht werden müssen.
+	 * @return
+	 */
+	public List<Vertex> getVerticesNotReached(int steps, double percentage) {
+		List<Vertex> resultList = new ArrayList<Vertex>();
+		
+		for (Vertex v: network.getVertices()) {
+			System.out.println("Prrrrring");
+			List<List<Vertex>> list = computeHighlightLists(v);
+			System.out.println(list.size());
+			System.out.println("Ping");
+			double percentageReached = (double) ((double) getSizeAfterISteps(list, steps) / (double) network.getVertices().size());
+			if (percentageReached < percentage) {
+				resultList.add(v);
+				System.out.println("Name: " + v.getName());
+			}
+		}
+		
+		return resultList;
+	}
+	
+	private int getSizeAfterISteps(List<List<Vertex>> list, int steps) {
+		int num = 0;
+		
+		for (int i = 0; i <= steps; i++) {
+			List<Vertex> l2 = list.get(i);
+			for (Vertex v : l2) {
+				num++;
+			}
+		}
+		return num;
 	}
 	
 	public final DropShadow getScaledDropShadow(int step) {
