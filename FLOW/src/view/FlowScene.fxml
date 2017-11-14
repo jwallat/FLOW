@@ -9,6 +9,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.input.KeyCodeCombination?>
@@ -266,6 +267,28 @@
                                                             <Label fx:id="verticesReachedLabel" />
                                                          </children>
                                                       </VBox>
+                                                   </children>
+                                                </HBox>
+                                                <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                                   <children>
+                                                      <VBox spacing="10.0">
+                                                         <children>
+                                                            <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                                                               <children>
+                                                                  <Label text="#: " />
+                                                                  <TextField fx:id="stepTextField" prefWidth="25.0" />
+                                                                  <Label text="\%:  " />
+                                                                  <TextField fx:id="percentageTextField" prefWidth="40.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox prefHeight="100.0" prefWidth="200.0">
+                                                               <children>
+                                                                  <Button fx:id="goButton" mnemonicParsing="false" onAction="#goButtonClicked" text="Go" />
+                                                               </children>
+                                                            </HBox>
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox prefHeight="200.0" prefWidth="100.0" />
                                                    </children>
                                                 </HBox>
                                              </children>

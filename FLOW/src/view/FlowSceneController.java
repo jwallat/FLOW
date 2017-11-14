@@ -24,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.BlurType;
@@ -110,6 +111,15 @@ public class FlowSceneController implements Initializable {
 	
 	@FXML
 	private ToggleButton highlightFlowButton;
+	
+	@FXML
+	private TextField stepTextField; 
+	
+	@FXML
+	private TextField percentageTextField;
+	
+	@FXML
+	private Button goButton;
 	
 	private Stage stage;
 	private File file;
@@ -529,6 +539,7 @@ public class FlowSceneController implements Initializable {
 				public void handle(MouseEvent event) {
 					centerVertex = v;
 					iE = new InformationExpense(network, v);
+					iE.computeHighlightLists(v);
 					stepCounterLabel.textProperty().bind(iE.Step());
 					verticesReachedLabel.textProperty().bind(iE.PercentageReached());
 					//v.getShape().setEffect(highlightInformationFlow);
@@ -551,7 +562,26 @@ public class FlowSceneController implements Initializable {
             });
         }
 	}
+	
+	/**
+	 * Funktion die bei Klicken des "Go"-Buttons ausgeführt wird.
+	 * Dabei werden die angebenen Parameter gelesen und alle Knoten, die in $steps 
+	 * nicht mindestens $prozent der gesamten Knoten erreichen ausgegeben.
+	 */
+	public void goButtonClicked() {
+		InformationExpense iE = new InformationExpense(network, null);
+		List<Vertex> list =  iE.getVerticesNotReached(Integer.parseInt(stepTextField.getText()), 
+																	   Double.parseDouble(percentageTextField.getText()));
 		
+		for (Vertex v : network.getVertices()) {
+			v.getShape().setEffect(null);
+		}
+		
+		for (Vertex v : list) {
+			v.getShape().setEffect(highlightSink);
+		}
+	}
+	
 	/**
 	 * Entfernt alle Vertices vom AnchorPane.
 	 * 
