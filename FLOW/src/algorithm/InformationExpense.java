@@ -213,7 +213,7 @@ public class InformationExpense {
 					+ percentage * 100 + "_Prozent_aller_Knoten_erreichen.csv");
 
 			out.println("Nach Steps geordnete Auflistung der Knoten, die in weniger als " + percentage
-					+ " Prozent aller Knoten erreicht haben:");
+					+ " Prozent aller Knoten erreicht haben");
 
 			List<Vertex> list = getVerticesNotReached(1, percentage);
 			for (int i = 1; !list.isEmpty(); i++) {
