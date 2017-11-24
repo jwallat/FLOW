@@ -48,8 +48,9 @@ import util.PannablePane;
 import util.SceneGestures;
 
 /**
- * Kontroller zur FlowScene.fxml. Hier werden alle Interaktionen mit dem UI erm�glicht.
- * 
+ * Kontroller zur FlowScene.fxml. Hier werden alle Interaktionen mit dem UI
+ * erm�glicht.
+ *
  * @author Jonas Wallat
  *
  */
@@ -57,70 +58,70 @@ public class FlowSceneController implements Initializable {
 
 	@FXML
 	private MenuBar menuBar;
-	
+
 	@FXML
 	private HBox hBox;
-	
+
 	@FXML
 	private AnchorPane anchor;
-	
+
 	private PannablePane pannablePane;
-	
+
 	private Canvas canvas;
-	
+
 	private GraphicsContext gc;
-	
+
 	@FXML
 	private TitledPane informationPane;
-	
+
 	@FXML
 	private Label fileNameLabel;
-	
+
 	@FXML
 	private Label sourceLabel;
-	
+
 	@FXML
 	private Label centerVertexLabel;
-	
-	@FXML 
+
+	@FXML
 	private Label stepCounterLabel;
-	
+
 	@FXML
 	private Label verticesReachedLabel;
-	
-	@FXML 
+
+	@FXML
 	private Label sinkLabel;
-	
+
 	@FXML
 	private Label maxFlowLabel;
-	
+
 	@FXML
 	private Label flowDistanceLabel;
-	
-	@FXML 
+
+	@FXML
 	private Button acceptButton;
-	
+
 	@FXML
 	private RadioButton networkFlowRadioButton;
-	
+
 	@FXML
 	private RadioButton flowDistanceRadioButton;
-	
+
 	@FXML
 	private RadioButton waterPipeRadioButton;
-	
+
 	@FXML
 	private ToggleButton highlightFlowButton;
-	
+
 	@FXML
-	private TextField stepTextField; 
-	
+	private TextField stepTextField;
+
 	@FXML
 	private TextField percentageTextField;
-	
+
 	@FXML
 	private Button goButton;
-	
+
 	private Stage stage;
 	private File file;
 	private Parser parser;
@@ -130,166 +131,167 @@ public class FlowSceneController implements Initializable {
 	private Vertex centerVertex;
 	private boolean highlightFlow = false;
 	private InformationExpense iE;
-	
-	public enum visualizationType {
-		NETWORKFLOW, FLOWDISTANCE, WATERPIPES 
-	}
-	
-	private visualizationType edgeWeighting = visualizationType.NETWORKFLOW;
-	
-	private static final DropShadow highlightSource = new DropShadow(BlurType.GAUSSIAN, Color.VIOLET.darker().darker(), 30, 0.7, 0, 0);
-	private static final DropShadow highlightSink = new DropShadow(BlurType.GAUSSIAN, Color.ORANGE, 30, 0.7, 0, 0);
-	
-	//private static final DropShadow highlightInformationFlow = new DropShadow(BlurType.GAUSSIAN, Color.ORANGE.brighter(), 30, 0.7, 0, 0);
 
-	
+	public enum visualizationType {
+		NETWORKFLOW, FLOWDISTANCE, WATERPIPES
+	}
+
+	private visualizationType edgeWeighting = visualizationType.NETWORKFLOW;
+
+	private static final DropShadow highlightSource = new DropShadow(BlurType.GAUSSIAN, Color.VIOLET.darker().darker(),
+			30, 0.7, 0, 0);
+	private static final DropShadow highlightSink = new DropShadow(BlurType.GAUSSIAN, Color.ORANGE, 30, 0.7, 0, 0);
+
+	// private static final DropShadow highlightInformationFlow = new
+	// DropShadow(BlurType.GAUSSIAN, Color.ORANGE.brighter(), 30, 0.7, 0, 0);
+
 	/**
-	 * Initialisierungs-Mehtode, die aufgerufen wird, wenn in der Main.java die FlowScene.fxml geladen wird.
-	 * 
+	 * Initialisierungs-Mehtode, die aufgerufen wird, wenn in der Main.java die
+	 * FlowScene.fxml geladen wird.
+	 *
 	 */
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {		
-		
+	public void initialize(URL arg0, ResourceBundle arg1) {
+
 	}
-	
+
 	/**
 	 * �bergibt die Stage, sodass der FileChooser verwendet werden kann.
-	 * 
-	 * @param stage Stage der FlowScene.fxml
+	 *
+	 * @param stage
+	 *            Stage der FlowScene.fxml
 	 */
 	public void init(Stage stage) {
 		this.stage = stage;
-		
-		//Order Elements and set size-Properties
+
+		// Order Elements and set size-Properties
 		hBox.setPrefWidth(stage.getScene().getWidth());
 		hBox.setPrefHeight(stage.getScene().getHeight());
 		hBox.autosize();
 		hBox.toBack();
-		
+
 		menuBar.toFront();
 		menuBar.prefWidthProperty().bind(anchor.widthProperty());
-		
+
 		pannablePane = new PannablePane();
 		anchor.getChildren().add(pannablePane);
-		
+
 		anchor.setPrefWidth(hBox.getWidth());
 		anchor.setPrefHeight(hBox.getHeight());
 		anchor.autosize();
 		/*
-		Canvas anchorCanvas = new Canvas();
-		anchorCanvas.widthProperty().bind(anchor.widthProperty());
-		anchorCanvas.heightProperty().bind(anchor.heightProperty());
-		anchorCanvas.autosize();
-		
-		GraphicsContext gc2 = anchorCanvas.getGraphicsContext2D();
-		gc2 = anchorCanvas.getGraphicsContext2D();
-		gc2.setFill(Color.RED);
-		gc2.fillRect(0, 0, anchorCanvas.getWidth(), anchorCanvas.getHeight());
-		
-		anchor.getChildren().add(anchorCanvas);
-		*/
+		 * Canvas anchorCanvas = new Canvas();
+		 * anchorCanvas.widthProperty().bind(anchor.widthProperty());
+		 * anchorCanvas.heightProperty().bind(anchor.heightProperty());
+		 * anchorCanvas.autosize();
+		 *
+		 * GraphicsContext gc2 = anchorCanvas.getGraphicsContext2D(); gc2 =
+		 * anchorCanvas.getGraphicsContext2D(); gc2.setFill(Color.RED);
+		 * gc2.fillRect(0, 0, anchorCanvas.getWidth(),
+		 * anchorCanvas.getHeight());
+		 *
+		 * anchor.getChildren().add(anchorCanvas);
+		 */
 		anchor.toBack();
-		
+
 		pannablePane.setPrefWidth(anchor.widthProperty().get());
 		pannablePane.setPrefHeight(anchor.heightProperty().get());
-		//pannablePane.setPrefWidth(3000);
-		//pannablePane.setPrefHeight(3000);
+		// pannablePane.setPrefWidth(3000);
+		// pannablePane.setPrefHeight(3000);
 		pannablePane.autosize();
-		
+
 		pannablePane.toFront();
 		informationPane.toFront();
-		
-		
+
 		canvas = new Canvas();
-		pannablePane.getChildren().add(canvas);		
-		
-		//canvas.widthProperty().bind(pannablePane.widthProperty());
-		//canvas.heightProperty().bind(pannablePane.heightProperty());
+		pannablePane.getChildren().add(canvas);
+
+		// canvas.widthProperty().bind(pannablePane.widthProperty());
+		// canvas.heightProperty().bind(pannablePane.heightProperty());
 		canvas.setWidth(1900);
 		canvas.setHeight(1000);
 		canvas.autosize();
-		
+
 		gc = canvas.getGraphicsContext2D();
-		//gc.setFill(Color.BEIGE);
-		//gc.setFill(Color.WHITE);
-		//gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		
+		// gc.setFill(Color.BEIGE);
+		// gc.setFill(Color.WHITE);
+		// gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
 		SceneGestures sceneGestures = new SceneGestures(pannablePane);
-		stage.getScene().addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
-        stage.getScene().addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
-        stage.getScene().addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());        
- 	}
-	
+		stage.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
+		stage.getScene().addEventFilter(MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
+		stage.getScene().addEventFilter(ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
+	}
+
 	/**
 	 * �ffnet einen FileChooser fuer XML-Dateien.
-	 * 
+	 *
 	 */
 	public void openFile() {
-		
+
 		if (network != null) {
 			clearVertices();
 			clearLines();
 			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		}
-		
+
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Big FLOW");
 		fc.setInitialDirectory(new File(System.getProperty("user.dir") + "/resource/xmls"));
 		fc.getExtensionFilters().add(new ExtensionFilter("XML Files", "*.xml"));
-		
+
 		file = fc.showOpenDialog(stage);
-		
+
 		if (file == null) {
 			System.out.println("Fehler beim lesen der Datei!");
 		}
-		
+
 		fileNameLabel.setText(file.getName());
-		
+
 		parser = new Parser(file);
 		parser.parse();
 		network = parser.getData();
 		network.prepareNetwork();
 
 		showNetwork();
-		
+
 		informationPane.expandedProperty().set(true);
 	}
-	
+
 	/**
 	 * Funktion die das Programm beendet. Sie wird �ber das UI aufgerufen.
-	 * 
+	 *
 	 */
 	public void close() {
 		System.exit(0);
 	}
-	
+
 	/**
-	 * Funktion die bei Auswahl des Radiobuttons ausgef�hrt wird. 
-	 * Die beiden Radiobuttons schlie�en sich gegenseitig aus und geben an, welche Information auf den 
-	 * Kanten angezeigt wird.
-	 * 
+	 * Funktion die bei Auswahl des Radiobuttons ausgef�hrt wird. Die beiden
+	 * Radiobuttons schlie�en sich gegenseitig aus und geben an, welche
+	 * Information auf den Kanten angezeigt wird.
+	 *
 	 */
 	public void networkFlowRadioButtonClicked() {
 		if (file != null) {
 			if (flowDistanceRadioButton.isSelected() || waterPipeRadioButton.isSelected()) {
 				flowDistanceRadioButton.setSelected(false);
 				waterPipeRadioButton.setSelected(false);
-				
+
 				edgeWeighting = visualizationType.NETWORKFLOW;
-				
+
 				updateGraphics();
-			}
-			else {
+			} else {
 				networkFlowRadioButton.setSelected(true);
 			}
 		}
 	}
-	
+
 	/**
-	 * Funktion die bei Auswahl des Radiobuttons ausgef�hrt wird. 
-	 * Die beiden Radiobuttons schlie�en sich gegenseitig aus und geben an, welche Information auf den 
-	 * Kanten angezeigt wird.
-	 * 
+	 * Funktion die bei Auswahl des Radiobuttons ausgef�hrt wird. Die beiden
+	 * Radiobuttons schlie�en sich gegenseitig aus und geben an, welche
+	 * Information auf den Kanten angezeigt wird.
+	 *
 	 */
 	public void flowDistanceRadioButtonClicked() {
 		if (file != null) {
@@ -297,20 +299,19 @@ public class FlowSceneController implements Initializable {
 				networkFlowRadioButton.setSelected(false);
 				waterPipeRadioButton.setSelected(false);
 				edgeWeighting = visualizationType.FLOWDISTANCE;
-			
+
 				updateGraphics();
-			}
-			else {
+			} else {
 				flowDistanceRadioButton.setSelected(true);
 			}
 		}
 	}
-	
+
 	/**
-	 * Funktion die bei Auswahl des Radiobuttons ausgef�hrt wird. 
-	 * Die drei Radiobuttons schlie�en sich gegenseitig aus und geben an, welche Information auf den 
-	 * Kanten angezeigt wird.
-	 * 
+	 * Funktion die bei Auswahl des Radiobuttons ausgef�hrt wird. Die drei
+	 * Radiobuttons schlie�en sich gegenseitig aus und geben an, welche
+	 * Information auf den Kanten angezeigt wird.
+	 *
 	 */
 	public void waterPipeRadioButtonClicked() {
 		if (file != null) {
@@ -318,26 +319,25 @@ public class FlowSceneController implements Initializable {
 				networkFlowRadioButton.setSelected(false);
 				flowDistanceRadioButton.setSelected(false);
 				edgeWeighting = visualizationType.WATERPIPES;
-				
-				
+
 				updateGraphics();
-			}
-			else {
+			} else {
 				waterPipeRadioButton.setSelected(true);
 			}
 		}
 	}
-	
+
 	/**
 	 * �ffnet das InformationPane und l�sst den Nutzer Source/Sink mit klick
-	 * ausw�hlen. Wird ausgef�hrt, wenn der "select vertices" Button geklickt wird.
-	 * 
+	 * ausw�hlen. Wird ausgef�hrt, wenn der "select vertices" Button geklickt
+	 * wird.
+	 *
 	 */
 	@FXML
 	private void selectSourceAndSink() {
-		
+
 		if (network == null) {
-			
+
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Network Flow");
 			alert.setHeaderText(null);
@@ -346,7 +346,7 @@ public class FlowSceneController implements Initializable {
 			alert.showAndWait();
 			return;
 		}
-		
+
 		if (source != null) {
 			source.getShape().setEffect(null);
 			source = null;
@@ -360,40 +360,38 @@ public class FlowSceneController implements Initializable {
 			centerVertex = null;
 			centerVertexLabel.setText("");
 		}
-		
+
 		clearVertexHighlights();
-		
+
 		maxFlowLabel.setText("");
 		flowDistanceLabel.setText("");
 		sourceLabel.setText("");
 		sinkLabel.setText("");
-		
+
 		informationPane.expandedProperty().set(true);
 
-        for (Vertex v : network.getVertices()) {
-        	Shape shape = v.getShape();
-        	
-        	shape.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    stage.getScene().setCursor(Cursor.HAND);
-                }
-            });
-        	
-        	shape.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		for (Vertex v : network.getVertices()) {
+			Shape shape = v.getShape();
+
+			shape.setOnMouseEntered(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					stage.getScene().setCursor(Cursor.HAND);
+				}
+			});
+
+			shape.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
 					if (source == null) {
 						source = v;
 						v.getShape().setEffect(highlightSource);
 						sourceLabel.setText(v.getName());
-					}
-					else if (sink == null) {
+					} else if (sink == null) {
 						sink = v;
 						v.getShape().setEffect(highlightSink);
 						sinkLabel.setText(v.getName());
-					}
-					else {
+					} else {
 						source.getShape().setEffect(null);
 						source = sink;
 						source.getShape().setEffect(highlightSource);
@@ -403,48 +401,46 @@ public class FlowSceneController implements Initializable {
 						sinkLabel.setText(v.getName());
 					}
 				}
-        	});
+			});
 
-            shape.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    //shape.setEffect(null);
-                    stage.getScene().setCursor(Cursor.DEFAULT);
-                }
-            });
-        }
+			shape.setOnMouseExited(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					// shape.setEffect(null);
+					stage.getScene().setCursor(Cursor.DEFAULT);
+				}
+			});
+		}
 	}
-	
+
 	/**
 	 * Funktion die bei Klick auf den "Calculate"-Button aufgerufen wird.
-	 * 
+	 *
 	 */
 	public void calculateButtonClicked() {
 		if (source != null && sink != null) {
-			for (Vertex v: network.getVertices()) {
+			for (Vertex v : network.getVertices()) {
 				Shape shape = v.getShape();
 				shape.setOnMouseEntered(null);
 				shape.setOnMouseClicked(null);
 				shape.setOnMouseExited(null);
 			}
-			
-			EdmondsKarp edmondsKarp = new EdmondsKarp(network); 
+
+			EdmondsKarp edmondsKarp = new EdmondsKarp(network);
 			FlowDistance flowDistance = new FlowDistance(network);
-			
+
 			if (!edmondsKarp.areConnected(source, sink)) {
 				maxFlowLabel.setText("Not connected");
 				flowDistanceLabel.setText("Not connected");
-			}
-			else {
+			} else {
 				edmondsKarp.run(source, sink);
 				updateGraphics();
 				maxFlowLabel.setText(edmondsKarp.getMaxFlow() + "");
-				
+
 				flowDistance.run(source, sink);
 				flowDistanceLabel.setText(flowDistance.getFlowDistance() + "");
 			}
-		}
-		else {
+		} else {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Calculation ERROR");
 			alert.setHeaderText(null);
@@ -453,45 +449,48 @@ public class FlowSceneController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-	
+
 	/**
 	 * Funktion die bei Klick des Toggle-Buttons ausgef�hrt wird.
-	 * 
+	 *
 	 */
 	public void highlightFlowButtonClicked() {
-		
+
 		if (file != null) {
 			highlightFlow = highlightFlowButton.isSelected();
-		
+
 			updateGraphics();
 		}
 	}
 
 	/**
-	 * Funktion die bei Klick des Info-Expansion-Forewards-Buttons ausgef�hrt wird.
+	 * Funktion die bei Klick des Info-Expansion-Forewards-Buttons ausgef�hrt
+	 * wird.
 	 */
 	public void infoExpansionForewardsButtonClicked() {
 		if (iE != null) {
 			iE.iterateForewards();
-		} 
+		}
 	}
-	
+
 	/**
-	 * Funktion die bei Klick des Info-Expansion-Backwards-Buttons ausgef�hrt wird.
+	 * Funktion die bei Klick des Info-Expansion-Backwards-Buttons ausgef�hrt
+	 * wird.
 	 */
 	public void infoExpansionBackwardsButtonClicked() {
 		if (iE != null) {
 			iE.iterateBackwards();
 		}
 	}
-	
+
 	/**
-	 * Funktion die bei Klicken des "Select Source" Buttons ausgef�hrt wird. 
-	 * Es die hier ausgew�hlte Source wird f�r die Informationsausbreitung verwendet.
+	 * Funktion die bei Klicken des "Select Source" Buttons ausgef�hrt wird. Es
+	 * die hier ausgew�hlte Source wird f�r die Informationsausbreitung
+	 * verwendet.
 	 */
 	public void selectInformationSource() {
 		if (network == null) {
-			
+
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Network Flow");
 			alert.setHeaderText(null);
@@ -500,7 +499,7 @@ public class FlowSceneController implements Initializable {
 			alert.showAndWait();
 			return;
 		}
-		
+
 		if (source != null) {
 			source.getShape().setEffect(null);
 			sourceLabel.setText("");
@@ -512,79 +511,104 @@ public class FlowSceneController implements Initializable {
 			sink = null;
 		}
 		clearVertexHighlights();
-		
+
 		maxFlowLabel.setText("");
 		flowDistanceLabel.setText("");
-		
-		//stepCounterLabel.setText("0");
-				
-		
+
+		// stepCounterLabel.setText("0");
+
 		informationPane.expandedProperty().set(true);
 
-        for (Vertex v : network.getVertices()) {
-        	Shape shape = v.getShape();
-        	
-        	shape.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    stage.getScene().setCursor(Cursor.HAND);
-                }
-            });
-        	
-        	/*
-        	 * To be reworked
-        	 */
-        	shape.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		for (Vertex v : network.getVertices()) {
+			Shape shape = v.getShape();
+
+			shape.setOnMouseEntered(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					stage.getScene().setCursor(Cursor.HAND);
+				}
+			});
+
+			/*
+			 * To be reworked
+			 */
+			shape.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
 					centerVertex = v;
 					iE = new InformationExpense(network, v);
-					iE.computeHighlightLists(v);
+					iE.run();
 					stepCounterLabel.textProperty().bind(iE.Step());
 					verticesReachedLabel.textProperty().bind(iE.PercentageReached());
-					//v.getShape().setEffect(highlightInformationFlow);
 					centerVertexLabel.setText(v.getName());
-					
-					for (Vertex v: network.getVertices()) {
+
+					for (Vertex v : network.getVertices()) {
 						Shape shape = v.getShape();
 						shape.setOnMouseEntered(null);
 						shape.setOnMouseClicked(null);
 						shape.setOnMouseExited(null);
 					}
 				}
-        	});
+			});
 
-            shape.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    stage.getScene().setCursor(Cursor.DEFAULT);
-                }
-            });
-        }
+			shape.setOnMouseExited(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					stage.getScene().setCursor(Cursor.DEFAULT);
+				}
+			});
+		}
 	}
-	
+
 	/**
-	 * Funktion die bei Klicken des "Go"-Buttons ausgeführt wird.
-	 * Dabei werden die angebenen Parameter gelesen und alle Knoten, die in $steps 
-	 * nicht mindestens $prozent der gesamten Knoten erreichen ausgegeben.
+	 * Funktion die bei Klicken des "Go"-Buttons ausgeführt wird. Dabei werden
+	 * die angebenen Parameter gelesen und alle Knoten, die in $steps nicht
+	 * mindestens $prozent der gesamten Knoten erreichen ausgegeben.
 	 */
 	public void goButtonClicked() {
 		InformationExpense iE = new InformationExpense(network, null);
-		List<Vertex> list =  iE.getVerticesNotReached(Integer.parseInt(stepTextField.getText()), 
-																	   Double.parseDouble(percentageTextField.getText()));
-		
-		for (Vertex v : network.getVertices()) {
-			v.getShape().setEffect(null);
-		}
-		
-		for (Vertex v : list) {
-			v.getShape().setEffect(highlightSink);
+		if (stepTextField.getText().matches("\\d+")) {
+			int step = Integer.parseInt(stepTextField.getText());
+			if (percentageTextField.getText().matches("\\d+")) {
+				double percentage = Double.parseDouble(percentageTextField.getText());
+
+				if (percentage <= 100) {
+					List<Vertex> list = iE.getVerticesNotReached(step, percentage / 100.0);
+
+					for (Vertex v : list) {
+						v.getShape().setEffect(highlightSink);
+					}
+
+				} else {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Percentage");
+					alert.setHeaderText(null);
+					alert.setContentText("Valid Input is a number between 0-100");
+
+					alert.showAndWait();
+				}
+
+			} else {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Percentage");
+				alert.setHeaderText(null);
+				alert.setContentText("Valid Input is a number between 0-100");
+
+				alert.showAndWait();
+			}
+		} else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Step");
+			alert.setHeaderText(null);
+			alert.setContentText("Valid Input is a number >= 0");
+
+			alert.showAndWait();
 		}
 	}
-	
+
 	/**
 	 * Entfernt alle Vertices vom AnchorPane.
-	 * 
+	 *
 	 */
 	private void clearVertices() {
 		for (Vertex v : network.getVertices()) {
@@ -592,43 +616,44 @@ public class FlowSceneController implements Initializable {
 			pannablePane.getChildren().remove(v.getNameLabel());
 		}
 	}
-	
+
 	/**
 	 * Entfernt alle WaterPipe-Lines vom Pane.
-	 * 
+	 *
 	 */
 	private void clearLines() {
 
-		for (Edge e: network.getEdges()) {
-			//e.getShape().getTransforms().clear();
+		for (Edge e : network.getEdges()) {
+			// e.getShape().getTransforms().clear();
 			for (Node n : e.getShapes()) {
 				n.getTransforms().clear();
 				pannablePane.getChildren().remove(n);
 			}
-		}	
+		}
 	}
 
 	/**
-	 * Visualisiert das Netzwerk aus der XML-Datei.
-	 * Wird aufgerufen, nachdem �ber den FileChooser eine Datei ausgew�hlt wurde.
-	 * 
+	 * Visualisiert das Netzwerk aus der XML-Datei. Wird aufgerufen, nachdem
+	 * �ber den FileChooser eine Datei ausgew�hlt wurde.
+	 *
 	 */
 	private void showNetwork() {
-		
+
 		List<Vertex> vertices = network.getVertices();
-		//network.prepareNetwork();
-		
+		// network.prepareNetwork();
+
 		for (Vertex v : vertices) {
-			//gc.strokeText(v.getName(), v.getX() - ((v.getName().length() / 2) * 6), v.getY() + 25);
+			// gc.strokeText(v.getName(), v.getX() - ((v.getName().length() / 2)
+			// * 6), v.getY() + 25);
 			pannablePane.getChildren().add(v.getShape());
 			v.getNameLabel().setLayoutX(v.getX() - ((v.getName().length() / 2) * 8));
 			v.getNameLabel().setLayoutY(v.getY() + 18);
 			pannablePane.getChildren().add(v.getNameLabel());
 		}
-		
+
 		drawEdges();
 	}
-	
+
 	/**
 	 * Clear Vertex highlightings.
 	 */
@@ -637,108 +662,107 @@ public class FlowSceneController implements Initializable {
 			v.getShape().setEffect(null);
 		}
 	}
-	
+
 	/**
-	 * Aktualisiert die Elemente des Canvas, nach einer �nderung.
-	 * Das Netzwerk aus der XML wird angezeigt.
+	 * Aktualisiert die Elemente des Canvas, nach einer �nderung. Das Netzwerk
+	 * aus der XML wird angezeigt.
 	 */
 	private void updateGraphics() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		clearLines();
-		//gc.setFill(Color.WHITE);
-		//gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		
+		// gc.setFill(Color.WHITE);
+		// gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
 		drawEdges();
 	}
-	
+
 	/**
-	 * Zeichnet die Edges auf das Canvas.
-	 * Besonders ist dabei zu beachten, dass f�r bidirektionale Edges besonders vorgegangen wird:
-	 * Das Weighting soll 2x gezeichnet werden, so dass jeweils Flow/Kapazit�t in Flussrichtung
+	 * Zeichnet die Edges auf das Canvas. Besonders ist dabei zu beachten, dass
+	 * f�r bidirektionale Edges besonders vorgegangen wird: Das Weighting soll
+	 * 2x gezeichnet werden, so dass jeweils Flow/Kapazit�t in Flussrichtung
 	 * zeigen.
-	 * 
+	 *
 	 */
 	private void drawEdges() {
-		
+
 		if (edgeWeighting == visualizationType.WATERPIPES) {
 			drawWaterPipes();
 			return;
 		}
-		
+
 		List<Edge> edges = network.getEdges();
 		boolean weightingDrawn = false;
 		List<Edge> drawnEdges = new ArrayList<Edge>();
-		
+
 		for (Edge e : edges) {
-			
-			if (e.getFlow() > 0)  {
+
+			if (e.getFlow() > 0) {
 				if (highlightFlow) {
 					e.setColor(Color.ORANGE);
-				}
-				else {
+				} else {
 					e.setColor(Color.BLACK);
 				}
-			}
-			else {
+			} else {
 				e.setColor(Color.GREY);
 			}
-			
+
 			e.draw(gc);
 			weightingDrawn = false;
 			for (Edge e2 : edges) {
 				if ((e.getOrigin() == e2.getDestination()) && (e.getDestination() == e2.getOrigin())) {
-					
+
 					if (e.getFlow() > 0 || e2.getFlow() > 0) {
 						if (highlightFlow) {
 							e.setColor(Color.ORANGE);
 							e.draw(gc);
 							e2.setColor(Color.ORANGE);
 							e2.draw(gc);
-						}
-						else {
+						} else {
 							e.setColor(Color.BLACK);
 							e.draw(gc);
 							e2.setColor(Color.BLACK);
 							e2.draw(gc);
 						}
-						
-					}
-					else {
+
+					} else {
 						e.setColor(Color.GREY);
 					}
-					
+
 					if (!drawnEdges.contains(e2) && !drawnEdges.contains(e)) {
-						
-						e.drawBidirectionalWeighting(gc, (int) e.getOrigin().getX(), (int) e.getOrigin().getY(), (int) e.getFlow(), (int) e.getCapacity(), e.getFlowDistance(),
-							(int) e.getDestination().getX(), (int) e.getDestination().getY(), (int) e2.getFlow(), (int) e2.getCapacity(), e2.getFlowDistance(), edgeWeighting);
+
+						e.drawBidirectionalWeighting(gc, e.getOrigin().getX(), e.getOrigin().getY(), (int) e.getFlow(),
+								(int) e.getCapacity(), e.getFlowDistance(), e.getDestination().getX(),
+								e.getDestination().getY(), (int) e2.getFlow(), (int) e2.getCapacity(),
+								e2.getFlowDistance(), edgeWeighting);
 						drawnEdges.add(e);
-					}	
+					}
 					weightingDrawn = true;
 				}
 			}
 			if (!weightingDrawn) {
-				e.drawWeighting(gc, e.getOrigin().getX(), e.getOrigin().getY(), e.getDestination().getX(), e.getDestination().getY(), edgeWeighting);
+				e.drawWeighting(gc, e.getOrigin().getX(), e.getOrigin().getY(), e.getDestination().getX(),
+						e.getDestination().getY(), edgeWeighting);
 				drawnEdges.add(e);
 			}
 		}
 	}
-	
+
 	/**
-	 * Methode die aufgerufen wird wenn der RadioButton f�r das Anzeigen des Kanalsystems ausgew�hlt wurde.
-	 * Hier werden die Kanten als 
-	 * 
+	 * Methode die aufgerufen wird wenn der RadioButton f�r das Anzeigen des
+	 * Kanalsystems ausgew�hlt wurde. Hier werden die Kanten als
+	 *
 	 */
 	private void drawWaterPipes() {
-		
+
 		// Verteile die Kapazit�ten auf eine strokeWidth zwischen 5 und 15
 		int minWidth = 6;
 		int maxWidth = 14;
-					
+
 		int minCapacity = Integer.MAX_VALUE;
 		int maxCapacity = Integer.MIN_VALUE;
-		
+
 		HashMap<Integer, Double> capacitiesHashMap = network.getCapacitiesHashMap();
-					
+
 		for (Integer capacity : network.getCapacities()) {
 			if (capacity > maxCapacity) {
 				maxCapacity = capacity;
@@ -747,114 +771,98 @@ public class FlowSceneController implements Initializable {
 				minCapacity = capacity;
 			}
 		}
-		
+
 		for (Integer capacity : network.getCapacities()) {
-			double value = minWidth + (( (double) (capacity - minCapacity) / (maxCapacity - minCapacity)) * (maxWidth - minWidth));
-			capacitiesHashMap.replace(capacity, 0.0, value);	
+			double value = minWidth
+					+ (((double) (capacity - minCapacity) / (maxCapacity - minCapacity)) * (maxWidth - minWidth));
+			capacitiesHashMap.replace(capacity, 0.0, value);
 		}
-		
-		
-		for (Edge e: network.getEdges()) {
+
+		for (Edge e : network.getEdges()) {
 			int x1 = e.getOrigin().getX();
 			int y1 = e.getOrigin().getY();
-			
+
 			int x2 = e.getDestination().getX();
 			int y2 = e.getDestination().getY();
-			
+
 			int dx = x2 - x1;
 			int dy = y2 - y1;
-			
+
 			int length = (int) Math.sqrt(dx * dx + dy * dy);
 			double angle = Math.atan2(dy, dx);
-			
-			
-			
-			
+
 			// try rects:
-			double width = capacitiesHashMap.get((int) e.getCapacity()); 
-						
-			
-			Rectangle baseRect = new Rectangle(x1, y1 - width/2, length, width);
+			double width = capacitiesHashMap.get((int) e.getCapacity());
+
+			Rectangle baseRect = new Rectangle(x1, y1 - width / 2, length, width);
 			baseRect.setFill(Color.WHITE);
 			baseRect.setStrokeType(StrokeType.OUTSIDE);
 			baseRect.setStroke(Color.BLACK);
 			baseRect.setStrokeWidth(2);
-			
-			Rectangle fillRect = new Rectangle(x1, y1 - width/2, length, width * (e.getFlow() / e.getCapacity()));
+
+			Rectangle fillRect = new Rectangle(x1, y1 - width / 2, length, width * (e.getFlow() / e.getCapacity()));
 			fillRect.setFill(Color.BLUE);
-			
-			//transform:
-			baseRect.getTransforms().add(new Rotate(Math.toDegrees(angle), x1,y1));
-			fillRect.getTransforms().add(new Rotate(Math.toDegrees(angle), x1,y1));
-			
+
+			// transform:
+			baseRect.getTransforms().add(new Rotate(Math.toDegrees(angle), x1, y1));
+			fillRect.getTransforms().add(new Rotate(Math.toDegrees(angle), x1, y1));
+
 			e.getShapes().add(baseRect);
 			e.getShapes().add(fillRect);
-			
+
 			pannablePane.getChildren().add(baseRect);
 			pannablePane.getChildren().add(fillRect);
-			
+
 			fillRect.toFront();
 			baseRect.toBack();
-			
-			
-			/*Line line = e.getShape();
-			
-			line.setStartX(e.getOrigin().getX());
-			line.setStartY(e.getOrigin().getY());
-			
-			line.setEndX(e.getOrigin().getX() + length);
-			line.setEndY(e.getOrigin().getY());
-			
-			//line.getTransforms().add(new Rotate(Math.toDegrees(angle), x1,y1));
-			*/			
-			
-			/*System.out.println("Cap: " + e.getCapacity());
-			double strokeWidth = capacitiesHashMap.get((int) e.getCapacity());
-			strokeWidth = (double) Math.round(strokeWidth);
-			if (strokeWidth % 2 != 0) {
-				strokeWidth--;
-			}
-			strokeWidth = 15.0;
-			//line.setStrokeWidth(10);
-			line.setStrokeWidth(strokeWidth);
-			//double halfWidth = (double) strokeWidth / 2;
-			//halfWidth = (double) Math.round(halfWidth * 100) / 100;
-			int halfWidth = (int) (strokeWidth / 2);
-			//halfWidth = Math.round(halfWidth);
-			System.out.println(strokeWidth + ", " + halfWidth);
-			
-						
-			
-			double fillPercentage = e.getFlow() / e.getCapacity();
-			if (fillPercentage == 1) {
-				
-				line.setStroke(new LinearGradient(0d, -halfWidth, 0d, halfWidth, false, CycleMethod.REFLECT,
-					new Stop(0,Color.BLACK),
-					new Stop(0.099,Color.BLACK),
-					new Stop(0.1,Color.BLUE),
-					new Stop(0.899,Color.BLUE),
-					new Stop(0.9, Color.BLACK),
-					new Stop(1, Color.BLACK)));
-			}
-			else {
-				fillPercentage *= 0.8;
-				fillPercentage += 0.09998;
 
-				line.setStroke(new LinearGradient(0, -8, 0, 8, false, CycleMethod.REFLECT, 
-					new Stop(0,Color.BLACK), 
-					new Stop(0.099,Color.BLACK), 
-					new Stop(0.1,Color.BLUE),
-					new Stop(fillPercentage,Color.BLUE),
-					new Stop(fillPercentage + 0.001, Color.WHITE),
-					new Stop(0.89999999999999,Color.WHITE),
-					new Stop(0.9, Color.BLACK),
-					new Stop(1, Color.BLACK)));
-			}
-			*/
-			
-			//pannablePane.getChildren().add(line);
-			//line.toBack();
-			
+			/*
+			 * Line line = e.getShape();
+			 *
+			 * line.setStartX(e.getOrigin().getX());
+			 * line.setStartY(e.getOrigin().getY());
+			 *
+			 * line.setEndX(e.getOrigin().getX() + length);
+			 * line.setEndY(e.getOrigin().getY());
+			 *
+			 * //line.getTransforms().add(new Rotate(Math.toDegrees(angle),
+			 * x1,y1));
+			 */
+
+			/*
+			 * System.out.println("Cap: " + e.getCapacity()); double strokeWidth
+			 * = capacitiesHashMap.get((int) e.getCapacity()); strokeWidth =
+			 * (double) Math.round(strokeWidth); if (strokeWidth % 2 != 0) {
+			 * strokeWidth--; } strokeWidth = 15.0; //line.setStrokeWidth(10);
+			 * line.setStrokeWidth(strokeWidth); //double halfWidth = (double)
+			 * strokeWidth / 2; //halfWidth = (double) Math.round(halfWidth *
+			 * 100) / 100; int halfWidth = (int) (strokeWidth / 2); //halfWidth
+			 * = Math.round(halfWidth); System.out.println(strokeWidth + ", " +
+			 * halfWidth);
+			 *
+			 *
+			 *
+			 * double fillPercentage = e.getFlow() / e.getCapacity(); if
+			 * (fillPercentage == 1) {
+			 *
+			 * line.setStroke(new LinearGradient(0d, -halfWidth, 0d, halfWidth,
+			 * false, CycleMethod.REFLECT, new Stop(0,Color.BLACK), new
+			 * Stop(0.099,Color.BLACK), new Stop(0.1,Color.BLUE), new
+			 * Stop(0.899,Color.BLUE), new Stop(0.9, Color.BLACK), new Stop(1,
+			 * Color.BLACK))); } else { fillPercentage *= 0.8; fillPercentage +=
+			 * 0.09998;
+			 *
+			 * line.setStroke(new LinearGradient(0, -8, 0, 8, false,
+			 * CycleMethod.REFLECT, new Stop(0,Color.BLACK), new
+			 * Stop(0.099,Color.BLACK), new Stop(0.1,Color.BLUE), new
+			 * Stop(fillPercentage,Color.BLUE), new Stop(fillPercentage + 0.001,
+			 * Color.WHITE), new Stop(0.89999999999999,Color.WHITE), new
+			 * Stop(0.9, Color.BLACK), new Stop(1, Color.BLACK))); }
+			 */
+
+			// pannablePane.getChildren().add(line);
+			// line.toBack();
+
 			e.getOrigin().getShape().toFront();
 			e.getOrigin().getNameLabel().toFront();
 			e.getDestination().getShape().toFront();
