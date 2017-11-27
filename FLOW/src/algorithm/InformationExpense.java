@@ -65,7 +65,8 @@ public class InformationExpense {
 			int s = Integer.parseInt(step.get());
 
 			for (Vertex v : highlightLists.get(Integer.parseInt(step.get()) + 1)) {
-				double size = 30 - (20 * ((double) (s + 1) / (double) (highlightLists.size() - 1) * (s + 1))) + 10;
+				double size = 30 - (25 * ((double) (s + 1) / (double) (highlightLists.size() - 1)));
+				System.out.println("Size: " + size);
 				v.getShape().setEffect(new DropShadow(BlurType.GAUSSIAN,
 						// Color.RED.interpolate(Color.BLUE, (double) (s + 1) /
 						// (double) (highlightLists.size() - 1)), 30,
@@ -188,6 +189,35 @@ public class InformationExpense {
 		return resultList;
 	}
 
+	/**
+	 * Gibt eine Liste an Knoten zur�ck, die nach einer gegebenen Anzahl an
+	 * Schritten mindestens eine gegebene Prozentzahl an Knoten erreicht haben.
+	 *
+	 * @param steps
+	 *            - die Anzahl der Schritte
+	 * @param percentage
+	 *            - die Prozentzahl aller Knoten, die nach "steps" Schritten
+	 *            erreicht werden m�ssen.
+	 * @return
+	 */
+	public List<Vertex> getVerticesReached(int steps, double percentage) {
+		List<Vertex> resultList = new ArrayList<Vertex>();
+		System.out.println("*****************");
+		for (Vertex v : network.getVertices()) {
+			List<List<Vertex>> list = computeHighlightLists(v);
+			double percentageReached = (double) getSizeAfterISteps(list, steps) / (double) network.getVertices().size();
+			if (percentageReached >= percentage) {
+				resultList.add(v);
+				System.out.println("Name: " + v.getName() + ", " + getSizeAfterISteps(list, steps));
+			}
+			if (percentageReached >= 1.0) {
+				break;
+			}
+		}
+
+		return resultList;
+	}
+
 	private int getSizeAfterISteps(List<List<Vertex>> lists, int steps) {
 		int num = 0;
 		// System.out.println("++++++");
@@ -210,13 +240,13 @@ public class InformationExpense {
 	 * in X Steps weniger als Y Prozent der Knoten erreichen berechnet und diese
 	 * in eine CSV schreibt.
 	 */
-	private void safeAsCSV(double percentage) {
+	public void safeVerticesNotReachedAsCSV(double percentage) {
 		try {
 			PrintWriter out = new PrintWriter(System.getProperty("user.dir") + "/out/Knoten_die_weniger_als_"
 					+ percentage * 100 + "_Prozent_aller_Knoten_erreichen.csv");
 
-			out.println("Nach Steps geordnete Auflistung der Knoten, die in weniger als "
-					+ Integer.parseInt(percentage + "") + " Prozent aller Knoten erreicht haben");
+			out.println("Nach Steps geordnete Auflistung der Knoten, die in weniger als " + percentage * 100
+					+ " Prozent aller Knoten erreicht haben");
 
 			List<Vertex> list = getVerticesNotReached(1, percentage);
 			for (int i = 1; !list.isEmpty(); i++) {
@@ -228,6 +258,38 @@ public class InformationExpense {
 				out.println(i + ";" + names);
 
 				list = getVerticesNotReached(i + 1, percentage);
+			}
+
+			out.flush();
+			out.close();
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Funktion die zu einer gegebenen Prozentzahl alle Listen von Knoten, die
+	 * in X Steps mindestens Y Prozent der Knoten erreichen berechnet und diese
+	 * in eine CSV schreibt.
+	 */
+	public void safeVerticesReachedAsCSV(double percentage) {
+		try {
+			PrintWriter out = new PrintWriter(System.getProperty("user.dir") + "/out/Knoten_die_mindestens_"
+					+ percentage * 100 + "_Prozent_aller_Knoten_erreichen.csv");
+
+			out.println("Nach Steps geordnete Auflistung der Knoten, die mindestens " + percentage * 100
+					+ " Prozent aller Knoten erreicht haben");
+			List<Vertex> list = getVerticesReached(1, percentage);
+			for (int i = 1; !list.isEmpty(); i++) {
+				String names = "";
+				for (Vertex v : list) {
+					names += v.getName() + ", ";
+				}
+				names = names.substring(0, names.length() - 2);
+				out.println(i + ";" + names);
+
+				list = getVerticesReached(i + 1, percentage);
 			}
 
 			out.flush();

@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FlowSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FlowSceneController">
    <top>
       <HBox BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
@@ -269,26 +269,125 @@
                                                       </VBox>
                                                    </children>
                                                 </HBox>
-                                                <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </VBox>
+                                    <VBox spacing="15.0">
+                                       <children>
+                                          <HBox id="myHBox">
+                                             <children>
+                                                <Label id="heading-label" prefHeight="19.0" prefWidth="190.0" text="Statistics:">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                   <cursor>
+                                                      <Cursor fx:constant="DEFAULT" />
+                                                   </cursor>
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <VBox spacing="10.0">
+                                             <children>
+                                                <HBox spacing="20.0">
                                                    <children>
-                                                      <VBox spacing="10.0">
+                                                      <VBox>
                                                          <children>
-                                                            <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
-                                                               <children>
-                                                                  <Label text="#: " />
-                                                                  <TextField fx:id="stepTextField" prefWidth="25.0" />
-                                                                  <Label text="\%:  " />
-                                                                  <TextField fx:id="percentageTextField" prefWidth="40.0" />
-                                                               </children>
-                                                            </HBox>
-                                                            <HBox prefHeight="100.0" prefWidth="200.0">
-                                                               <children>
-                                                                  <Button fx:id="goButton" mnemonicParsing="false" onAction="#goButtonClicked" text="Go" />
-                                                               </children>
-                                                            </HBox>
+                                                            <Label text="Reach less Vertices:" />
                                                          </children>
                                                       </VBox>
-                                                      <VBox prefHeight="200.0" prefWidth="100.0" />
+                                                      <VBox>
+                                                         <children>
+                                                            <Label fx:id="verticesReachedLabel1" />
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </HBox>
+                                                <HBox spacing="4.0">
+                                                   <children>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label text="\%:  " />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <TextField fx:id="reachedLessStepTextField" prefWidth="25.0" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label text="#: " />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <TextField fx:id="reachedLessPercentageTextField" prefWidth="34.0" promptText="100" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <Button fx:id="reachedLessGoButton" mnemonicParsing="false" onAction="#reachedLessGoButtonClicked" text="Go" />
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </HBox>
+                                                <HBox spacing="20.0">
+                                                   <children>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label text="Reach more Vertices:" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label fx:id="verticesReachedLabel11" />
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </HBox>
+                                                <HBox spacing="4.0">
+                                                   <children>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label text="\%:  " />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <TextField fx:id="reachedMoreStepTextField" prefWidth="25.0" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label text="#: " />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <TextField fx:id="reachedMorePercentageTextField" prefWidth="34.0" promptText="100" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <Button fx:id="reachedMoreGoButton" mnemonicParsing="false" onAction="#reachedMoreGoButtonClicked" text="Go" />
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </HBox>
+                                                <HBox>
+                                                   <children>
+                                                      <Label text="Generates data for given %:" wrapText="true" />
+                                                   </children>
+                                                </HBox>
+                                                <HBox spacing="4.0">
+                                                   <children>
+                                                      <Label text="\%:  " />
+                                                      <TextField fx:id="percentageTextField" prefWidth="25.0" />
+                                                      <Button mnemonicParsing="false" onAction="#computeOutputButtonClicked" text="Compute output" />
                                                    </children>
                                                 </HBox>
                                              </children>

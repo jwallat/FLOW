@@ -114,13 +114,25 @@ public class FlowSceneController implements Initializable {
 	private ToggleButton highlightFlowButton;
 
 	@FXML
-	private TextField stepTextField;
+	private TextField reachedLessStepTextField;
+
+	@FXML
+	private TextField reachedLessPercentageTextField;
+
+	@FXML
+	private TextField reachedMoreStepTextField;
+
+	@FXML
+	private TextField reachedMorePercentageTextField;
+
+	@FXML
+	private Button reachedLessGoButton;
+
+	@FXML
+	private Button reachedMoreGoButton;
 
 	@FXML
 	private TextField percentageTextField;
-
-	@FXML
-	private Button goButton;
 
 	private Stage stage;
 	private File file;
@@ -329,8 +341,8 @@ public class FlowSceneController implements Initializable {
 
 	/**
 	 * ï¿½ffnet das InformationPane und lï¿½sst den Nutzer Source/Sink mit klick
-	 * auswï¿½hlen. Wird ausgefï¿½hrt, wenn der "select vertices" Button geklickt
-	 * wird.
+	 * auswï¿½hlen. Wird ausgefï¿½hrt, wenn der "select vertices" Button
+	 * geklickt wird.
 	 *
 	 */
 	@FXML
@@ -484,8 +496,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Klicken des "Select Source" Buttons ausgefï¿½hrt wird. Es
-	 * die hier ausgewï¿½hlte Source wird fï¿½r die Informationsausbreitung
+	 * Funktion die bei Klicken des "Select Source" Buttons ausgefï¿½hrt wird.
+	 * Es die hier ausgewï¿½hlte Source wird fï¿½r die Informationsausbreitung
 	 * verwendet.
 	 */
 	public void selectInformationSource() {
@@ -529,9 +541,6 @@ public class FlowSceneController implements Initializable {
 				}
 			});
 
-			/*
-			 * To be reworked
-			 */
 			shape.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
@@ -541,6 +550,8 @@ public class FlowSceneController implements Initializable {
 					stepCounterLabel.textProperty().bind(iE.Step());
 					verticesReachedLabel.textProperty().bind(iE.PercentageReached());
 					centerVertexLabel.setText(v.getName());
+
+					stage.getScene().setCursor(Cursor.DEFAULT);
 
 					for (Vertex v : network.getVertices()) {
 						Shape shape = v.getShape();
@@ -565,12 +576,14 @@ public class FlowSceneController implements Initializable {
 	 * die angebenen Parameter gelesen und alle Knoten, die in $steps nicht
 	 * mindestens $prozent der gesamten Knoten erreichen ausgegeben.
 	 */
-	public void goButtonClicked() {
+	public void reachedLessGoButtonClicked() {
+		clearVertexHighlights();
+
 		InformationExpense iE = new InformationExpense(network, null);
-		if (stepTextField.getText().matches("\\d+")) {
-			int step = Integer.parseInt(stepTextField.getText());
-			if (percentageTextField.getText().matches("\\d+")) {
-				double percentage = Double.parseDouble(percentageTextField.getText());
+		if (reachedLessStepTextField.getText().matches("\\d+")) {
+			int step = Integer.parseInt(reachedLessStepTextField.getText());
+			if (reachedLessPercentageTextField.getText().matches("\\d+")) {
+				double percentage = Double.parseDouble(reachedLessPercentageTextField.getText());
 
 				if (percentage <= 100) {
 					List<Vertex> list = iE.getVerticesNotReached(step, percentage / 100.0);
@@ -601,6 +614,91 @@ public class FlowSceneController implements Initializable {
 			alert.setTitle("Step");
 			alert.setHeaderText(null);
 			alert.setContentText("Valid Input is a number >= 0");
+
+			alert.showAndWait();
+		}
+	}
+
+	/**
+	 * Funktion die bei Klicken des "Go"-Buttons ausgefÃ¼hrt wird. Dabei werden
+	 * die angebenen Parameter gelesen und alle Knoten, die in $steps mindestens
+	 * $prozent der gesamten Knoten erreichen ausgegeben.
+	 */
+	public void reachedMoreGoButtonClicked() {
+		clearVertexHighlights();
+
+		InformationExpense iE = new InformationExpense(network, null);
+		if (reachedMoreStepTextField.getText().matches("\\d+")) {
+			int step = Integer.parseInt(reachedMoreStepTextField.getText());
+			if (reachedMorePercentageTextField.getText().matches("\\d+")) {
+				double percentage = Double.parseDouble(reachedMorePercentageTextField.getText());
+
+				if (percentage <= 100) {
+					List<Vertex> list = iE.getVerticesReached(step, percentage / 100.0);
+
+					for (Vertex v : list) {
+						v.getShape().setEffect(highlightSink);
+					}
+
+				} else {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Percentage");
+					alert.setHeaderText(null);
+					alert.setContentText("Valid Input is a number between 0-100");
+
+					alert.showAndWait();
+				}
+
+			} else {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Percentage");
+				alert.setHeaderText(null);
+				alert.setContentText("Valid Input is a number between 0-100");
+
+				alert.showAndWait();
+			}
+		} else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Step");
+			alert.setHeaderText(null);
+			alert.setContentText("Valid Input is a number >= 0");
+
+			alert.showAndWait();
+		}
+	}
+
+	/**
+	 * Click-Methode die ausgeführt wenn der computeOutput-Button geklickt wird.
+	 * Daraufhin werden Listen berechnet, in den für die gegebene Prozentzahl
+	 * für alle Schritte jeweils alle Knoten aufgelistet werden, die weniger
+	 * als/mindestens die gegebene Prozentzahl aller Knoten erreichen.
+	 * 
+	 */
+	public void computeOutputButtonClicked() {
+		if (percentageTextField.getText().matches("\\d+")) {
+			double percentage = Double.parseDouble(percentageTextField.getText());
+
+			if (percentage <= 100) {
+				// List<Vertex> list = iE.getVerticesNotReached(step, percentage
+				// / 100.0);
+				InformationExpense iE = new InformationExpense(network, null);
+				iE.safeVerticesReachedAsCSV(percentage / 100.0);
+				iE.safeVerticesNotReachedAsCSV(percentage / 100.0);
+
+			} else {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Percentage");
+				alert.setHeaderText(null);
+				alert.setContentText("Valid Input is a number between 0-100");
+
+				alert.showAndWait();
+			}
+
+		} else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Percentage");
+			alert.setHeaderText(null);
+			alert.setContentText("Valid Input is a number between 0-100");
 
 			alert.showAndWait();
 		}
