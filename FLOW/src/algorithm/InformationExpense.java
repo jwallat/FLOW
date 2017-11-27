@@ -52,7 +52,7 @@ public class InformationExpense {
 		percentageReached.set("0,00");
 		this.network = network;
 		this.center = center;
-		safeAsCSV(0.7);
+		// safeAsCSV(0.7);
 	}
 
 	/**
@@ -65,9 +65,12 @@ public class InformationExpense {
 			int s = Integer.parseInt(step.get());
 
 			for (Vertex v : highlightLists.get(Integer.parseInt(step.get()) + 1)) {
+				double size = 30 - (20 * ((double) (s + 1) / (double) (highlightLists.size() - 1) * (s + 1))) + 10;
 				v.getShape().setEffect(new DropShadow(BlurType.GAUSSIAN,
-						Color.RED.interpolate(Color.BLUE, (double) (s + 1) / (double) (highlightLists.size() - 1)), 30,
-						0.7, 0, 0));
+						// Color.RED.interpolate(Color.BLUE, (double) (s + 1) /
+						// (double) (highlightLists.size() - 1)), 30,
+						Color.RED.interpolate(Color.BLUE, (double) (s + 1) / (double) (highlightLists.size() - 1)),
+						size, 0.7, 0, 0));
 			}
 
 			// calculate new percentage
@@ -212,8 +215,8 @@ public class InformationExpense {
 			PrintWriter out = new PrintWriter(System.getProperty("user.dir") + "/out/Knoten_die_weniger_als_"
 					+ percentage * 100 + "_Prozent_aller_Knoten_erreichen.csv");
 
-			out.println("Nach Steps geordnete Auflistung der Knoten, die in weniger als " + percentage
-					+ " Prozent aller Knoten erreicht haben");
+			out.println("Nach Steps geordnete Auflistung der Knoten, die in weniger als "
+					+ Integer.parseInt(percentage + "") + " Prozent aller Knoten erreicht haben");
 
 			List<Vertex> list = getVerticesNotReached(1, percentage);
 			for (int i = 1; !list.isEmpty(); i++) {
