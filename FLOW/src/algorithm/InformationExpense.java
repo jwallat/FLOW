@@ -49,7 +49,7 @@ public class InformationExpense {
 	 */
 	public InformationExpense(Network network, Vertex center) {
 		step.set("0");
-		percentageReached.set("0,00");
+		percentageReached.set(dm.format((1.0 / network.getVertices().size())) + "");
 		this.network = network;
 		this.center = center;
 		// safeAsCSV(0.7);
