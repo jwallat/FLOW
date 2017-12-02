@@ -386,7 +386,7 @@
                                                 <HBox spacing="4.0">
                                                    <children>
                                                       <Label text="\%:  " />
-                                                      <TextField fx:id="percentageTextField" prefWidth="25.0" />
+                                                      <TextField fx:id="percentageTextField" prefWidth="28.0" />
                                                       <Button mnemonicParsing="false" onAction="#computeOutputButtonClicked" text="Compute output" />
                                                    </children>
                                                 </HBox>

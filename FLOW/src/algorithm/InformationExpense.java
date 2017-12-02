@@ -208,30 +208,34 @@ public class InformationExpense {
 			double percentageReached = (double) getSizeAfterISteps(list, steps) / (double) network.getVertices().size();
 			if (percentageReached >= percentage) {
 				resultList.add(v);
-				System.out.println("Name: " + v.getName() + ", " + getSizeAfterISteps(list, steps));
+				System.out.println(
+						"Name: " + v.getName() + ", " + getSizeAfterISteps(list, steps) + ", " + percentageReached);
 			}
-			if (percentageReached >= 1.0) {
-				break;
-			}
+			/*
+			 * if (percentageReached >= 1.0) { break; }
+			 */
 		}
 
 		return resultList;
 	}
 
+	/**
+	 * Funktion, die für eine Liste aus Listen die Anzahl der Knoten zurückgibt,
+	 * die in den ersten $steps Listen enthalten sind.
+	 * 
+	 * @param lists
+	 * @param steps
+	 * @return
+	 */
 	private int getSizeAfterISteps(List<List<Vertex>> lists, int steps) {
 		int num = 0;
-		// System.out.println("++++++");
 		int i = 0;
 		for (List<Vertex> list : lists) {
 			if (i <= steps) {
 				num += list.size();
-				// System.out.println(list.size());
 			}
-
 			i++;
 		}
-
-		// System.out.println("Num: " + num);
 		return num;
 	}
 
@@ -281,7 +285,9 @@ public class InformationExpense {
 			out.println("Nach Steps geordnete Auflistung der Knoten, die mindestens " + percentage * 100
 					+ " Prozent aller Knoten erreicht haben");
 			List<Vertex> list = getVerticesReached(1, percentage);
-			for (int i = 1; !list.isEmpty(); i++) {
+			List<Vertex> lastList = getVerticesReached(100, percentage);
+
+			for (int i = 1; list.size() < lastList.size(); i++) {
 				String names = "";
 				for (Vertex v : list) {
 					names += v.getName() + ", ";
@@ -289,6 +295,7 @@ public class InformationExpense {
 				names = names.substring(0, names.length() - 2);
 				out.println(i + ";" + names);
 
+				// lastList = list;
 				list = getVerticesReached(i + 1, percentage);
 			}
 
