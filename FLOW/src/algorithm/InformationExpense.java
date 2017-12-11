@@ -220,9 +220,9 @@ public class InformationExpense {
 	}
 
 	/**
-	 * Funktion, die für eine Liste aus Listen die Anzahl der Knoten zurückgibt,
+	 * Funktion, die fï¿½r eine Liste aus Listen die Anzahl der Knoten zurï¿½ckgibt,
 	 * die in den ersten $steps Listen enthalten sind.
-	 * 
+	 *
 	 * @param lists
 	 * @param steps
 	 * @return
@@ -285,7 +285,7 @@ public class InformationExpense {
 			out.println("Nach Steps geordnete Auflistung der Knoten, die mindestens " + percentage * 100
 					+ " Prozent aller Knoten erreicht haben");
 			List<Vertex> list = getVerticesReached(1, percentage);
-			List<Vertex> lastList = getVerticesReached(100, percentage);
+			List<Vertex> lastList = getVerticesReached(network.getVertices().size(), percentage);
 
 			for (int i = 1; list.size() < lastList.size(); i++) {
 				String names = "";

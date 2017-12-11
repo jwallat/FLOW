@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FlowSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FlowSceneController">
    <top>
       <HBox BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
@@ -310,7 +310,7 @@
                                                    <children>
                                                       <VBox>
                                                          <children>
-                                                            <Label text="\%:  " />
+                                                            <Label text="#:  " />
                                                          </children>
                                                       </VBox>
                                                       <VBox>
@@ -320,7 +320,7 @@
                                                       </VBox>
                                                       <VBox>
                                                          <children>
-                                                            <Label text="#: " />
+                                                            <Label text="\%: " />
                                                          </children>
                                                       </VBox>
                                                       <VBox>
@@ -353,7 +353,7 @@
                                                    <children>
                                                       <VBox>
                                                          <children>
-                                                            <Label text="\%:  " />
+                                                            <Label text="#:  " />
                                                          </children>
                                                       </VBox>
                                                       <VBox>
@@ -363,7 +363,7 @@
                                                       </VBox>
                                                       <VBox>
                                                          <children>
-                                                            <Label text="#: " />
+                                                            <Label text="\%: " />
                                                          </children>
                                                       </VBox>
                                                       <VBox>
