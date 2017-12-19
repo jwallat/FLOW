@@ -13,7 +13,7 @@ import view.FlowSceneController.visualizationType;
 
 /**
  * Klasse die Informationen zu den Kommunikationen kapselt.
- * 
+ *
  * @author jwall
  *
  */
@@ -27,16 +27,16 @@ public class Edge {
 	private double flow;
 	private double flowDistance;
 	private Color edgeColor = Color.BLACK;
-	
+
 	public Edge(int id, Vertex origin, Vertex destination, double capacity) {
 		this.setOrigin(origin);
 		this.setDestination(destination);
 		this.setCapacity(capacity);
 		this.setId(id);
-		
-		
+
 		this.shapes = new ArrayList<Node>();
-		//this.line = new Line(origin.getX(), origin.getY(), destination.getX(), destination.getY());
+		// this.line = new Line(origin.getX(), origin.getY(),
+		// destination.getX(), destination.getY());
 	}
 
 	public Vertex getOrigin() {
@@ -62,7 +62,7 @@ public class Edge {
 	public void setCapacity(double capacity) {
 		this.capacity = capacity;
 	}
-	
+
 	public double getFlowDistance() {
 		return flowDistance;
 	}
@@ -86,148 +86,165 @@ public class Edge {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public void setColor(Color c) {
 		this.edgeColor = c;
 	}
-	
+
 	public List<Node> getShapes() {
 		return this.shapes;
 	}
 
 	public void draw(GraphicsContext gc) {
-		drawArrow(gc, (int) origin.getX(), (int) origin.getY(), (int) destination.getX(), (int) destination.getY());
+		drawArrow(gc, origin.getX(), origin.getY(), destination.getX(), destination.getY());
 		edgeColor = Color.BLACK;
 	}
 
 	/**
-	 * Hilfsfunktion zum Zeichnen der Pfeile. 
-	 * 
-	 * @param gc - graphical Context
-	 * @param x1 - X-Position des Senders
-	 * @param y1 - Y-Position des Senders
-	 * @param x2 - X-Position des Empfängers
-	 * @param y2 - y-Position des Empfängers
+	 * Hilfsfunktion zum Zeichnen der Pfeile.
+	 *
+	 * @param gc
+	 *            - graphical Context
+	 * @param x1
+	 *            - X-Position des Senders
+	 * @param y1
+	 *            - Y-Position des Senders
+	 * @param x2
+	 *            - X-Position des Empfï¿½ngers
+	 * @param y2
+	 *            - y-Position des Empfï¿½ngers
 	 */
 	private void drawArrow(GraphicsContext gc, int x1, int y1, int x2, int y2) {
-	    gc.setFill(edgeColor);
+		gc.setFill(edgeColor);
 
-	    double dx = x2 - x1, dy = y2 - y1;
-	    double angle = Math.atan2(dy, dx);
-	    ////////////////////////// -5 hier fuer die halbe breite des knotens ////////////////////////////////
-	    int len = (int) Math.sqrt(dx * dx + dy * dy) - 9;
-	    int ARR_SIZE = 5;
+		double dx = x2 - x1, dy = y2 - y1;
+		double angle = Math.atan2(dy, dx);
+		////////////////////////// -5 hier fuer die halbe breite des knotens
+		////////////////////////// ////////////////////////////////
+		int len = (int) Math.sqrt(dx * dx + dy * dy) - 9;
+		int ARR_SIZE = 5;
 
-	    Transform transform2 = gc.getTransform();
-	    
-	    Transform transform = Transform.translate(x1, y1);
-	    transform = transform.createConcatenation(Transform.rotate(Math.toDegrees(angle), 0, 0));
-	    gc.setTransform(new Affine(transform));
+		Transform transform2 = gc.getTransform();
 
-	    Paint old = gc.getStroke();
-	    gc.setStroke(edgeColor);	    
-	    gc.strokeLine(0, 0, len, 0);
-	    gc.setStroke(old);
-	    
-	    gc.fillPolygon(new double[]{len, len - ARR_SIZE, len - ARR_SIZE, len}, new double[]{0, -ARR_SIZE, ARR_SIZE, 0},
-	            4);
-	    
-	    // Transofrmation rückgängig machen:
-	    gc.setTransform(new Affine(transform2));
+		Transform transform = Transform.translate(x1, y1);
+		transform = transform.createConcatenation(Transform.rotate(Math.toDegrees(angle), 0, 0));
+		gc.setTransform(new Affine(transform));
+
+		Paint old = gc.getStroke();
+		gc.setStroke(edgeColor);
+		gc.strokeLine(0, 0, len, 0);
+		gc.setStroke(old);
+
+		gc.fillPolygon(new double[] { len, len - ARR_SIZE, len - ARR_SIZE, len },
+				new double[] { 0, -ARR_SIZE, ARR_SIZE, 0 }, 4);
+
+		// Transofrmation rï¿½ckgï¿½ngig machen:
+		gc.setTransform(new Affine(transform2));
 	}
-	
+
 	/**
-	 * Hilfsfunktion zum Zeichnen der Kantengewichte. 
-	 * 
-	 * @param gc - graphical Context
-	 * @param x1 - X-Position des Senders
-	 * @param y1 - Y-Position des Senders
-	 * @param x2 - X-Position des Empfängers
-	 * @param y2 - y-Position des Empfängers
+	 * Hilfsfunktion zum Zeichnen der Kantengewichte.
+	 *
+	 * @param gc
+	 *            - graphical Context
+	 * @param x1
+	 *            - X-Position des Senders
+	 * @param y1
+	 *            - Y-Position des Senders
+	 * @param x2
+	 *            - X-Position des Empfï¿½ngers
+	 * @param y2
+	 *            - y-Position des Empfï¿½ngers
 	 */
 	public void drawWeighting(GraphicsContext gc, int x1, int y1, int x2, int y2, visualizationType type) {
 		Color color;
 		if (flow != 0) {
 			color = Color.BLACK;
-		}
-		else {
+		} else {
 			color = Color.GRAY;
 		}
 		gc.setFill(color);
 
-	    double dx = x2 - x1, dy = y2 - y1;
-	    double angle = Math.atan2(dy, dx);
-	    int len = (int) Math.sqrt(dx * dx + dy * dy) - 25;
+		double dx = x2 - x1, dy = y2 - y1;
+		double angle = Math.atan2(dy, dx);
+		int len = (int) Math.sqrt(dx * dx + dy * dy) - 25;
 
-	    Transform transform2 = gc.getTransform();
-	    
-	    Transform transform = Transform.translate(x1, y1);
-	    transform = transform.createConcatenation(Transform.rotate(Math.toDegrees(angle), 0, 0));
-	    gc.setTransform(new Affine(transform));
+		Transform transform2 = gc.getTransform();
 
-	    Paint old = gc.getStroke();
-	    gc.setStroke(color);	    
-	    //gc.strokeLine(0, 0, len, 0);
-	    if (Math.PI/2 > angle  && angle >= -Math.PI/2) {
-	    	if (type == visualizationType.NETWORKFLOW) {
-	    		gc.strokeText((int) flow + "/" + (int) capacity, (len/2) - 2, 13);
-	    	}
-	    	else {
-	    		gc.strokeText(flowDistance + "", (len / 2) - 2, 13);
-	    	}
-	    }
-	    else {
-	    	drawWeighting(gc, x2, y2, x1, y1, type);
-	    }
-	    gc.setStroke(old);
-	    
-	    // Transofrmation rückgängig machen:
-	    gc.setTransform(new Affine(transform2));
+		Transform transform = Transform.translate(x1, y1);
+		transform = transform.createConcatenation(Transform.rotate(Math.toDegrees(angle), 0, 0));
+		gc.setTransform(new Affine(transform));
+
+		Paint old = gc.getStroke();
+		gc.setStroke(color);
+		// gc.strokeLine(0, 0, len, 0);
+		if (Math.PI / 2 > angle && angle >= -Math.PI / 2) {
+			if (type == visualizationType.NETWORKFLOW) {
+				gc.strokeText((int) flow + "/" + (int) capacity, (len / 2) - 2, 13);
+			} else {
+				gc.strokeText(flowDistance + "", (len / 2) - 2, 13);
+			}
+		} else {
+			drawWeighting(gc, x2, y2, x1, y1, type);
+		}
+		gc.setStroke(old);
+
+		// Transofrmation rï¿½ckgï¿½ngig machen:
+		gc.setTransform(new Affine(transform2));
 	}
-	
+
 	/**
-	 * Hilfsfunktion zum Zeichnen der Kantengewichte. 
-	 * 
-	 * @param gc - graphical Context
-	 * @param x1 - X-Position des Senders
-	 * @param y1 - Y-Position des Senders
-	 * @param x2 - X-Position des Empfängers
-	 * @param y2 - y-Position des Empfängers
+	 * Hilfsfunktion zum Zeichnen der Kantengewichte.
+	 *
+	 * @param gc
+	 *            - graphical Context
+	 * @param x1
+	 *            - X-Position des Senders
+	 * @param y1
+	 *            - Y-Position des Senders
+	 * @param x2
+	 *            - X-Position des Empfï¿½ngers
+	 * @param y2
+	 *            - y-Position des Empfï¿½ngers
 	 */
-	public void drawBidirectionalWeighting(GraphicsContext gc, int x1, int y1, int flow1, int capacity1, double flowDistance1, int x2, int y2, int flow2, int capacity2, double flowDistance2, visualizationType type) {
+	public void drawBidirectionalWeighting(GraphicsContext gc, int x1, int y1, int flow1, int capacity1,
+			double flowDistance1, int x2, int y2, int flow2, int capacity2, double flowDistance2,
+			visualizationType type) {
 		gc.setFill(edgeColor);
 
-	    double dx = x2 - x1, dy = y2 - y1;
-	    double angle = Math.atan2(dy, dx);
-	    int len = (int) Math.sqrt(dx * dx + dy * dy) - 25;
+		double dx = x2 - x1, dy = y2 - y1;
+		double angle = Math.atan2(dy, dx);
+		int len = (int) Math.sqrt(dx * dx + dy * dy) - 25;
 
-	    Transform transform2 = gc.getTransform();
-	    
-	    Transform transform = Transform.translate(x1, y1);
-	    transform = transform.createConcatenation(Transform.rotate(Math.toDegrees(angle), 0, 0));
-	    gc.setTransform(new Affine(transform));
+		Transform transform2 = gc.getTransform();
 
-	    Paint old = gc.getStroke();
-	    gc.setStroke(edgeColor);	    
-	    //gc.strokeLine(0, 0, len, 0);
-	    if (Math.PI/2 > angle  && angle >= -Math.PI/2) {
-	    	if (type == visualizationType.NETWORKFLOW) {
-	    		gc.strokeText("<- " + (int) flow2 + "/" + (int) capacity2 + "\t\t" + (int) flow + "/" + (int) capacity + " ->", (len/2) - 50, 13);
-	    	}
-	    	else {
-	    		gc.strokeText("<- " + flowDistance2 + "\t\t" + flowDistance1 + " ->", (len/2) - 45, 13);
-	    	}
-	    }
-	    else {
-	    	drawBidirectionalWeighting(gc, x2, y2, flow2, capacity2, flowDistance2, x1, y1, flow1, capacity1, flowDistance1, type);
-	    }
-	    gc.setStroke(old);
-	    
-	    // Transofrmation rückgängig machen:
-	    gc.setTransform(new Affine(transform2));
+		Transform transform = Transform.translate(x1, y1);
+		transform = transform.createConcatenation(Transform.rotate(Math.toDegrees(angle), 0, 0));
+		gc.setTransform(new Affine(transform));
+
+		Paint old = gc.getStroke();
+		gc.setStroke(edgeColor);
+		// gc.strokeLine(0, 0, len, 0);
+		if (Math.PI / 2 > angle && angle >= -Math.PI / 2) {
+			if (type == visualizationType.NETWORKFLOW) {
+				gc.strokeText("<- " + flow2 + "/" + capacity2 + "\t\t" + (int) flow + "/" + (int) capacity + " ->",
+						(len / 2) - 50, 13);
+			} else {
+				gc.strokeText("<- " + flowDistance2 + "\t\t" + flowDistance1 + " ->", (len / 2) - 45, 13);
+			}
+		} else {
+			drawBidirectionalWeighting(gc, x2, y2, flow2, capacity2, flowDistance2, x1, y1, flow1, capacity1,
+					flowDistance1, type);
+		}
+		gc.setStroke(old);
+
+		// Transofrmation rï¿½ckgï¿½ngig machen:
+		gc.setTransform(new Affine(transform2));
 	}
 
+	@Override
 	public String toString() {
-		return "Edge(" + this.id + ", " + this.origin.getName() + " --> " + this.destination.getName() + ", " + this.flow + "/" + this.capacity + ")";
+		return "Edge(" + this.id + ", " + this.origin.getName() + " --> " + this.destination.getName() + ", "
+				+ this.flow + "/" + this.capacity + ")";
 	}
 }
