@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import algorithm.util.BreadthFirstSearch;
+import algorithm.util.Path;
 import model.Edge;
 import model.Network;
 import model.Vertex;
@@ -37,10 +39,10 @@ public class FlowDistance {
 	}
 	
 	/**
-	 * Diese Methode enthält den eigentlichen Algorithmus.
+	 * Diese Methode enthï¿½lt den eigentlichen Algorithmus.
 	 * 
 	 * @param source Sender
-	 * @param sink Empfänger
+	 * @param sink Empfï¿½nger
 	 */
 	public void run(Vertex sender, Vertex reciever) {
 		//to-do
@@ -205,7 +207,7 @@ public class FlowDistance {
 	}
 	
 	/**
-	 * Gibt die berechnete FLOW Distanz zwischen Sender und Empfänger zurück.
+	 * Gibt die berechnete FLOW Distanz zwischen Sender und Empfï¿½nger zurï¿½ck.
 	 * 
 	 * @return
 	 */
@@ -214,7 +216,7 @@ public class FlowDistance {
 	}
 	
 	/** 
-	 * Gibt einen boolschen Wert zurück, der angibt ob die übergebenen Knoten verbunden sin.
+	 * Gibt einen boolschen Wert zurï¿½ck, der angibt ob die ï¿½bergebenen Knoten verbunden sin.
 	 * 
 	 * @param source Start-Knoten
 	 * @param sink Ziel-Knoten

@@ -1,4 +1,4 @@
-package algorithm;
+package algorithm.util;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -28,7 +28,7 @@ public class BreadthFirstSearch {
 	/**
 	 * Konstruktor
 	 * 
-	 * @param network Das Netzwerk auf dem die Breitensuche durchgehführt werden soll
+	 * @param network Das Netzwerk auf dem die Breitensuche durchgehfï¿½hrt werden soll
 	 */
 	public BreadthFirstSearch(Network network) {
 		//this.network = network;
@@ -41,7 +41,7 @@ public class BreadthFirstSearch {
 	/**
 	 * Der eigentliche Algorithmus der Breitensuche.
 	 * Konstruiert gleichzeitig das visitedNetwork, ein Graph in dem alle besuchten Knoten/Kanten
-	 * vorhanden sind. Dieses wird benötigt um später den genauen Pfad zu finden.
+	 * vorhanden sind. Dieses wird benï¿½tigt um spï¿½ter den genauen Pfad zu finden.
 	 * 
 	 * @param start Knoten von dem die Breitensuche starten soll
 	 * @param goal Knoten, zu dem die Breitensuche einen Pfad finden soll
@@ -105,7 +105,7 @@ public class BreadthFirstSearch {
 	}
 	
 	/** 
-	 * Gibt einen boolschen Wert zurück, der angibt ob die übergebenen Knoten verbunden sin.
+	 * Gibt einen boolschen Wert zurï¿½ck, der angibt ob die ï¿½bergebenen Knoten verbunden sin.
 	 * 
 	 * @param start Start-Knoten
 	 * @param goal Ziel-Knoten

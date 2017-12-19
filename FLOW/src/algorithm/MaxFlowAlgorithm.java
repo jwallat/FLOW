@@ -1,5 +1,6 @@
 package algorithm;
 
+import algorithm.util.BreadthFirstSearch;
 import model.Network;
 import model.Vertex;
 
@@ -30,7 +31,7 @@ public abstract class MaxFlowAlgorithm {
 	}
 	
 	/** 
-	 * Gibt einen boolschen Wert zurück, der angibt ob die übergebenen Knoten verbunden sin.
+	 * Gibt einen boolschen Wert zurï¿½ck, der angibt ob die ï¿½bergebenen Knoten verbunden sin.
 	 * 
 	 * @param start Start-Knoten
 	 * @param goal Ziel-Knoten
@@ -42,7 +43,7 @@ public abstract class MaxFlowAlgorithm {
 	}
 	
 	/**
-	 * Funktion die den berechneten maximalen Fluss Wert zurück gibt.
+	 * Funktion die den berechneten maximalen Fluss Wert zurï¿½ck gibt.
 	 * 
 	 * @return
 	 */

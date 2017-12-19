@@ -2,6 +2,7 @@ package algorithm;
 
 import java.util.List;
 
+import algorithm.util.BreadthFirstSearch;
 import model.Edge;
 import model.Network;
 import model.Vertex;
@@ -39,7 +40,7 @@ public class EdmondsKarp extends MaxFlowAlgorithm {
 	}
 
 	/**
-	 * Diese Methode enthält den eigentlichen Algorithmus.
+	 * Diese Methode enthï¿½lt den eigentlichen Algorithmus.
 	 * 
 	 * @param source Quelle
 	 * @param sink Senke
@@ -98,7 +99,7 @@ public class EdmondsKarp extends MaxFlowAlgorithm {
  				}
  			}
 			
-			// setze kapazitäten im residualNetwork
+			// setze kapazitï¿½ten im residualNetwork
  			for (Edge e : path) {
  				for (Edge e2 : residualNetwork.getEdges()) {
  					if ((e.getOrigin() == e2.getDestination()) && (e.getDestination() == e2.getOrigin())) {
@@ -124,7 +125,7 @@ public class EdmondsKarp extends MaxFlowAlgorithm {
 	}
 
 	/**
-	 * Erzeugt das residual network, welches für den Algorithmus benötigt wird.
+	 * Erzeugt das residual network, welches fï¿½r den Algorithmus benï¿½tigt wird.
 	 * Dazu wird zu jeder Kante eine entgegenlaufende Kante erzeugt.
 	 * 
 	 */
@@ -142,7 +143,7 @@ public class EdmondsKarp extends MaxFlowAlgorithm {
 	}
 	
 	/** 
-	 * Gibt einen boolschen Wert zurück, der angibt ob die übergebenen Knoten verbunden sin.
+	 * Gibt einen boolschen Wert zurï¿½ck, der angibt ob die ï¿½bergebenen Knoten verbunden sin.
 	 * 
 	 * @param source Start-Knoten
 	 * @param sink Ziel-Knoten

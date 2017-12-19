@@ -1,4 +1,4 @@
-package algorithm;
+package algorithm.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import model.Edge;
 import model.Vertex;
 
 /**
- * Helfer-Klasse die die nötigen Informationen des Pfades zur Berechnung der FLOW-Distanz in einem Objekt kapselt.
+ * Helfer-Klasse die die nï¿½tigen Informationen des Pfades zur Berechnung der FLOW-Distanz in einem Objekt kapselt.
  * 
  * @author jwall
  *
