@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.Node;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import javafx.scene.transform.Affine;
+import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Transform;
+import util.PannablePane;
 import view.FlowSceneController.visualizationType;
 
 /**
@@ -22,6 +25,7 @@ public class Edge {
 	private Vertex origin;
 	private Vertex destination;
 	private List<Node> shapes;
+	private Label weightingLabel = new Label();
 	private int id;
 	private double capacity;
 	private double flow;
@@ -95,109 +99,116 @@ public class Edge {
 		return this.shapes;
 	}
 
-	public void draw(GraphicsContext gc) {
-		drawArrow(gc, origin.getX(), origin.getY(), destination.getX(), destination.getY());
+	public Label getWeightingLabel() {
+		return this.weightingLabel;
+	}
+
+	public void show(PannablePane pane) {
+		showLineShape(pane);
 		edgeColor = Color.BLACK;
 	}
 
-	/**
-	 * Hilfsfunktion zum Zeichnen der Pfeile.
-	 *
-	 * @param gc
-	 *            - graphical Context
-	 * @param x1
-	 *            - X-Position des Senders
-	 * @param y1
-	 *            - Y-Position des Senders
-	 * @param x2
-	 *            - X-Position des Empfï¿½ngers
-	 * @param y2
-	 *            - y-Position des Empfï¿½ngers
-	 */
-	private void drawArrow(GraphicsContext gc, int x1, int y1, int x2, int y2) {
-		gc.setFill(edgeColor);
+	private void showLineShape(PannablePane pane) {
 
-		double dx = x2 - x1, dy = y2 - y1;
+		int x1 = origin.getX();
+		int y1 = origin.getY();
+
+		int x2 = destination.getX();
+		int y2 = destination.getY();
+
+		int dx = x2 - x1;
+		int dy = y2 - y1;
+
+		int length = (int) Math.sqrt(dx * dx + dy * dy);
 		double angle = Math.atan2(dy, dx);
-		////////////////////////// -5 hier fuer die halbe breite des knotens
-		////////////////////////// ////////////////////////////////
-		int len = (int) Math.sqrt(dx * dx + dy * dy) - 9;
-		int ARR_SIZE = 5;
 
-		Transform transform2 = gc.getTransform();
+		Line line = new Line(x1, y1, x1 + length - destination.getWidth(), y1);
 
-		Transform transform = Transform.translate(x1, y1);
-		transform = transform.createConcatenation(Transform.rotate(Math.toDegrees(angle), 0, 0));
-		gc.setTransform(new Affine(transform));
+		Polygon arrowHead = new Polygon();
+		arrowHead.getPoints().addAll(new Double[] { line.getEndX() + 2, line.getEndY(), line.getEndX() - 5,
+				line.getEndY() - 5, line.getEndX() - 5, line.getEndY() + 5 });
 
-		Paint old = gc.getStroke();
-		gc.setStroke(edgeColor);
-		gc.strokeLine(0, 0, len, 0);
-		gc.setStroke(old);
+		// adjust colors
+		line.setStroke(edgeColor);
+		arrowHead.setFill(edgeColor);
 
-		gc.fillPolygon(new double[] { len, len - ARR_SIZE, len - ARR_SIZE, len },
-				new double[] { 0, -ARR_SIZE, ARR_SIZE, 0 }, 4);
+		// transform:
+		line.getTransforms().add(new Rotate(Math.toDegrees(angle), x1, y1));
+		arrowHead.getTransforms().add(new Rotate(Math.toDegrees(angle), x1, y1));
 
-		// Transofrmation rï¿½ckgï¿½ngig machen:
-		gc.setTransform(new Affine(transform2));
+		// add shapes to interal list & pane
+		this.shapes.add(line);
+		this.shapes.add(arrowHead);
+
+		pane.getChildren().add(line);
+		pane.getChildren().add(arrowHead);
+
+		line.toBack();
 	}
 
 	/**
-	 * Hilfsfunktion zum Zeichnen der Kantengewichte.
+	 * Hilfsfunktion zum Anzeigen der Kantengewichte.
 	 *
-	 * @param gc
-	 *            - graphical Context
+	 * @param pane
+	 *            - Parent dem das Label hinzugefügt wird
 	 * @param x1
 	 *            - X-Position des Senders
 	 * @param y1
 	 *            - Y-Position des Senders
 	 * @param x2
-	 *            - X-Position des Empfï¿½ngers
+	 *            - X-Position des Empfaengers
 	 * @param y2
-	 *            - y-Position des Empfï¿½ngers
+	 *            - y-Position des Empfaengers
 	 */
-	public void drawWeighting(GraphicsContext gc, int x1, int y1, int x2, int y2, visualizationType type) {
-		Color color;
+	public void showWeightingLabel(PannablePane pane, int x1, int y1, int x2, int y2, visualizationType type) {
+
+		weightingLabel = new Label();
+		weightingLabel.setId("weighting-label");
+
 		if (flow != 0) {
-			color = Color.BLACK;
+			edgeColor = Color.BLACK;
 		} else {
-			color = Color.GRAY;
+			edgeColor = Color.GRAY;
 		}
-		gc.setFill(color);
+
+		weightingLabel.setTextFill(edgeColor);
 
 		double dx = x2 - x1, dy = y2 - y1;
 		double angle = Math.atan2(dy, dx);
 		int len = (int) Math.sqrt(dx * dx + dy * dy) - 25;
 
-		Transform transform2 = gc.getTransform();
-
 		Transform transform = Transform.translate(x1, y1);
 		transform = transform.createConcatenation(Transform.rotate(Math.toDegrees(angle), 0, 0));
-		gc.setTransform(new Affine(transform));
 
-		Paint old = gc.getStroke();
-		gc.setStroke(color);
-		// gc.strokeLine(0, 0, len, 0);
 		if (Math.PI / 2 > angle && angle >= -Math.PI / 2) {
 			if (type == visualizationType.NETWORKFLOW) {
-				gc.strokeText((int) flow + "/" + (int) capacity, (len / 2) - 2, 13);
+				this.weightingLabel.setText((int) flow + "/" + (int) capacity);
 			} else {
-				gc.strokeText(flowDistance + "", (len / 2) - 2, 13);
+				this.weightingLabel.setText(flowDistance + "");
 			}
-		} else {
-			drawWeighting(gc, x2, y2, x1, y1, type);
-		}
-		gc.setStroke(old);
 
-		// Transofrmation rï¿½ckgï¿½ngig machen:
-		gc.setTransform(new Affine(transform2));
+			if (!pane.getChildren().contains(weightingLabel)) {
+				pane.getChildren().add(this.weightingLabel);
+			}
+
+			weightingLabel.getTransforms().add(new Affine(transform));
+
+			weightingLabel.relocate(weightingLabel.getLayoutX() + (dx / 2), weightingLabel.getLayoutY() + (dy / 2));
+
+			weightingLabel.relocate(
+					weightingLabel.getLayoutX() - ((dx / len) * (weightingLabel.getText().length() / 2) * 8),
+					weightingLabel.getLayoutY() - ((dy / len) * (weightingLabel.getText().length() / 2) * 8));
+
+		} else {
+			showWeightingLabel(pane, x2, y2, x1, y1, type);
+		}
 	}
 
 	/**
-	 * Hilfsfunktion zum Zeichnen der Kantengewichte.
+	 * Hilfsfunktion zum Anzeigen der bidirektionalen Kantengewichte.
 	 *
-	 * @param gc
-	 *            - graphical Context
+	 * @param pane
+	 *            - parent dem das Label hinzugefügt wird
 	 * @param x1
 	 *            - X-Position des Senders
 	 * @param y1
@@ -207,39 +218,52 @@ public class Edge {
 	 * @param y2
 	 *            - y-Position des Empfï¿½ngers
 	 */
-	public void drawBidirectionalWeighting(GraphicsContext gc, int x1, int y1, int flow1, int capacity1,
+	public void showBidirectionalWeightingLabel(PannablePane pane, int x1, int y1, int flow1, int capacity1,
 			double flowDistance1, int x2, int y2, int flow2, int capacity2, double flowDistance2,
 			visualizationType type) {
-		gc.setFill(edgeColor);
+
+		weightingLabel = new Label();
+		weightingLabel.setId("weighting-label");
+
+		if (flow1 != 0 || flow2 != 0) {
+			edgeColor = Color.BLACK;
+		} else {
+			edgeColor = Color.GRAY;
+		}
+
+		weightingLabel.setTextFill(edgeColor);
 
 		double dx = x2 - x1, dy = y2 - y1;
 		double angle = Math.atan2(dy, dx);
-		int len = (int) Math.sqrt(dx * dx + dy * dy) - 25;
-
-		Transform transform2 = gc.getTransform();
+		int len = (int) Math.sqrt(dx * dx + dy * dy);
 
 		Transform transform = Transform.translate(x1, y1);
 		transform = transform.createConcatenation(Transform.rotate(Math.toDegrees(angle), 0, 0));
-		gc.setTransform(new Affine(transform));
 
-		Paint old = gc.getStroke();
-		gc.setStroke(edgeColor);
-		// gc.strokeLine(0, 0, len, 0);
 		if (Math.PI / 2 > angle && angle >= -Math.PI / 2) {
 			if (type == visualizationType.NETWORKFLOW) {
-				gc.strokeText("<- " + flow2 + "/" + capacity2 + "\t\t" + (int) flow + "/" + (int) capacity + " ->",
-						(len / 2) - 50, 13);
+				weightingLabel
+						.setText("<- " + flow2 + "/" + capacity2 + "    " + (int) flow + "/" + (int) capacity + " ->");
 			} else {
-				gc.strokeText("<- " + flowDistance2 + "\t\t" + flowDistance1 + " ->", (len / 2) - 45, 13);
+				weightingLabel.setText("<- " + flowDistance2 + "    " + flowDistance1 + " ->");
 			}
+
+			if (!pane.getChildren().contains(weightingLabel)) {
+				pane.getChildren().add(this.weightingLabel);
+			}
+
+			weightingLabel.getTransforms().add(new Affine(transform));
+
+			weightingLabel.relocate(weightingLabel.getLayoutX() + (dx / 2), weightingLabel.getLayoutY() + (dy / 2));
+
+			weightingLabel.relocate(
+					weightingLabel.getLayoutX() - ((dx / len) * (weightingLabel.getText().length() / 2) * 8),
+					weightingLabel.getLayoutY() - ((dy / len) * (weightingLabel.getText().length() / 2) * 8));
+
 		} else {
-			drawBidirectionalWeighting(gc, x2, y2, flow2, capacity2, flowDistance2, x1, y1, flow1, capacity1,
+			showBidirectionalWeightingLabel(pane, x2, y2, flow2, capacity2, flowDistance2, x1, y1, flow1, capacity1,
 					flowDistance1, type);
 		}
-		gc.setStroke(old);
-
-		// Transofrmation rï¿½ckgï¿½ngig machen:
-		gc.setTransform(new Affine(transform2));
 	}
 
 	@Override

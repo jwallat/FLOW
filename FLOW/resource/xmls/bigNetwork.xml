@@ -18,11 +18,11 @@
 		<member name="Stellvertretender Teamleiter" id="14" x="850" y="610" type="person"></member>
 		<member name="Entwickler" id="15" x="1200" y="610" type="person"></member>
 		<member name="Konzept" id="16" x="750" y="520" type="document"></member>
-		<member name="Click-Dummy" id="17" x="830" y="520" type="document"></member>		
+		<member name="Click-Dummy" id="17" x="850" y="520" type="document"></member>		
 	</members>
 	<egdes>
-		<edge from="Teamleiter" to="Berater" id="0"></edge>
-		<edge from="Berater" to="Teamleiter" id="1"></edge>
+		<edge from="Teamleiter" to="Berater" id="1"></edge>
+		<edge from="Berater" to="Teamleiter" id="2"></edge>
 		<edge from="Gespraechsprotokoll" to="Teamleiter" id="3"></edge>
 		<edge from="Teamleiter" to="Workshop" id="4"></edge>
 		<edge from="Gespraechsprotokoll" to="Geschaeftsfuehrer" id="5"></edge>
@@ -31,43 +31,41 @@
 		<edge from="Geschaeftsfuehrer" to="Berater" id="8"></edge>
 		<edge from="Berater" to="Kunde (D)" id="9"></edge>
 		<edge from="Kunde (D)" to="Berater" id="10"></edge>
-		<edge from="Berater" to="Geschaeftsfuehrer" id="11"></edge>
-		<edge from="Gespraechsprotokoll" to="Kunde (D)" id="12"></edge>
-		<edge from="Geschaeftsfuehrer" to="Workshop" id="13"></edge>
-		<edge from="Kunde (D)" to="Workshop" id="14"></edge>
-		<edge from="Berater" to="Geschaeftsfuehrer" id="15"></edge>
-		<edge from="Anforderungen" to="Workshop" id="15"></edge>
-		<edge from="Berater" to="Workshop" id="16"></edge>
-		<edge from="Workshop" to="Protokoll" id="17"></edge>
-		<edge from="Workshop" to="Anforderungskatalog" id="18"></edge>
-		<edge from="Protokoll" to="Kunde (D)" id="19"></edge>
-		<edge from="Anforderungskatalog" to="Kunde (D)" id="20"></edge>
-		<edge from="Anforderungskatalog" to="Berater" id="21"></edge>
-		<edge from="Teamleiter Informatik" to="Workshop" id="23"></edge>
+		<edge from="Gespraechsprotokoll" to="Kunde (D)" id="11"></edge>
+		<edge from="Geschaeftsfuehrer" to="Workshop" id="12"></edge>
+		<edge from="Kunde (D)" to="Workshop" id="13"></edge>
+		<edge from="Anforderungen" to="Workshop" id="14"></edge>
+		<edge from="Berater" to="Workshop" id="15"></edge>
+		<edge from="Workshop" to="Protokoll" id="16"></edge>
+		<edge from="Workshop" to="Anforderungskatalog" id="17"></edge>
+		<edge from="Protokoll" to="Kunde (D)" id="18"></edge>
+		<edge from="Anforderungskatalog" to="Kunde (D)" id="19"></edge>
+		<edge from="Anforderungskatalog" to="Berater" id="20"></edge>
+		<edge from="Teamleiter Informatik" to="Workshop" id="21"></edge>
+		<edge from="Anforderungskatalog" to="Kunde (D)" id="22"></edge>
+		<edge from="Berater" to="Teamleiter Informatik" id="23"></edge>
 		<edge from="Anforderungskatalog" to="Kunde (D)" id="24"></edge>
-		<edge from="Berater" to="Teamleiter Informatik" id="25"></edge>
-		<edge from="Anforderungskatalog" to="Kunde (D)" id="26"></edge>
-		<edge from="Teamleiter Informatik" to="Konzept" id="27"></edge>
-		<edge from="Teamleiter Informatik" to="Stellvertretender Teamleiter" id="28"></edge>
-		<edge from="Stellvertretender Teamleiter" to="Teamleiter Informatik" id="29"></edge>
-		<edge from="Stellvertretender Teamleiter" to="Entwickler" id="30"></edge>
-		<edge from="Entwickler" to="Stellvertretender Teamleiter" id="31"></edge>
-		<edge from="Konzept" to="Berater" id="32"></edge>
-		<edge from="Berater" to="Konzept" id="33"></edge>
-		<edge from="Berater" to="Click-Dummy" id="34"></edge>
-		<edge from="Click-Dummy" to="Berater" id="35"></edge>
-		<edge from="Click-Dummy" to="Entwickler" id="36"></edge>
-		<edge from="Berater" to="Entwickler" id="37"></edge>
-		<edge from="Entwickler" to="Berater" id="38"></edge>
-		<edge from="Entwickler" to="Storycards" id="40"></edge>
-		<edge from="Entwickler" to="Ticketsystem" id="42"></edge>
-		<edge from="Qualitaetssicherung" to="Entwickler" id="43"></edge>
-		<edge from="Berater" to="Storycards" id="45"></edge>
-		<edge from="Berater" to="Ticketsystem" id="46"></edge>
-		<edge from="Storycards" to="Ticketsystem" id="47"></edge>
-		<edge from="Berater" to="Testfaelle" id="48"></edge>
-		<edge from="Testfaelle" to="Qualitaetssicherung" id="49"></edge>
-		<edge from="Ticketsystem" to="Qualitaetssicherung" id="50"></edge>
-		<edge from="Kunde (D)" to="Anforderungen" id="51"></edge>
+		<edge from="Teamleiter Informatik" to="Konzept" id="25"></edge>
+		<edge from="Teamleiter Informatik" to="Stellvertretender Teamleiter" id="26"></edge>
+		<edge from="Stellvertretender Teamleiter" to="Teamleiter Informatik" id="27"></edge>
+		<edge from="Stellvertretender Teamleiter" to="Entwickler" id="28"></edge>
+		<edge from="Entwickler" to="Stellvertretender Teamleiter" id="29"></edge>
+		<edge from="Konzept" to="Berater" id="30"></edge>
+		<edge from="Berater" to="Konzept" id="31"></edge>
+		<edge from="Berater" to="Click-Dummy" id="32"></edge>
+		<edge from="Click-Dummy" to="Berater" id="33"></edge>
+		<edge from="Click-Dummy" to="Entwickler" id="34"></edge>
+		<edge from="Berater" to="Entwickler" id="35"></edge>
+		<edge from="Entwickler" to="Berater" id="36"></edge>
+		<edge from="Entwickler" to="Storycards" id="37"></edge>
+		<edge from="Entwickler" to="Ticketsystem" id="38"></edge>
+		<edge from="Qualitaetssicherung" to="Entwickler" id="39"></edge>
+		<edge from="Berater" to="Storycards" id="40"></edge>
+		<edge from="Berater" to="Ticketsystem" id="41"></edge>
+		<edge from="Storycards" to="Ticketsystem" id="42"></edge>
+		<edge from="Berater" to="Testfaelle" id="43"></edge>
+		<edge from="Testfaelle" to="Qualitaetssicherung" id="44"></edge>
+		<edge from="Ticketsystem" to="Qualitaetssicherung" id="45"></edge>
+		<edge from="Kunde (D)" to="Anforderungen" id="46"></edge>
 	</egdes>
 </BigFLOW>
