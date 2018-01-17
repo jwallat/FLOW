@@ -1,0 +1,2 @@
+Wichtig: Um das Bild scroll-bar zu gestalten muss es an die derzeitige Bildschirmauflösung angepasst werden.
+Dementsprechend dürfen die Coordinaten der Elemente nur in [0, HEIGHT] und [0, WIDTH] liegen

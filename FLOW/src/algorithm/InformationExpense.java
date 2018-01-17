@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
+import javafx.util.Pair;
 import model.Edge;
 import model.Network;
 import model.Vertex;
@@ -24,7 +25,7 @@ import model.Vertex;
  */
 public class InformationExpense {
 
-	private List<List<Vertex>> highlightLists = new ArrayList<List<Vertex>>();
+	private List<Pair<List<Vertex>, List<Edge>>> highlightLists = new ArrayList<Pair<List<Vertex>, List<Edge>>>();
 
 	private SimpleStringProperty step = new SimpleStringProperty();
 	private SimpleStringProperty percentageReached = new SimpleStringProperty();
@@ -64,14 +65,16 @@ public class InformationExpense {
 
 			int s = Integer.parseInt(step.get());
 
-			for (Vertex v : highlightLists.get(Integer.parseInt(step.get()) + 1)) {
+			for (Vertex v : highlightLists.get(Integer.parseInt(step.get()) + 1).getKey()) {
 				double size = 30 - (25 * ((double) (s + 1) / (double) (highlightLists.size() - 1)));
 				System.out.println("Size: " + size);
 				v.getShape().setEffect(new DropShadow(BlurType.GAUSSIAN,
-						// Color.RED.interpolate(Color.BLUE, (double) (s + 1) /
-						// (double) (highlightLists.size() - 1)), 30,
 						Color.RED.interpolate(Color.BLUE, (double) (s + 1) / (double) (highlightLists.size() - 1)),
 						size, 0.7, 0, 0));
+			}
+
+			for (Edge e : highlightLists.get(Integer.parseInt(step.get()) + 1).getValue()) {
+				e.setColor(Color.BLACK);
 			}
 
 			// calculate new percentage
@@ -89,8 +92,12 @@ public class InformationExpense {
 	public void iterateBackwards() {
 		if (Integer.parseInt(step.get()) > 0) {
 
-			for (Vertex v : highlightLists.get(Integer.parseInt(step.get()))) {
+			for (Vertex v : highlightLists.get(Integer.parseInt(step.get())).getKey()) {
 				v.getShape().setEffect(null);
+			}
+
+			for (Edge e : highlightLists.get(Integer.parseInt(step.get())).getValue()) {
+				e.setColor(Color.GRAY);
 			}
 
 			// verringere den stepCounter
@@ -110,41 +117,46 @@ public class InformationExpense {
 	}
 
 	/**
-	 * Helfer Funktion, die eine Liste aus Listen erzeugt. In der i-ten Liste
-	 * sind die Knoten enthalten, die im i-ten Schritt gehighlighted werden
-	 * müssen.
+	 * Helfer Funktion, die eine Liste aus Listen erzeugt. In der i-ten Liste sind
+	 * die Knoten enthalten, die im i-ten Schritt gehighlighted werden muessen.
 	 *
 	 * @param center
 	 * @return
 	 */
-	public List<List<Vertex>> computeHighlightLists(Vertex center) {
-		List<List<Vertex>> resultLists = new ArrayList<List<Vertex>>();
+	public List<Pair<List<Vertex>, List<Edge>>> computeHighlightLists(Vertex center) {
+		List<Pair<List<Vertex>, List<Edge>>> resultLists = new ArrayList<Pair<List<Vertex>, List<Edge>>>();
 
-		List<Vertex> firstList = new ArrayList<Vertex>();
-		firstList.add(center);
+		List<Vertex> firstVertexList = new ArrayList<Vertex>();
+		List<Edge> firstEdgeList = new ArrayList<Edge>();
+		firstVertexList.add(center);
 
-		resultLists.add(firstList);
+		resultLists.add(new Pair<>(firstVertexList, firstEdgeList));
 
 		int numElements = 1;
 
 		for (int i = 1; numElements < network.getVertices().size(); i++) {
-			List<Vertex> stepIList = new ArrayList<Vertex>();
-			for (Vertex v : resultLists.get(i - 1)) {
+			List<Vertex> stepIVertexList = new ArrayList<Vertex>();
+			List<Edge> stepIEdgeList = new ArrayList<Edge>();
+			for (Vertex v : resultLists.get(i - 1).getKey()) {
 				for (Edge e : network.getEdges()) {
 					if (e.getOrigin().equals(v)) {
-						if (!contains(resultLists, e.getDestination()) && !stepIList.contains(e.getDestination())) {
-							stepIList.add(e.getDestination());
+						if (!contains(resultLists, e.getDestination())
+								&& !stepIVertexList.contains(e.getDestination())) {
+							stepIVertexList.add(e.getDestination());
 							numElements++;
+						}
+						if (!contains(resultLists, e)) {
+							stepIEdgeList.add(e);
 						}
 					}
 				}
 			}
-			resultLists.add(stepIList);
+			resultLists.add(new Pair<>(stepIVertexList, stepIEdgeList));
 		}
 
 		this.numElements[0] = 1;
 		for (int i = 1; i < resultLists.size(); i++) {
-			this.numElements[i] = this.numElements[i - 1] + resultLists.get(i).size();
+			this.numElements[i] = this.numElements[i - 1] + resultLists.get(i).getKey().size();
 		}
 
 		highlightLists = resultLists;
@@ -152,9 +164,10 @@ public class InformationExpense {
 		return resultLists;
 	}
 
-	private boolean contains(List<List<Vertex>> list, Vertex v) {
-		for (List<Vertex> l2 : list) {
-			for (Vertex v2 : l2) {
+	private boolean contains(List<Pair<List<Vertex>, List<Edge>>> list, Vertex v) {
+		for (Pair<List<Vertex>, List<Edge>> l2 : list) {
+			List<Vertex> vertexList = l2.getKey();
+			for (Vertex v2 : vertexList) {
 				if (v.getName().equals(v2.getName())) {
 					return true;
 				}
@@ -163,26 +176,39 @@ public class InformationExpense {
 		return false;
 	}
 
+	private boolean contains(List<Pair<List<Vertex>, List<Edge>>> list, Edge e) {
+		for (Pair<List<Vertex>, List<Edge>> l2 : list) {
+			List<Edge> edgeList = l2.getValue();
+			for (Edge e2 : edgeList) {
+				if (e.getId() == e2.getId()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	/**
-	 * Gibt eine Liste an Knoten zur�ck, die nach einer gegebenen Anzahl an
+	 * Gibt eine Liste an Knoten zurueck, die nach einer gegebenen Anzahl an
 	 * Schritten weniger als eine gegebene Prozentzahl an Knoten erreicht haben.
 	 *
 	 * @param steps
 	 *            - die Anzahl der Schritte
 	 * @param percentage
 	 *            - die Prozentzahl aller Knoten, die nach "steps" Schritten
-	 *            erreicht werden m�ssen.
+	 *            erreicht werden muessen.
 	 * @return
 	 */
 	public List<Vertex> getVerticesNotReached(int steps, double percentage) {
 		List<Vertex> resultList = new ArrayList<Vertex>();
 		System.out.println("*****************");
 		for (Vertex v : network.getVertices()) {
-			List<List<Vertex>> list = computeHighlightLists(v);
-			double percentageReached = (double) getSizeAfterISteps(list, steps) / (double) network.getVertices().size();
+			List<Pair<List<Vertex>, List<Edge>>> pairLists = computeHighlightLists(v);
+			double percentageReached = (double) getSizeAfterISteps(pairLists, steps)
+					/ (double) network.getVertices().size();
 			if (percentageReached < percentage) {
 				resultList.add(v);
-				System.out.println("Name: " + v.getName() + ", " + getSizeAfterISteps(list, steps));
+				System.out.println("Name: " + v.getName() + ", " + getSizeAfterISteps(pairLists, steps));
 			}
 		}
 
@@ -190,26 +216,27 @@ public class InformationExpense {
 	}
 
 	/**
-	 * Gibt eine Liste an Knoten zur�ck, die nach einer gegebenen Anzahl an
+	 * Gibt eine Liste an Knoten zurueck, die nach einer gegebenen Anzahl an
 	 * Schritten mindestens eine gegebene Prozentzahl an Knoten erreicht haben.
 	 *
 	 * @param steps
 	 *            - die Anzahl der Schritte
 	 * @param percentage
 	 *            - die Prozentzahl aller Knoten, die nach "steps" Schritten
-	 *            erreicht werden m�ssen.
+	 *            erreicht werden muessen.
 	 * @return
 	 */
 	public List<Vertex> getVerticesReached(int steps, double percentage) {
 		List<Vertex> resultList = new ArrayList<Vertex>();
 		System.out.println("*****************");
 		for (Vertex v : network.getVertices()) {
-			List<List<Vertex>> list = computeHighlightLists(v);
-			double percentageReached = (double) getSizeAfterISteps(list, steps) / (double) network.getVertices().size();
+			List<Pair<List<Vertex>, List<Edge>>> pairLists = computeHighlightLists(v);
+			double percentageReached = (double) getSizeAfterISteps(pairLists, steps)
+					/ (double) network.getVertices().size();
 			if (percentageReached >= percentage) {
 				resultList.add(v);
-				System.out.println(
-						"Name: " + v.getName() + ", " + getSizeAfterISteps(list, steps) + ", " + percentageReached);
+				System.out.println("Name: " + v.getName() + ", " + getSizeAfterISteps(pairLists, steps) + ", "
+						+ percentageReached);
 			}
 			/*
 			 * if (percentageReached >= 1.0) { break; }
@@ -220,19 +247,19 @@ public class InformationExpense {
 	}
 
 	/**
-	 * Funktion, die f�r eine Liste aus Listen die Anzahl der Knoten zur�ckgibt,
+	 * Funktion, die fuer eine Liste aus Listen die Anzahl der Knoten zurueckgibt,
 	 * die in den ersten $steps Listen enthalten sind.
 	 *
 	 * @param lists
 	 * @param steps
 	 * @return
 	 */
-	private int getSizeAfterISteps(List<List<Vertex>> lists, int steps) {
+	private int getSizeAfterISteps(List<Pair<List<Vertex>, List<Edge>>> pairLists, int steps) {
 		int num = 0;
 		int i = 0;
-		for (List<Vertex> list : lists) {
+		for (Pair<List<Vertex>, List<Edge>> list : pairLists) {
 			if (i <= steps) {
-				num += list.size();
+				num += list.getKey().size();
 			}
 			i++;
 		}
@@ -240,9 +267,9 @@ public class InformationExpense {
 	}
 
 	/**
-	 * Funktion die zu einer gegebenen Prozentzahl alle Listen von Knoten, die
-	 * in X Steps weniger als Y Prozent der Knoten erreichen berechnet und diese
-	 * in eine CSV schreibt.
+	 * Funktion die zu einer gegebenen Prozentzahl alle Listen von Knoten, die in X
+	 * Steps weniger als Y Prozent der Knoten erreichen berechnet und diese in eine
+	 * CSV schreibt.
 	 */
 	public void safeVerticesNotReachedAsCSV(double percentage) {
 		try {
@@ -273,9 +300,9 @@ public class InformationExpense {
 	}
 
 	/**
-	 * Funktion die zu einer gegebenen Prozentzahl alle Listen von Knoten, die
-	 * in X Steps mindestens Y Prozent der Knoten erreichen berechnet und diese
-	 * in eine CSV schreibt.
+	 * Funktion die zu einer gegebenen Prozentzahl alle Listen von Knoten, die in X
+	 * Steps mindestens Y Prozent der Knoten erreichen berechnet und diese in eine
+	 * CSV schreibt.
 	 */
 	public void safeVerticesReachedAsCSV(double percentage) {
 		try {

@@ -469,6 +469,8 @@ public class FlowSceneController implements Initializable {
 	public void infoExpansionForewardsButtonClicked() {
 		if (iE != null) {
 			iE.iterateForewards();
+			clearLines();
+			showEdges("informationExpansion");
 		}
 	}
 
@@ -479,6 +481,8 @@ public class FlowSceneController implements Initializable {
 	public void infoExpansionBackwardsButtonClicked() {
 		if (iE != null) {
 			iE.iterateBackwards();
+			clearLines();
+			showEdges("informationExpansion");
 		}
 	}
 
@@ -782,7 +786,7 @@ public class FlowSceneController implements Initializable {
 	 * Funktion die die Edges visualisiert, indem die Kanten als Shape zum Pane
 	 * hinzugefügt werden.
 	 */
-	private void showEdges() {
+	private void showEdges(String... mode) {
 
 		if (edgeWeighting == visualizationType.WATERPIPES) {
 			drawWaterPipes();
@@ -795,38 +799,26 @@ public class FlowSceneController implements Initializable {
 
 		for (Edge e : edges) {
 
-			if (e.getFlow() > 0) {
-				if (highlightFlow) {
-					e.setColor(Color.ORANGE);
-				} else {
-					e.setColor(Color.BLACK);
+			if (mode.length > 0) {
+				if (mode[0].equals("informationExpansion")) {
+					e.show(pannablePane);
 				}
 			} else {
-				e.setColor(Color.GREY);
+				if (e.getFlow() > 0) {
+					if (highlightFlow) {
+						e.setColor(Color.ORANGE);
+					} else {
+						e.setColor(Color.BLACK);
+					}
+				} else {
+					e.setColor(Color.GREY);
+				}
+				e.show(pannablePane);
 			}
-			// e.draw(gc);
-			e.show(pannablePane);
 
 			weightingDrawn = false;
 			for (Edge e2 : edges) {
 				if ((e.getOrigin() == e2.getDestination()) && (e.getDestination() == e2.getOrigin())) {
-
-					if (e.getFlow() > 0 || e2.getFlow() > 0) {
-						if (highlightFlow) {
-							e.setColor(Color.ORANGE);
-							e.show(pannablePane);
-							e2.setColor(Color.ORANGE);
-							e.show(pannablePane);
-						} else {
-							e.setColor(Color.BLACK);
-							e.show(pannablePane);
-							e2.setColor(Color.BLACK);
-							e.show(pannablePane);
-						}
-
-					} else {
-						e.setColor(Color.GREY);
-					}
 
 					if (!drawnEdges.contains(e2) && !drawnEdges.contains(e)) {
 
@@ -844,6 +836,48 @@ public class FlowSceneController implements Initializable {
 						e.getDestination().getX(), e.getDestination().getY(), edgeWeighting);
 				drawnEdges.add(e);
 			}
+		}
+
+		// bringe nicht verwendete kanten in den hintergrund, damit sie nicht über
+		// interessanten kanten liegen: Layering soll wie folgt sein (von oben nach
+		// unten):
+		// 1. NameLabels
+		// 2. Pfeilspitzen mit farbe
+		// 3. Pfeilspitzen grau
+		// 4. Vertex-Shapes
+		// 5. edges mit farbe
+		// 6. edges grau
+
+		for (Edge e : edges) {
+			if (e.getColor() != Color.GRAY) {
+				for (Node n : e.getShapes()) {
+					n.toFront();
+				}
+			}
+		}
+		for (Vertex v : network.getVertices()) {
+			v.getShape().toFront();
+		}
+		for (Edge e : edges) {
+			if (e.getColor() == Color.GRAY) {
+				for (Node n : e.getShapes()) {
+					if (n.getClass().toString().contains("javafx.scene.shape.Polygon")) {
+						n.toFront();
+					}
+				}
+			}
+		}
+		for (Edge e : edges) {
+			if (e.getColor() != Color.GRAY) {
+				for (Node n : e.getShapes()) {
+					if (n.getClass().toString().contains("javafx.scene.shape.Polygon")) {
+						n.toFront();
+					}
+				}
+			}
+		}
+		for (Vertex v : network.getVertices()) {
+			v.getNameLabel().toFront();
 		}
 	}
 

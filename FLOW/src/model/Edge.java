@@ -31,6 +31,7 @@ public class Edge {
 	private double flow;
 	private double flowDistance;
 	private Color edgeColor = Color.BLACK;
+	private Color weightingColor = Color.BLACK;
 
 	public Edge(int id, Vertex origin, Vertex destination, double capacity) {
 		this.setOrigin(origin);
@@ -93,6 +94,11 @@ public class Edge {
 
 	public void setColor(Color c) {
 		this.edgeColor = c;
+		System.out.println("Changed Color of edge: " + id);
+	}
+
+	public Color getColor() {
+		return this.edgeColor;
 	}
 
 	public List<Node> getShapes() {
@@ -103,9 +109,17 @@ public class Edge {
 		return this.weightingLabel;
 	}
 
+	public Color getWeightingColor() {
+		return weightingColor;
+	}
+
+	public void setWeightingColor(Color weightingColor) {
+		this.weightingColor = weightingColor;
+	}
+
 	public void show(PannablePane pane) {
 		showLineShape(pane);
-		edgeColor = Color.BLACK;
+		// edgeColor = Color.BLACK;
 	}
 
 	private void showLineShape(PannablePane pane) {
@@ -166,12 +180,12 @@ public class Edge {
 		weightingLabel.setId("weighting-label");
 
 		if (flow != 0) {
-			edgeColor = Color.BLACK;
+			weightingColor = Color.BLACK;
 		} else {
-			edgeColor = Color.GRAY;
+			weightingColor = Color.GRAY;
 		}
 
-		weightingLabel.setTextFill(edgeColor);
+		weightingLabel.setTextFill(weightingColor);
 
 		double dx = x2 - x1, dy = y2 - y1;
 		double angle = Math.atan2(dy, dx);
