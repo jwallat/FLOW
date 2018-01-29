@@ -71,6 +71,35 @@
                                           </Label>
                                        </children>
                                     </HBox>
+                                    <VBox layoutX="15.0" layoutY="84.0" spacing="15.0">
+                                       <children>
+                                          <HBox id="myHBox">
+                                             <children>
+                                                <Label id="heading-label" prefHeight="19.0" prefWidth="190.0" text="Visualizazion style:">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                   <cursor>
+                                                      <Cursor fx:constant="DEFAULT" />
+                                                   </cursor>
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <VBox spacing="10.0">
+                                             <children>
+                                                <HBox>
+                                                   <children>
+                                                      <Label text="FLOW-Notation: " />
+                                                      <HBox fx:id="toggleButtonHBox" alignment="CENTER" prefHeight="25.0" prefWidth="100.0" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </VBox>
                                     <VBox spacing="15.0">
                                        <children>
                                           <HBox id="myHBox">

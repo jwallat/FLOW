@@ -34,6 +34,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
@@ -46,6 +47,7 @@ import model.Network;
 import model.Vertex;
 import util.PannablePane;
 import util.SceneGestures;
+import util.SwitchButton;
 
 /**
  * Kontroller zur FlowScene.fxml. Hier werden alle Interaktionen mit dem UI
@@ -73,6 +75,9 @@ public class FlowSceneController implements Initializable {
 
 	@FXML
 	private TitledPane informationPane;
+
+	@FXML
+	private HBox toggleButtonHBox;
 
 	@FXML
 	private Label fileNameLabel;
@@ -161,7 +166,9 @@ public class FlowSceneController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
+		// FÃ¼gt dem MenuPanel auf der rechten seite einen Switch button zum an
+		// und ausstellen der FLOW-Notation hinzu.
+		toggleButtonHBox.getChildren().add(new SwitchButton(this));
 	}
 
 	/**
@@ -357,7 +364,7 @@ public class FlowSceneController implements Initializable {
 			centerVertexLabel.setText("");
 		}
 
-		// setze alles zurück
+		// setze alles zurï¿½ck
 		resetNetwork();
 		clearVertexHighlights();
 		updateGraphics();
@@ -514,7 +521,7 @@ public class FlowSceneController implements Initializable {
 			sink = null;
 		}
 
-		// setze alles zurück
+		// setze alles zurï¿½ck
 		clearVertexHighlights();
 		resetNetwork();
 		updateGraphics();
@@ -567,9 +574,9 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Klicken des "Go"-Buttons ausgefÃ¼hrt wird. Dabei werden die
-	 * angebenen Parameter gelesen und alle Knoten, die in $steps nicht mindestens
-	 * $prozent der gesamten Knoten erreichen ausgegeben.
+	 * Funktion die bei Klicken des "Go"-Buttons ausgefÃ¼hrt wird. Dabei werden
+	 * die angebenen Parameter gelesen und alle Knoten, die in $steps nicht
+	 * mindestens $prozent der gesamten Knoten erreichen ausgegeben.
 	 */
 	public void reachedLessGoButtonClicked() {
 		clearVertexHighlights();
@@ -615,8 +622,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Klicken des "Go"-Buttons ausgefÃ¼hrt wird. Dabei werden die
-	 * angebenen Parameter gelesen und alle Knoten, die in $steps mindestens
+	 * Funktion die bei Klicken des "Go"-Buttons ausgefÃ¼hrt wird. Dabei werden
+	 * die angebenen Parameter gelesen und alle Knoten, die in $steps mindestens
 	 * $prozent der gesamten Knoten erreichen ausgegeben.
 	 */
 	public void reachedMoreGoButtonClicked() {
@@ -663,11 +670,11 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Click-Methode die ausgeführt wenn der computeOutput-Button geklickt wird.
-	 * Daraufhin werden Listen berechnet, in den für die gegebene Prozentzahl für
-	 * alle Schritte jeweils alle Knoten aufgelistet werden, die weniger
+	 * Click-Methode die ausgefï¿½hrt wenn der computeOutput-Button geklickt wird.
+	 * Daraufhin werden Listen berechnet, in den fï¿½r die gegebene Prozentzahl
+	 * fï¿½r alle Schritte jeweils alle Knoten aufgelistet werden, die weniger
 	 * als/mindestens die gegebene Prozentzahl aller Knoten erreichen.
-	 * 
+	 *
 	 */
 	public void computeOutputButtonClicked() {
 		if (percentageTextField.getText().matches("\\d+")) {
@@ -700,6 +707,42 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
+	 * Funktion die ausgefÃ¼hrt wird, wenn der FLOW-Notations switch geklickt
+	 * wird. Werden zur Zeit die Konten in der FLOW-Notation angezeigt, dann
+	 * wird auf die normale, schlichtere Visualisierung gewechselt und
+	 * umgekehrt.
+	 */
+	public void toggleFLOWNotation() {
+		boolean normalVisualizationActive = true;
+		for (Vertex v : network.getVertices()) {
+			if (v.getClass().toString().contains("Person") | v.getClass().toString().contains("Document")) {
+				if (v.getShape().getFill() != Color.WHITE) {
+					normalVisualizationActive = false;
+				}
+			}
+		}
+
+		if (normalVisualizationActive) {
+			// zeige alles in FLOW-Notation
+			for (Vertex v : network.getVertices()) {
+				if (v.getImg() != null) {
+					v.getShape().setFill(new ImagePattern(v.getImg()));
+				}
+			}
+			// TODO- line styles zu gestrichelt
+		} else {
+			// zeige wieder alles normal an
+			for (Vertex v : network.getVertices()) {
+				v.getShape().setFill(Color.WHITE);
+			}
+			// TODO- line styles zurÃ¼cksetzen
+		}
+		clearVertices();
+		clearLines();
+		showNetwork();
+	}
+
+	/**
 	 * Entfernt alle Vertices vom AnchorPane.
 	 *
 	 */
@@ -727,8 +770,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Visualisiert das Netzwerk aus der XML-Datei. Wird aufgerufen, nachdem ï¿½ber
-	 * den FileChooser eine Datei ausgewï¿½hlt wurde.
+	 * Visualisiert das Netzwerk aus der XML-Datei. Wird aufgerufen, nachdem
+	 * ï¿½ber den FileChooser eine Datei ausgewï¿½hlt wurde.
 	 *
 	 */
 	private void showNetwork() {
@@ -746,8 +789,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Setzt das Netzwerk auf den Ausgangszustand zurück. Dabei werden alle
-	 * Informationsflüsse gelöscht.
+	 * Setzt das Netzwerk auf den Ausgangszustand zurï¿½ck. Dabei werden alle
+	 * Informationsflï¿½sse gelï¿½scht.
 	 */
 	private void resetNetwork() {
 		for (Edge e : network.getEdges()) {
@@ -766,8 +809,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Aktualisiert die Elemente des Canvas, nach einer ï¿½nderung. Das Netzwerk aus
-	 * der XML wird angezeigt.
+	 * Aktualisiert die Elemente des Canvas, nach einer ï¿½nderung. Das Netzwerk
+	 * aus der XML wird angezeigt.
 	 */
 	private void updateGraphics() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -777,14 +820,15 @@ public class FlowSceneController implements Initializable {
 
 	/**
 	 * Zeichnet die Edges auf das Canvas. Besonders ist dabei zu beachten, dass
-	 * fï¿½r bidirektionale Edges besonders vorgegangen wird: Das Weighting soll 2x
-	 * gezeichnet werden, so dass jeweils Flow/Kapazitï¿½t in Flussrichtung zeigen.
+	 * fï¿½r bidirektionale Edges besonders vorgegangen wird: Das Weighting soll
+	 * 2x gezeichnet werden, so dass jeweils Flow/Kapazitï¿½t in Flussrichtung
+	 * zeigen.
 	 *
 	 */
 
 	/**
 	 * Funktion die die Edges visualisiert, indem die Kanten als Shape zum Pane
-	 * hinzugefügt werden.
+	 * hinzugefï¿½gt werden.
 	 */
 	private void showEdges(String... mode) {
 
@@ -838,8 +882,10 @@ public class FlowSceneController implements Initializable {
 			}
 		}
 
-		// bringe nicht verwendete kanten in den hintergrund, damit sie nicht über
-		// interessanten kanten liegen: Layering soll wie folgt sein (von oben nach
+		// bringe nicht verwendete kanten in den hintergrund, damit sie nicht
+		// ï¿½ber
+		// interessanten kanten liegen: Layering soll wie folgt sein (von oben
+		// nach
 		// unten):
 		// 1. NameLabels
 		// 2. Pfeilspitzen mit farbe

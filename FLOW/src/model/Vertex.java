@@ -1,13 +1,13 @@
 package model;
 
-
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
 /**
  * Abstrakte Basis Klasse, von der alle Knoten-Typen erben.
- * 
+ *
  * @author jwall
  *
  */
@@ -17,16 +17,17 @@ public abstract class Vertex {
 	private int ID;
 	private Circle shape;
 	private Label nameLabel;
+	private Image img;
 	private boolean visited;
 	private int x;
 	private int y;
 	private int width;
 	private int height;
-	
+
 	public Vertex(int id) {
 		this.setID(id);
 	}
-	
+
 	public Vertex(String name, int id, int x, int y) {
 		this.name = name;
 		this.setID(id);
@@ -35,13 +36,13 @@ public abstract class Vertex {
 		this.height = 10;
 		this.width = 10;
 		this.setVisited(false);
-		
+
 		this.shape = new Circle(x, y, 20);
 		this.nameLabel = new Label(name);
 		this.nameLabel.setId("name-label");
-		//this.nameLabel.setStyle("-fx-background-color: #24d24d24d");
+		// this.nameLabel.setStyle("-fx-background-color: #24d24d24d");
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -69,25 +70,26 @@ public abstract class Vertex {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
+
 	public int getWidth() {
 		return this.width;
 	}
-	
+
 	public int getHeight() {
 		return this.height;
 	}
-	
-	public Shape getShape() { 
+
+	public Shape getShape() {
 		return this.shape;
 	}
-	
+
 	public Label getNameLabel() {
 		return this.nameLabel;
 	}
-	
+
+	@Override
 	public String toString() {
-		return "Vertex(" + name + ", " + ID + ", " + x + ", " + y +")";
+		return "Vertex(" + name + ", " + ID + ", " + x + ", " + y + ")";
 	}
 
 	public boolean isVisited() {
@@ -96,5 +98,13 @@ public abstract class Vertex {
 
 	public void setVisited(boolean visited) {
 		this.visited = visited;
+	}
+
+	public Image getImg() {
+		return img;
+	}
+
+	public void setImg(Image img) {
+		this.img = img;
 	}
 }
