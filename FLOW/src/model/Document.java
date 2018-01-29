@@ -23,14 +23,15 @@ public class Document extends Vertex {
 	private int width;
 	private int height;
 
-	public Document(String name, int id, int x, int y) {
+	public Document(String name, String type, int id, int x, int y) {
 		super(name, id, x, y);
 		this.name = name;
+		this.setType(type);
 		this.ID = id;
 		this.x = x;
 		this.y = y;
-		this.width = 15;
-		this.height = 20;
+		this.width = 20;// 15
+		this.height = 25;// 20
 
 		this.shape = new Rectangle(x - (width / 2), y - (height / 2), width, height);
 		this.shape.setStroke(Color.BLACK);
@@ -38,7 +39,7 @@ public class Document extends Vertex {
 		this.shape.setStrokeType(StrokeType.INSIDE);
 		this.shape.setFill(Color.WHITE);
 
-		this.img = new Image("file:///" + System.getProperty("user.dir") + "/resource/icons/document.png");
+		this.img = new Image("file:///" + System.getProperty("user.dir") + "/resource/icons/document_2.png");
 		// this.shape.setFill(new ImagePattern(this.img));
 	}
 

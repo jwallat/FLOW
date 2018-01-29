@@ -15,6 +15,7 @@ public abstract class Vertex {
 
 	private String name;
 	private int ID;
+	private String type;
 	private Circle shape;
 	private Label nameLabel;
 	private Image img;
@@ -106,5 +107,13 @@ public abstract class Vertex {
 
 	public void setImg(Image img) {
 		this.img = img;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

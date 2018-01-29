@@ -28,6 +28,7 @@ public class Edge {
 	private Label weightingLabel = new Label();
 	private int id;
 	private double capacity;
+	private boolean isDashed = false;
 	private double flow;
 	private double flowDistance;
 	private Color edgeColor = Color.BLACK;
@@ -94,7 +95,6 @@ public class Edge {
 
 	public void setColor(Color c) {
 		this.edgeColor = c;
-		System.out.println("Changed Color of edge: " + id);
 	}
 
 	public Color getColor() {
@@ -136,7 +136,7 @@ public class Edge {
 		int length = (int) Math.sqrt(dx * dx + dy * dy);
 		double angle = Math.atan2(dy, dx);
 
-		Line line = new Line(x1, y1, x1 + length - destination.getWidth(), y1);
+		Line line = new Line(x1, y1, x1 + length - (destination.getWidth() + 5), y1);
 
 		Polygon arrowHead = new Polygon();
 		arrowHead.getPoints().addAll(new Double[] { line.getEndX() + 2, line.getEndY(), line.getEndX() - 5,
@@ -149,6 +149,11 @@ public class Edge {
 		// transform:
 		line.getTransforms().add(new Rotate(Math.toDegrees(angle), x1, y1));
 		arrowHead.getTransforms().add(new Rotate(Math.toDegrees(angle), x1, y1));
+
+		// decide if the line should be dashed or not
+		if (isDashed) {
+			line.getStrokeDashArray().addAll(25d, 10d);
+		}
 
 		// add shapes to interal list & pane
 		this.shapes.add(line);
@@ -284,5 +289,13 @@ public class Edge {
 	public String toString() {
 		return "Edge(" + this.id + ", " + this.origin.getName() + " --> " + this.destination.getName() + ", "
 				+ this.flow + "/" + this.capacity + ")";
+	}
+
+	public boolean isDashed() {
+		return isDashed;
+	}
+
+	public void setDashed(boolean isDashed) {
+		this.isDashed = isDashed;
 	}
 }

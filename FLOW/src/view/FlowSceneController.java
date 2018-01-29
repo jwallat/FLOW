@@ -79,6 +79,8 @@ public class FlowSceneController implements Initializable {
 	@FXML
 	private HBox toggleButtonHBox;
 
+	private SwitchButton switchButton;
+
 	@FXML
 	private Label fileNameLabel;
 
@@ -168,7 +170,8 @@ public class FlowSceneController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// Fügt dem MenuPanel auf der rechten seite einen Switch button zum an
 		// und ausstellen der FLOW-Notation hinzu.
-		toggleButtonHBox.getChildren().add(new SwitchButton(this));
+		this.switchButton = new SwitchButton(this);
+		toggleButtonHBox.getChildren().add(switchButton);
 	}
 
 	/**
@@ -257,6 +260,7 @@ public class FlowSceneController implements Initializable {
 		network.prepareNetwork();
 
 		showNetwork();
+		switchButton.switchOnProperty().set(false);
 
 		informationPane.expandedProperty().set(true);
 	}
@@ -574,9 +578,9 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Klicken des "Go"-Buttons ausgeführt wird. Dabei werden
-	 * die angebenen Parameter gelesen und alle Knoten, die in $steps nicht
-	 * mindestens $prozent der gesamten Knoten erreichen ausgegeben.
+	 * Funktion die bei Klicken des "Go"-Buttons ausgeführt wird. Dabei werden die
+	 * angebenen Parameter gelesen und alle Knoten, die in $steps nicht mindestens
+	 * $prozent der gesamten Knoten erreichen ausgegeben.
 	 */
 	public void reachedLessGoButtonClicked() {
 		clearVertexHighlights();
@@ -622,8 +626,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Klicken des "Go"-Buttons ausgeführt wird. Dabei werden
-	 * die angebenen Parameter gelesen und alle Knoten, die in $steps mindestens
+	 * Funktion die bei Klicken des "Go"-Buttons ausgeführt wird. Dabei werden die
+	 * angebenen Parameter gelesen und alle Knoten, die in $steps mindestens
 	 * $prozent der gesamten Knoten erreichen ausgegeben.
 	 */
 	public void reachedMoreGoButtonClicked() {
@@ -707,35 +711,37 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die ausgeführt wird, wenn der FLOW-Notations switch geklickt
-	 * wird. Werden zur Zeit die Konten in der FLOW-Notation angezeigt, dann
-	 * wird auf die normale, schlichtere Visualisierung gewechselt und
-	 * umgekehrt.
+	 * Funktion die ausgeführt wird, wenn der FLOW-Notations switch geklickt wird.
+	 * Werden zur Zeit die Konten in der FLOW-Notation angezeigt, dann wird auf die
+	 * normale, schlichtere Visualisierung gewechselt und umgekehrt.
 	 */
 	public void toggleFLOWNotation() {
-		boolean normalVisualizationActive = true;
-		for (Vertex v : network.getVertices()) {
-			if (v.getClass().toString().contains("Person") | v.getClass().toString().contains("Document")) {
-				if (v.getShape().getFill() != Color.WHITE) {
-					normalVisualizationActive = false;
-				}
-			}
-		}
 
-		if (normalVisualizationActive) {
+		if (switchButton.switchOnProperty().get() == true) {
 			// zeige alles in FLOW-Notation
 			for (Vertex v : network.getVertices()) {
 				if (v.getImg() != null) {
 					v.getShape().setFill(new ImagePattern(v.getImg()));
 				}
 			}
-			// TODO- line styles zu gestrichelt
+			// TODO- line styles zu gestrichelt - zumindest wenn die Quelle ein Dokument ist
+			for (Edge e : network.getEdges()) {
+				if (e.getOrigin().getType().equals("document")) {
+					e.setDashed(true);
+				}
+			}
+
 		} else {
 			// zeige wieder alles normal an
 			for (Vertex v : network.getVertices()) {
 				v.getShape().setFill(Color.WHITE);
 			}
 			// TODO- line styles zurücksetzen
+			for (Edge e : network.getEdges()) {
+				if (e.getOrigin().getType().equals("document")) {
+					e.setDashed(false);
+				}
+			}
 		}
 		clearVertices();
 		clearLines();
@@ -770,8 +776,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Visualisiert das Netzwerk aus der XML-Datei. Wird aufgerufen, nachdem
-	 * �ber den FileChooser eine Datei ausgew�hlt wurde.
+	 * Visualisiert das Netzwerk aus der XML-Datei. Wird aufgerufen, nachdem �ber
+	 * den FileChooser eine Datei ausgew�hlt wurde.
 	 *
 	 */
 	private void showNetwork() {
@@ -781,7 +787,7 @@ public class FlowSceneController implements Initializable {
 		for (Vertex v : vertices) {
 			pannablePane.getChildren().add(v.getShape());
 			v.getNameLabel().setLayoutX(v.getX() - ((v.getName().length() / 2) * 8));
-			v.getNameLabel().setLayoutY(v.getY() + 18);
+			v.getNameLabel().setLayoutY(v.getY() + v.getHeight() + 10);
 			pannablePane.getChildren().add(v.getNameLabel());
 		}
 
@@ -809,8 +815,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Aktualisiert die Elemente des Canvas, nach einer �nderung. Das Netzwerk
-	 * aus der XML wird angezeigt.
+	 * Aktualisiert die Elemente des Canvas, nach einer �nderung. Das Netzwerk aus
+	 * der XML wird angezeigt.
 	 */
 	private void updateGraphics() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -820,9 +826,8 @@ public class FlowSceneController implements Initializable {
 
 	/**
 	 * Zeichnet die Edges auf das Canvas. Besonders ist dabei zu beachten, dass
-	 * f�r bidirektionale Edges besonders vorgegangen wird: Das Weighting soll
-	 * 2x gezeichnet werden, so dass jeweils Flow/Kapazit�t in Flussrichtung
-	 * zeigen.
+	 * f�r bidirektionale Edges besonders vorgegangen wird: Das Weighting soll 2x
+	 * gezeichnet werden, so dass jeweils Flow/Kapazit�t in Flussrichtung zeigen.
 	 *
 	 */
 

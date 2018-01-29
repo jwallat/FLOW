@@ -22,13 +22,14 @@ public class Person extends Vertex {
 	private int y;
 	private int radius;
 
-	public Person(String name, int id, int x, int y) {
+	public Person(String name, String type, int id, int x, int y) {
 		super(name, id, x, y);
 		this.name = name;
+		this.setType(type);
 		this.ID = id;
 		this.x = x;
 		this.y = y;
-		this.radius = 10;
+		this.radius = 15;
 
 		this.shape = new Circle(x, y, radius);
 		this.shape.setStroke(Color.BLACK);
@@ -36,7 +37,7 @@ public class Person extends Vertex {
 		this.shape.setStrokeType(StrokeType.INSIDE);
 		this.shape.setFill(Color.WHITE);
 
-		this.img = new Image("file:///" + System.getProperty("user.dir") + "/resource/icons/person.png");
+		this.img = new Image("file:///" + System.getProperty("user.dir") + "/resource/icons/person_4.png");
 		// this.shape.setFill(new ImagePattern(this.img));
 	}
 
