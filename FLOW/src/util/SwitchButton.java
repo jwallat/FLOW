@@ -20,17 +20,27 @@ import view.FlowSceneController;
 public class SwitchButton extends Label {
 	private SimpleBooleanProperty switchedOn = new SimpleBooleanProperty(true);
 
-	public SwitchButton(FlowSceneController fsc) {
+	public SwitchButton(FlowSceneController fsc, String mode) {
 		Button switchBtn = new Button();
 		switchBtn.setPrefWidth(40);
 		switchBtn.setPrefHeight(10);
-		switchBtn.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent t) {
-				switchedOn.set(!switchedOn.get());
-				fsc.toggleFLOWNotation();
-			}
-		});
+		if (mode.equals("flow")) {
+			switchBtn.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent t) {
+					switchedOn.set(!switchedOn.get());
+					fsc.toggleFLOWNotation();
+				}
+			});
+		} else if (mode.equals("centrality")) {
+			switchBtn.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent t) {
+					switchedOn.set(!switchedOn.get());
+					fsc.centralityToggleButtonClicked();
+				}
+			});
+		}
 
 		setGraphic(switchBtn);
 

@@ -169,7 +169,7 @@ public class Edge {
 	 * Hilfsfunktion zum Anzeigen der Kantengewichte.
 	 *
 	 * @param pane
-	 *            - Parent dem das Label hinzugefügt wird
+	 *            - Parent dem das Label hinzugefï¿½gt wird
 	 * @param x1
 	 *            - X-Position des Senders
 	 * @param y1
@@ -227,7 +227,7 @@ public class Edge {
 	 * Hilfsfunktion zum Anzeigen der bidirektionalen Kantengewichte.
 	 *
 	 * @param pane
-	 *            - parent dem das Label hinzugefügt wird
+	 *            - parent dem das Label hinzugefï¿½gt wird
 	 * @param x1
 	 *            - X-Position des Senders
 	 * @param y1

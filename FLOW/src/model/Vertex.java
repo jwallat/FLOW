@@ -18,6 +18,9 @@ public abstract class Vertex {
 	private String type;
 	private Circle shape;
 	private Label nameLabel;
+	private Label degreeLabel;
+	private Label betweennessLabel;
+	private Label closenessLabel;
 	private Image img;
 	private boolean visited;
 	private int x;
@@ -42,6 +45,16 @@ public abstract class Vertex {
 		this.nameLabel = new Label(name);
 		this.nameLabel.setId("name-label");
 		// this.nameLabel.setStyle("-fx-background-color: #24d24d24d");
+
+		// set stuff for other info-label
+		this.closenessLabel = new Label("");
+		this.closenessLabel.setId("centrality");
+
+		this.betweennessLabel = new Label("");
+		this.betweennessLabel.setId("centrality");
+
+		this.degreeLabel = new Label("");
+		this.degreeLabel.setId("centrality");
 	}
 
 	public String getName() {
@@ -86,6 +99,18 @@ public abstract class Vertex {
 
 	public Label getNameLabel() {
 		return this.nameLabel;
+	}
+
+	public Label getBetweennessLabel() {
+		return this.betweennessLabel;
+	}
+
+	public Label getDegreeLabel() {
+		return this.degreeLabel;
+	}
+
+	public Label getClosenessLabel() {
+		return this.closenessLabel;
 	}
 
 	@Override
