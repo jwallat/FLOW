@@ -40,6 +40,14 @@ public class SwitchButton extends Label {
 					fsc.centralityToggleButtonClicked();
 				}
 			});
+		} else if (mode.equals("weights")) {
+			switchBtn.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent t) {
+					switchedOn.set(!switchedOn.get());
+					fsc.weightsToggleButtonClicked();
+				}
+			});
 		}
 
 		setGraphic(switchBtn);

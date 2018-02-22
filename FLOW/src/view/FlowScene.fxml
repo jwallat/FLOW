@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -218,6 +219,16 @@
                                           </HBox>
                                           <VBox spacing="10.0">
                                              <children>
+                                                <HBox>
+                                                   <children>
+                                                      <Label text="Weigths:" />
+                                                      <HBox fx:id="weightsToggleButtonHBox" alignment="CENTER" prefHeight="25.0" prefWidth="100.0" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                          <VBox spacing="10.0">
+                                             <children>
                                                 <RadioButton fx:id="networkFlowRadioButton" mnemonicParsing="false" onAction="#networkFlowRadioButtonClicked" onMouseClicked="#networkFlowRadioButtonClicked" selected="true" text="Capacities" />
                                                 <RadioButton fx:id="flowDistanceRadioButton" mnemonicParsing="false" onAction="#flowDistanceRadioButtonClicked" text="FLOW-distances" />
                                                 <RadioButton fx:id="waterPipeRadioButton" mnemonicParsing="false" onAction="#waterPipeRadioButtonClicked" text="Water-pipes" />
@@ -329,6 +340,17 @@
                                                 </HBox>
                                              </children>
                                           </VBox>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <VBox spacing="10.0">
+                                                   <children>
+                                                      <CheckBox fx:id="closenessCheckBox" mnemonicParsing="false" onAction="#centralityToggleButtonClicked" selected="true" text="Closeness" />
+                                                      <CheckBox fx:id="betweennessCheckBox" mnemonicParsing="false" onAction="#centralityToggleButtonClicked" selected="true" text="Betweenness" />
+                                                      <CheckBox fx:id="degreeCheckBox" mnemonicParsing="false" onAction="#centralityToggleButtonClicked" selected="true" text="Degree" />
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
                                           <HBox spacing="20.0">
                                              <children>
                                                 <Label text="Network density: " />

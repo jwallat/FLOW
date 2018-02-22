@@ -23,6 +23,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.RadioButton;
@@ -84,9 +85,23 @@ public class FlowSceneController implements Initializable {
 	private SwitchButton switchButton;
 
 	@FXML
+	private HBox weightsToggleButtonHBox;
+
+	private SwitchButton weightsSwitchButton;
+
+	@FXML
 	private HBox centralityToggleButtonHBox;
 
 	private SwitchButton centralitySwitchButton;
+
+	@FXML
+	private CheckBox closenessCheckBox;
+
+	@FXML
+	private CheckBox betweennessCheckBox;
+
+	@FXML
+	private CheckBox degreeCheckBox;
 
 	@FXML
 	private Label densityLabel;
@@ -185,6 +200,9 @@ public class FlowSceneController implements Initializable {
 
 		this.centralitySwitchButton = new SwitchButton(this, "centrality");
 		centralityToggleButtonHBox.getChildren().add(centralitySwitchButton);
+
+		this.weightsSwitchButton = new SwitchButton(this, "weights");
+		weightsToggleButtonHBox.getChildren().add(weightsSwitchButton);
 	}
 
 	/**
@@ -769,22 +787,34 @@ public class FlowSceneController implements Initializable {
 	 * Funktion die ausgeführt wird, wenn der Centrality-switch geklicket wird.
 	 */
 	public void centralityToggleButtonClicked() {
-		System.out.println("Clicked");
+
+		for (Vertex v : network.getVertices()) {
+			pannablePane.getChildren().remove(v.getClosenessLabel());
+			pannablePane.getChildren().remove(v.getBetweennessLabel());
+			pannablePane.getChildren().remove(v.getDegreeLabel());
+		}
+
 		// show centralities
 		if (centralitySwitchButton.switchOnProperty().get() == true) {
 			for (Vertex v : network.getVertices()) {
-				pannablePane.getChildren().add(v.getClosenessLabel());
-				pannablePane.getChildren().add(v.getBetweennessLabel());
-				pannablePane.getChildren().add(v.getDegreeLabel());
-			}
-
-		} else {
-			for (Vertex v : network.getVertices()) {
-				pannablePane.getChildren().remove(v.getClosenessLabel());
-				pannablePane.getChildren().remove(v.getBetweennessLabel());
-				pannablePane.getChildren().remove(v.getDegreeLabel());
+				if (closenessCheckBox.isSelected()) {
+					pannablePane.getChildren().add(v.getClosenessLabel());
+				}
+				if (betweennessCheckBox.isSelected()) {
+					pannablePane.getChildren().add(v.getBetweennessLabel());
+				}
+				if (degreeCheckBox.isSelected()) {
+					pannablePane.getChildren().add(v.getDegreeLabel());
+				}
 			}
 		}
+	}
+
+	/**
+	 * Funktion die ausgeführt wird wenn der Weightings-SwitchButton geklickt
+	 * wird.
+	 */
+	public void weightsToggleButtonClicked() {
 		updateGraphics();
 	}
 
@@ -813,7 +843,7 @@ public class FlowSceneController implements Initializable {
 					incomingEdges++;
 				}
 			}
-			v.getDegreeLabel().setText(incomingEdges + "/" + outgoingEdges);
+			v.getDegreeLabel().setText("(" + incomingEdges + "," + outgoingEdges + ")");
 		}
 	}
 
@@ -1012,6 +1042,13 @@ public class FlowSceneController implements Initializable {
 			v.getBetweennessLabel().toFront();
 			v.getClosenessLabel().toFront();
 			v.getDegreeLabel().toFront();
+		}
+
+		// entferne Edge-Labels wenn toggleButton nicht ausgewählt
+		if (!weightsSwitchButton.switchOnProperty().get()) {
+			for (Edge e : network.getEdges()) {
+				pannablePane.getChildren().remove(e.getWeightingLabel());
+			}
 		}
 	}
 
