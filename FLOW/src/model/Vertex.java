@@ -44,7 +44,6 @@ public abstract class Vertex {
 		this.shape = new Circle(x, y, 20);
 		this.nameLabel = new Label(name);
 		this.nameLabel.setId("name-label");
-		// this.nameLabel.setStyle("-fx-background-color: #24d24d24d");
 
 		// set stuff for other info-label
 		this.closenessLabel = new Label("");

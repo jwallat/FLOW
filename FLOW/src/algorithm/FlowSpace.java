@@ -11,14 +11,14 @@ import model.Network;
 import model.Vertex;
 
 /**
- * Implementation zur Berechnung der neuen FLOW-Distanz. Weitere Informationen
+ * Implementation zur Berechnung des neuen FLOW-Space. Weitere Informationen
  * sind der Bachelorarbeit "Algorithmen zur Analyse von Informationflussen in
- * der Software Entwicklung".
+ * der Software Entwicklung" von Jonas Wallat zu finden.
  *
  * @author jwall
  *
  */
-public class FlowDistance {
+public class FlowSpace {
 
 	private Network network;
 	private BreadthFirstSearch bfs;
@@ -33,7 +33,7 @@ public class FlowDistance {
 	 * @param network
 	 *            Netzwerk auf dem die FLOW-Distanz berechnet werden soll
 	 */
-	public FlowDistance(Network network) {
+	public FlowSpace(Network network) {
 		this.network = network;
 		this.flowDistance = -1;
 

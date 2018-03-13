@@ -33,7 +33,7 @@ public class ClosenessCentrality {
 	/**
 	 * Berechnet für alle Knoten die Closeness und setzt diesen Wert.
 	 */
-	public void run() {
+	public void compute() {
 		for (Vertex v : network.getVertices()) {
 			double closeness = computeCloseness(v);
 			v.getClosenessLabel().setText(df.format(closeness) + "");

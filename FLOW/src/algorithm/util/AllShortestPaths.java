@@ -9,6 +9,13 @@ import model.Edge;
 import model.Network;
 import model.Vertex;
 
+/**
+ * Klasse die verwendet wird um alle kürzesten Pfade zwischen zwei Knoten zu
+ * berechnen. Dies ist notwendig für die Berechnung der Betweenness Zentralität.
+ *
+ * @author jwall
+ *
+ */
 public class AllShortestPaths {
 
 	private Network network;

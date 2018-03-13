@@ -32,7 +32,7 @@ public class BetweennessCentrality {
 	/**
 	 * Berechnet für alle Knoten die Closeness und setzt diesen Wert.
 	 */
-	public void run() {
+	public void compute() {
 		for (Vertex v : network.getVertices()) {
 			double betweenness = computeBetweenness(v);
 			v.getBetweennessLabel().setText(df.format(betweenness) + "");

@@ -9,8 +9,10 @@ import java.util.ResourceBundle;
 
 import algorithm.BetweennessCentrality;
 import algorithm.ClosenessCentrality;
+import algorithm.DegreeCentrality;
+import algorithm.Density;
 import algorithm.EdmondsKarp;
-import algorithm.FlowDistance;
+import algorithm.FlowSpace;
 import algorithm.InformationExpense;
 import control.Parser;
 import javafx.event.EventHandler;
@@ -32,6 +34,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
@@ -54,7 +57,7 @@ import util.SwitchButton;
 
 /**
  * Kontroller zur FlowScene.fxml. Hier werden alle Interaktionen mit dem UI
- * erm�glicht.
+ * ermöglicht.
  *
  * @author Jonas Wallat
  *
@@ -105,6 +108,11 @@ public class FlowSceneController implements Initializable {
 
 	@FXML
 	private Label densityLabel;
+
+	@FXML
+	private HBox legendHBox;
+
+	private ImageView legendImageView;
 
 	@FXML
 	private Label fileNameLabel;
@@ -203,6 +211,17 @@ public class FlowSceneController implements Initializable {
 
 		this.weightsSwitchButton = new SwitchButton(this, "weights");
 		weightsToggleButtonHBox.getChildren().add(weightsSwitchButton);
+
+		// Initialisiere die Legende der Zentralitäten
+		try {
+			this.legendImageView = new ImageView(
+					"file:///" + System.getProperty("user.dir") + "/resource/icons/legend.png");
+		} catch (Exception e) {
+			System.out.println("Legende konnte nicht initialisiert werden. Stellen Sie sicher, dass die Legende "
+					+ "in resource/icons/legend.png vorhanden ist");
+			this.legendImageView = new ImageView();
+		}
+
 	}
 
 	/**
@@ -213,6 +232,8 @@ public class FlowSceneController implements Initializable {
 	 */
 	public void init(Stage stage) {
 		this.stage = stage;
+
+		stage.setMaximized(true);
 
 		// Order Elements and set size-Properties
 		hBox.setPrefWidth(stage.getScene().getWidth());
@@ -233,8 +254,6 @@ public class FlowSceneController implements Initializable {
 
 		pannablePane.setPrefWidth(anchor.widthProperty().get());
 		pannablePane.setPrefHeight(anchor.heightProperty().get());
-		// pannablePane.setPrefWidth(3000);
-		// pannablePane.setPrefHeight(3000);
 		pannablePane.autosize();
 
 		pannablePane.toFront();
@@ -245,8 +264,6 @@ public class FlowSceneController implements Initializable {
 
 		canvas.widthProperty().bind(pannablePane.widthProperty());
 		canvas.heightProperty().bind(pannablePane.heightProperty());
-		// canvas.setWidth(1900);
-		// canvas.setHeight(1000);
 		canvas.autosize();
 
 		gc = canvas.getGraphicsContext2D();
@@ -402,7 +419,7 @@ public class FlowSceneController implements Initializable {
 		}
 
 		// setze alles zur�ck
-		resetNetwork();
+		resetNetworkFlow();
 		clearVertexHighlights();
 		updateGraphics();
 
@@ -470,7 +487,7 @@ public class FlowSceneController implements Initializable {
 			}
 
 			EdmondsKarp edmondsKarp = new EdmondsKarp(network);
-			FlowDistance flowDistance = new FlowDistance(network);
+			FlowSpace flowDistance = new FlowSpace(network);
 
 			if (!edmondsKarp.areConnected(source, sink)) {
 				maxFlowLabel.setText("Not connected");
@@ -560,7 +577,7 @@ public class FlowSceneController implements Initializable {
 
 		// setze alles zur�ck
 		clearVertexHighlights();
-		resetNetwork();
+		resetNetworkFlow();
 		updateGraphics();
 
 		maxFlowLabel.setText("");
@@ -788,25 +805,37 @@ public class FlowSceneController implements Initializable {
 	 */
 	public void centralityToggleButtonClicked() {
 
-		for (Vertex v : network.getVertices()) {
-			pannablePane.getChildren().remove(v.getClosenessLabel());
-			pannablePane.getChildren().remove(v.getBetweennessLabel());
-			pannablePane.getChildren().remove(v.getDegreeLabel());
-		}
-
-		// show centralities
-		if (centralitySwitchButton.switchOnProperty().get() == true) {
+		try {
 			for (Vertex v : network.getVertices()) {
-				if (closenessCheckBox.isSelected()) {
-					pannablePane.getChildren().add(v.getClosenessLabel());
-				}
-				if (betweennessCheckBox.isSelected()) {
-					pannablePane.getChildren().add(v.getBetweennessLabel());
-				}
-				if (degreeCheckBox.isSelected()) {
-					pannablePane.getChildren().add(v.getDegreeLabel());
+				pannablePane.getChildren().remove(v.getClosenessLabel());
+				pannablePane.getChildren().remove(v.getBetweennessLabel());
+				pannablePane.getChildren().remove(v.getDegreeLabel());
+			}
+
+			// if (legendHBox.getChildren().contains(legendImageView)) {
+			legendHBox.getChildren().remove(legendImageView);
+			// }
+
+			// show centralities
+			if (centralitySwitchButton.switchOnProperty().get() == true) {
+				for (Vertex v : network.getVertices()) {
+					if (closenessCheckBox.isSelected()) {
+						pannablePane.getChildren().add(v.getClosenessLabel());
+					}
+					if (betweennessCheckBox.isSelected()) {
+						pannablePane.getChildren().add(v.getBetweennessLabel());
+					}
+					if (degreeCheckBox.isSelected()) {
+						pannablePane.getChildren().add(v.getDegreeLabel());
+					}
+
+					if (!legendHBox.getChildren().contains(legendImageView)) {
+						legendHBox.getChildren().add(legendImageView);
+					}
 				}
 			}
+		} catch (Exception e) {
+
 		}
 	}
 
@@ -825,26 +854,18 @@ public class FlowSceneController implements Initializable {
 	public void computeCentralities() {
 		// berechne zentralitäten
 		ClosenessCentrality cc = new ClosenessCentrality(network);
-		cc.run();
+		cc.compute();
 
 		BetweennessCentrality bc = new BetweennessCentrality(network);
-		bc.run();
+		bc.compute();
 
 		// Kantengrad eingehend/ausgehend
-		for (Vertex v : network.getVertices()) {
-			int incomingEdges = 0;
-			int outgoingEdges = 0;
+		DegreeCentrality dc = new DegreeCentrality(network);
+		dc.compute();
 
-			for (Edge e : network.getEdges()) {
-				if (e.getOrigin() == v) {
-					outgoingEdges++;
-				}
-				if (e.getDestination() == v) {
-					incomingEdges++;
-				}
-			}
-			v.getDegreeLabel().setText("(" + incomingEdges + "," + outgoingEdges + ")");
-		}
+		// Dichte des Netzwerks
+		Density density = new Density(network);
+		densityLabel.setText(density.getDensity());
 	}
 
 	/**
@@ -867,13 +888,17 @@ public class FlowSceneController implements Initializable {
 	 */
 	private void clearLines() {
 
-		for (Edge e : network.getEdges()) {
-			// e.getShape().getTransforms().clear();
-			for (Node n : e.getShapes()) {
-				n.getTransforms().clear();
-				pannablePane.getChildren().remove(n);
+		try {
+			for (Edge e : network.getEdges()) {
+				// e.getShape().getTransforms().clear();
+				for (Node n : e.getShapes()) {
+					n.getTransforms().clear();
+					pannablePane.getChildren().remove(n);
+				}
+				pannablePane.getChildren().remove(e.getWeightingLabel());
 			}
-			pannablePane.getChildren().remove(e.getWeightingLabel());
+		} catch (Exception e) {
+
 		}
 	}
 
@@ -898,7 +923,7 @@ public class FlowSceneController implements Initializable {
 			v.getBetweennessLabel().setLayoutX(v.getX() + ((v.getBetweennessLabel().getText().length() / 2) * 8));
 			v.getBetweennessLabel().setLayoutY(v.getY() - v.getHeight() * 3);
 
-			v.getDegreeLabel().setLayoutX(v.getX() + ((v.getDegreeLabel().getText().length() / 2) * 10));
+			v.getDegreeLabel().setLayoutX(v.getX() + ((v.getDegreeLabel().getText().length() / 2) * 8));
 			v.getDegreeLabel().setLayoutY(v.getY() + v.getHeight() / 2);
 		}
 		showEdges();
@@ -908,7 +933,7 @@ public class FlowSceneController implements Initializable {
 	 * Setzt das Netzwerk auf den Ausgangszustand zur�ck. Dabei werden alle
 	 * Informationsfl�sse gel�scht.
 	 */
-	private void resetNetwork() {
+	private void resetNetworkFlow() {
 		for (Edge e : network.getEdges()) {
 			e.setFlow(0);
 		}

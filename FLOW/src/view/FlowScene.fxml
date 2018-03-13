@@ -53,7 +53,7 @@
                     <content>
                         <ScrollPane centerShape="false" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" pannable="true" prefHeight="568.0" prefWidth="192.0" scaleShape="false">
                            <content>
-                              <VBox spacing="45.0">
+                              <VBox spacing="35.0">
                                  <children>
                                     <HBox id="myHBox">
                                        <children>
@@ -71,6 +71,9 @@
                                              </font>
                                           </Label>
                                        </children>
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
                                     </HBox>
                                     <VBox layoutX="15.0" layoutY="84.0" spacing="15.0">
                                        <children>
@@ -241,6 +244,53 @@
                                        <children>
                                           <HBox id="myHBox">
                                              <children>
+                                                <Label id="heading-label" prefHeight="19.0" prefWidth="190.0" text="Social Network Analysis:">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                   <cursor>
+                                                      <Cursor fx:constant="DEFAULT" />
+                                                   </cursor>
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <VBox spacing="10.0">
+                                             <children>
+                                                <HBox>
+                                                   <children>
+                                                      <Label text="Centralities: " />
+                                                      <HBox fx:id="centralityToggleButtonHBox" alignment="CENTER" prefHeight="25.0" prefWidth="100.0" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <VBox spacing="10.0">
+                                                   <children>
+                                                      <CheckBox fx:id="closenessCheckBox" mnemonicParsing="false" onAction="#centralityToggleButtonClicked" selected="true" text="Closeness" />
+                                                      <CheckBox fx:id="betweennessCheckBox" mnemonicParsing="false" onAction="#centralityToggleButtonClicked" selected="true" text="Betweenness" />
+                                                      <CheckBox fx:id="degreeCheckBox" mnemonicParsing="false" onAction="#centralityToggleButtonClicked" selected="true" text="Degree" />
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
+                                          <HBox spacing="20.0">
+                                             <children>
+                                                <Label text="Network density: " />
+                                                <Label fx:id="densityLabel" />
+                                             </children>
+                                          </HBox>
+                                          <HBox fx:id="legendHBox" spacing="20.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox spacing="15.0">
+                                       <children>
+                                          <HBox id="myHBox">
+                                             <children>
                                                 <Label id="heading-label" prefHeight="19.0" prefWidth="190.0" text="Information Expanse:">
                                                    <font>
                                                       <Font name="System Bold" size="13.0" />
@@ -311,52 +361,6 @@
                                                 </HBox>
                                              </children>
                                           </VBox>
-                                       </children>
-                                    </VBox>
-                                    <VBox spacing="15.0">
-                                       <children>
-                                          <HBox id="myHBox">
-                                             <children>
-                                                <Label id="heading-label" prefHeight="19.0" prefWidth="190.0" text="Social Network Analysis:">
-                                                   <font>
-                                                      <Font name="System Bold" size="13.0" />
-                                                   </font>
-                                                   <cursor>
-                                                      <Cursor fx:constant="DEFAULT" />
-                                                   </cursor>
-                                                   <HBox.margin>
-                                                      <Insets />
-                                                   </HBox.margin>
-                                                </Label>
-                                             </children>
-                                          </HBox>
-                                          <VBox spacing="10.0">
-                                             <children>
-                                                <HBox>
-                                                   <children>
-                                                      <Label text="Centralities: " />
-                                                      <HBox fx:id="centralityToggleButtonHBox" alignment="CENTER" prefHeight="25.0" prefWidth="100.0" />
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                          <HBox prefHeight="100.0" prefWidth="200.0">
-                                             <children>
-                                                <VBox spacing="10.0">
-                                                   <children>
-                                                      <CheckBox fx:id="closenessCheckBox" mnemonicParsing="false" onAction="#centralityToggleButtonClicked" selected="true" text="Closeness" />
-                                                      <CheckBox fx:id="betweennessCheckBox" mnemonicParsing="false" onAction="#centralityToggleButtonClicked" selected="true" text="Betweenness" />
-                                                      <CheckBox fx:id="degreeCheckBox" mnemonicParsing="false" onAction="#centralityToggleButtonClicked" selected="true" text="Degree" />
-                                                   </children>
-                                                </VBox>
-                                             </children>
-                                          </HBox>
-                                          <HBox spacing="20.0">
-                                             <children>
-                                                <Label text="Network density: " />
-                                                <Label fx:id="densityLabel" />
-                                             </children>
-                                          </HBox>
                                        </children>
                                     </VBox>
                                     <VBox spacing="15.0">

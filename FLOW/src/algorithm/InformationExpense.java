@@ -117,8 +117,9 @@ public class InformationExpense {
 	}
 
 	/**
-	 * Helfer Funktion, die eine Liste aus Listen erzeugt. In der i-ten Liste sind
-	 * die Knoten enthalten, die im i-ten Schritt gehighlighted werden muessen.
+	 * Helfer Funktion, die eine Liste aus Listen erzeugt. In der i-ten Liste
+	 * sind die Knoten enthalten, die im i-ten Schritt gehighlighted werden
+	 * muessen.
 	 *
 	 * @param center
 	 * @return
@@ -238,17 +239,14 @@ public class InformationExpense {
 				System.out.println("Name: " + v.getName() + ", " + getSizeAfterISteps(pairLists, steps) + ", "
 						+ percentageReached);
 			}
-			/*
-			 * if (percentageReached >= 1.0) { break; }
-			 */
 		}
 
 		return resultList;
 	}
 
 	/**
-	 * Funktion, die fuer eine Liste aus Listen die Anzahl der Knoten zurueckgibt,
-	 * die in den ersten $steps Listen enthalten sind.
+	 * Funktion, die fuer eine Liste aus Listen die Anzahl der Knoten
+	 * zurueckgibt, die in den ersten $steps Listen enthalten sind.
 	 *
 	 * @param lists
 	 * @param steps
@@ -267,9 +265,9 @@ public class InformationExpense {
 	}
 
 	/**
-	 * Funktion die zu einer gegebenen Prozentzahl alle Listen von Knoten, die in X
-	 * Steps weniger als Y Prozent der Knoten erreichen berechnet und diese in eine
-	 * CSV schreibt.
+	 * Funktion die zu einer gegebenen Prozentzahl alle Listen von Knoten, die
+	 * in X Steps weniger als Y Prozent der Knoten erreichen berechnet und diese
+	 * in eine CSV schreibt.
 	 */
 	public void safeVerticesNotReachedAsCSV(double percentage) {
 		try {
@@ -300,9 +298,9 @@ public class InformationExpense {
 	}
 
 	/**
-	 * Funktion die zu einer gegebenen Prozentzahl alle Listen von Knoten, die in X
-	 * Steps mindestens Y Prozent der Knoten erreichen berechnet und diese in eine
-	 * CSV schreibt.
+	 * Funktion die zu einer gegebenen Prozentzahl alle Listen von Knoten, die
+	 * in X Steps mindestens Y Prozent der Knoten erreichen berechnet und diese
+	 * in eine CSV schreibt.
 	 */
 	public void safeVerticesReachedAsCSV(double percentage) {
 		try {

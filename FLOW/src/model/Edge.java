@@ -146,6 +146,9 @@ public class Edge {
 		line.setStroke(edgeColor);
 		arrowHead.setFill(edgeColor);
 
+		// adjust line width
+		line.setStrokeWidth(1.5);
+
 		// transform:
 		line.getTransforms().add(new Rotate(Math.toDegrees(angle), x1, y1));
 		arrowHead.getTransforms().add(new Rotate(Math.toDegrees(angle), x1, y1));
