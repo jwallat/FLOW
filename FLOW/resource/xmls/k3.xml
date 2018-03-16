@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BigFLOW>
+	<members>
+		<member name="Helfer" id="0" x="100" y="20" type="person"></member>
+		<member name="Meldekarte" id="1" x="300" y="120" type="document"></member>
+		<member name="ELW" id="2" x="200" y="220" type="person"></member>
+		<member name="Helfer" id="3" x="250" y="300" type="person"></member>
+		<member name="Meldekarte" id="4" x="270" y="420" type="document"></member>
+		<member name="ELW" id="5" x="150" y="610" type="person"></member>
+		<member name="ELW 3" id="6" x="430" y="470" type="person"></member>
+		<member name="Personallisten" id="7" x="550" y="470" type="document"></member>
+		<member name="Personal verwalten" id="8" x="750" y="170" type="activity"></member>
+		<member name="Personallisten" id="9" x="950" y="20" type="document"></member>
+		<member name="Auftrag für Ausweise" id="10" x="1050" y="220" type="document"></member>
+		<member name="Marschbefehl" id="11" x="1050" y="390" type="document"></member>
+		<member name="Mannschaft" id="12" x="1200" y="20" type="person"></member>
+		
+		
+		<member name="Lagebesprechung" id="13" x="600" y="610" type="activity"></member>
+		
+		
+		<member name="DV 100" id="14" x="850" y="610" type="document"></member>
+		<member name="Live Bild" id="15" x="1200" y="610" type="person"></member>
+		<member name="S-Funktionen" id="16" x="750" y="520" type="person"></member>
+		<member name="Kontingentführer" id="17" x="900" y="520" type="person"></member>
+		<member name="Lagebesprechung" id="18" x="900" y="520" type="person"></member>
+		<member name="Fachinformationen" id="19" x="900" y="520" type="person"></member>
+		<member name="Entscheidungsfindung" id="20" x="900" y="520" type="activity"></member>
+		<member name="Checklisten" id="21" x="900" y="520" type="document"></member>
+		<member name="SEG Führer" id="22" x="900" y="520" type="document"></member>
+		
+		<member name="Click-Dummy" id="23" x="900" y="520" type="document"></member>
+		<member name="Click-Dummy" id="24" x="900" y="520" type="document"></member>
+	</members>
+	<egdes>
+		<edge from="Helfer" from_id="0" to="Meldekarte" to_id="1" id="0"></edge>
+		<edge from="Meldekarte" from_id="1" to="ELW" to_id="2" id="1"></edge>
+		<edge from="ELW" from_id="2" to="ELW 3" to_id="6" id="2"></edge>
+		<edge from="Helfer" from_id="3" to="Meldekarte" to_id="4" id="3"></edge>
+		<edge from="Meldekarte" from_id="4" to="ELW" to_id="5" id="4"></edge>
+		<edge from="ELW" from_id="5" to="ELW 3" to_id="6" id="5"></edge>
+		<edge from="ELW 3" from_id="6" to="Personallisten" to_id="7" id="6"></edge>
+		<edge from="Personallisten" from_id="7" to="Personal verwalten" to_id="8" id="7"></edge>
+		<edge from="Personal verwalten" from_id="8" to="Personallisten" to_id="9" id="8"></edge>
+		<edge from="Personal verwalten" from_id="8" to="Auftrag für Ausweise" to_id="10" id="9"></edge>
+		<edge from="Personal verwalten" from_id="8" to="Marschbefehl" to_id="11" id="10"></edge>
+		<edge from="Marschbefehl" from_id="11" to="Manschaft" to_id="12" id="11"></edge>
+		<edge from="Personallisten" from_id="9" to="ELW 3" to_id="6" id="12"></edge>
+		<edge from="Personal verwalten" from_id="8" to="Lagebesprechung" to_id="13" id="13"></edge>
+		<edge from="Lagebesprechung" from_id="13" to="Personal verwalten" to_id="8" id="14"></edge>
+		<edge from="DV 100" from_id="14" to="Personal verwalten" to_id="8" id="15"></edge>
+		<edge from="DV 100" from_id="14" to="Entscheidungsfindung" to_id="20" id="16"></edge>
+		
+		<edge from="DV 100" from_id="14" to="Entscheidungsfindung" to_id="20" id="17"></edge>
+		<edge from="DV 100" from_id="14" to="Entscheidungsfindung" to_id="20" id="18"></edge>
+		<edge from="DV 100" from_id="14" to="Entscheidungsfindung" to_id="20" id="19"></edge>
+		<edge from="DV 100" from_id="14" to="Entscheidungsfindung" to_id="20" id="20"></edge>
+		<edge from="DV 100" from_id="14" to="Entscheidungsfindung" to_id="20" id="21"></edge>
+		<edge from="DV 100" from_id="14" to="Entscheidungsfindung" to_id="20" id="22"></edge>
+		<edge from="DV 100" from_id="14" to="Entscheidungsfindung" to_id="20" id="23"></edge>
+		
+	</egdes>
+</BigFLOW>

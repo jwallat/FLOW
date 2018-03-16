@@ -6,7 +6,8 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Model-Klasse, die alle aus dem Parsen der XML-Datei gewonnenen Informationen enthält.
+ * Model-Klasse, die alle aus dem Parsen der XML-Datei gewonnenen Informationen
+ * enthält.
  * 
  * @author jwall
  *
@@ -16,10 +17,10 @@ public class Network {
 	private List<Vertex> vertices;
 	private List<Edge> edges;
 	private HashMap<Integer, Double> capacities;
-	
+
 	public Network() {
 		this.vertices = new CopyOnWriteArrayList<Vertex>();
-		this.edges =  new CopyOnWriteArrayList<Edge>();
+		this.edges = new CopyOnWriteArrayList<Edge>();
 		this.capacities = new HashMap<Integer, Double>();
 	}
 
@@ -30,7 +31,7 @@ public class Network {
 	public void setVertices(List<Vertex> vertices) {
 		this.vertices = vertices;
 	}
-	
+
 	public Vertex getVertexByName(String name) {
 		for (Vertex v : vertices) {
 			if (v.getName().equals(name)) {
@@ -39,7 +40,16 @@ public class Network {
 		}
 		return null;
 	}
-	
+
+	public Vertex getVertexByID(int id) {
+		for (Vertex v : vertices) {
+			if (v.getID() == id) {
+				return v;
+			}
+		}
+		return null;
+	}
+
 	public void addVertex(Vertex v) {
 		this.vertices.add(v);
 	}
@@ -51,11 +61,11 @@ public class Network {
 	public void setEdges(List<Edge> edges) {
 		this.edges = edges;
 	}
-	
+
 	public void addEdge(Edge e) {
 		this.edges.add(e);
 	}
-	
+
 	public boolean containsVertexID(int id) {
 		for (Vertex v : vertices) {
 			if (v.getID() == id) {
@@ -64,7 +74,7 @@ public class Network {
 		}
 		return false;
 	}
-	
+
 	public void clearNetwork() {
 		for (Edge e : edges) {
 			edges.remove(e);
@@ -73,58 +83,57 @@ public class Network {
 			vertices.remove(v);
 		}
 	}
-	
+
 	public boolean directlyConnected(Vertex v1, Vertex v2) {
-		for (Edge e: edges) {
+		for (Edge e : edges) {
 			if (e.getOrigin().equals(v1) && e.getDestination().equals(v2)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	/**
-	 * Fügt den Kanten des Netzwerks die Kapazitäten hinzu, die aus dem FLOW-Netzwerk ableitbar sind:
-	 * Mensch --> Mensch:		1/0,3 --> 333
-	 * Mensch --> Document:		1/0,5 --> 200
-	 * Dokument --> Mensch:		1/0,6 --> 166
-	 * Dokument --> Dokument:	1/1 --> 100
+	 * Fügt den Kanten des Netzwerks die Kapazitäten hinzu, die aus dem
+	 * FLOW-Netzwerk ableitbar sind: Mensch --> Mensch: 1/0,3 --> 333 Mensch -->
+	 * Document: 1/0,5 --> 200 Dokument --> Mensch: 1/0,6 --> 166 Dokument -->
+	 * Dokument: 1/1 --> 100
 	 * 
-	 * Ist eine Aktivität beteiligt wird: ******************************************************************************************************
+	 * Ist eine Aktivität beteiligt wird:
+	 * ******************************************************************************************************
 	 * 
 	 */
 	public void prepareNetwork() {
-		
+
 		// hier alle Kapazitäten einfügen
 		this.capacities.put(100, 0.0);
 		this.capacities.put(166, 0.0);
 		this.capacities.put(200, 0.0);
 		this.capacities.put(333, 0.0);
-		
-		
+
 		System.out.println("Preparing:");
 		for (Edge e : edges) {
-			if (e.getDestination().getClass().toString().contains("Activity") || e.getOrigin().getClass().toString().contains("Activity")) {
+			if (e.getDestination().getClass().toString().contains("Activity")
+					|| e.getOrigin().getClass().toString().contains("Activity")) {
 				e.setCapacity(100);
 				e.setFlowDistance(1.0);
-			}
-			else if (e.getOrigin().getClass().toString().contains("Person") && e.getDestination().getClass().toString().contains("Person")) {
+			} else if (e.getOrigin().getClass().toString().contains("Person")
+					&& e.getDestination().getClass().toString().contains("Person")) {
 				e.setCapacity(333);
 				e.setFlowDistance(0.3);
-			}
-			else if (e.getOrigin().getClass().toString().contains("Person") && e.getDestination().getClass().toString().contains("Document")) {
+			} else if (e.getOrigin().getClass().toString().contains("Person")
+					&& e.getDestination().getClass().toString().contains("Document")) {
 				e.setCapacity(200);
 				e.setFlowDistance(0.5);
-			}
-			else if (e.getOrigin().getClass().toString().contains("Document") && e.getDestination().getClass().toString().contains("Person")) {
+			} else if (e.getOrigin().getClass().toString().contains("Document")
+					&& e.getDestination().getClass().toString().contains("Person")) {
 				e.setCapacity(166);
 				e.setFlowDistance(0.6);
-			}
-			else if (e.getOrigin().getClass().toString().contains("Document") && e.getDestination().getClass().toString().contains("Document")) {
+			} else if (e.getOrigin().getClass().toString().contains("Document")
+					&& e.getDestination().getClass().toString().contains("Document")) {
 				e.setCapacity(100);
 				e.setFlowDistance(1);
-			}
-			else {
+			} else {
 				System.out.println("Problem beim Vorbereiten des Netzwerks: Capacity konnte nicht gersetzt werden");
 			}
 		}
@@ -134,7 +143,7 @@ public class Network {
 	public Set<Integer> getCapacities() {
 		return capacities.keySet();
 	}
-	
+
 	public HashMap<Integer, Double> getCapacitiesHashMap() {
 		return capacities;
 	}

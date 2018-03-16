@@ -185,13 +185,23 @@ public class Parser extends DefaultHandler {
 	private void createEdge(String uri, String localName, String qName, Attributes atts) {
 
 		Edge edge = null;
-		Vertex from = network.getVertexByName(atts.getValue("from"));
-		Vertex to = network.getVertexByName(atts.getValue("to"));
+
+		Vertex from;
+		Vertex to;
+		if (atts.getValue("from_id") != "" && atts.getValue("to_id") != "") {
+			from = network.getVertexByID(Integer.parseInt(atts.getValue("from_id")));
+			to = network.getVertexByID(Integer.parseInt(atts.getValue("to_id")));
+		} else {
+			from = network.getVertexByName(atts.getValue("from"));
+			to = network.getVertexByName(atts.getValue("to"));
+		}
+
 		if (from == null) {
-			errorLog.add("Zu " + atts.getValue("from") + " existiert kein Vertex");
+			errorLog.add(
+					"Zu " + atts.getValue("from") + "(" + atts.getValue("from_id") + ")" + " existiert kein Vertex");
 		}
 		if (to == null) {
-			errorLog.add("Zu " + atts.getValue("to") + " existiert kein Vertex");
+			errorLog.add("Zu " + atts.getValue("to") + "(" + atts.getValue("to_id") + ")" + " existiert kein Vertex");
 		}
 		if (atts.getValue("id") != "") {
 			if (atts.getValue("from") != "") {
