@@ -267,9 +267,9 @@ public class FlowSceneController implements Initializable {
 		canvas.autosize();
 
 		gc = canvas.getGraphicsContext2D();
-		// gc.setFill(Color.BLUE);
+		gc.setFill(Color.BLUE);
 		// gc.setFill(Color.WHITE);
-		// gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 		SceneGestures sceneGestures = new SceneGestures(pannablePane);
 		stage.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
@@ -628,9 +628,9 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Klicken des "Go"-Buttons ausgeführt wird. Dabei werden
-	 * die angebenen Parameter gelesen und alle Knoten, die in $steps nicht
-	 * mindestens $prozent der gesamten Knoten erreichen ausgegeben.
+	 * Funktion die bei Klicken des "Go"-Buttons ausgeführt wird. Dabei werden die
+	 * angebenen Parameter gelesen und alle Knoten, die in $steps nicht mindestens
+	 * $prozent der gesamten Knoten erreichen ausgegeben.
 	 */
 	public void reachedLessGoButtonClicked() {
 		clearVertexHighlights();
@@ -676,8 +676,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Klicken des "Go"-Buttons ausgeführt wird. Dabei werden
-	 * die angebenen Parameter gelesen und alle Knoten, die in $steps mindestens
+	 * Funktion die bei Klicken des "Go"-Buttons ausgeführt wird. Dabei werden die
+	 * angebenen Parameter gelesen und alle Knoten, die in $steps mindestens
 	 * $prozent der gesamten Knoten erreichen ausgegeben.
 	 */
 	public void reachedMoreGoButtonClicked() {
@@ -761,10 +761,9 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die ausgeführt wird, wenn der FLOW-Notations switch geklickt
-	 * wird. Werden zur Zeit die Konten in der FLOW-Notation angezeigt, dann
-	 * wird auf die normale, schlichtere Visualisierung gewechselt und
-	 * umgekehrt.
+	 * Funktion die ausgeführt wird, wenn der FLOW-Notations switch geklickt wird.
+	 * Werden zur Zeit die Konten in der FLOW-Notation angezeigt, dann wird auf die
+	 * normale, schlichtere Visualisierung gewechselt und umgekehrt.
 	 */
 	public void toggleFLOWNotation() {
 
@@ -840,8 +839,7 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die ausgeführt wird wenn der Weightings-SwitchButton geklickt
-	 * wird.
+	 * Funktion die ausgeführt wird wenn der Weightings-SwitchButton geklickt wird.
 	 */
 	public void weightsToggleButtonClicked() {
 		updateGraphics();
@@ -854,18 +852,18 @@ public class FlowSceneController implements Initializable {
 	public void computeCentralities() {
 		// berechne zentralitäten
 		ClosenessCentrality cc = new ClosenessCentrality(network);
-		cc.compute();
+		// cc.compute();
 
 		BetweennessCentrality bc = new BetweennessCentrality(network);
-		bc.compute();
+		// bc.compute();
 
 		// Kantengrad eingehend/ausgehend
 		DegreeCentrality dc = new DegreeCentrality(network);
-		dc.compute();
+		// dc.compute();
 
 		// Dichte des Netzwerks
 		Density density = new Density(network);
-		densityLabel.setText(density.getDensity());
+		// densityLabel.setText(density.getDensity());
 	}
 
 	/**
@@ -903,8 +901,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Visualisiert das Netzwerk aus der XML-Datei. Wird aufgerufen, nachdem
-	 * �ber den FileChooser eine Datei ausgew�hlt wurde.
+	 * Visualisiert das Netzwerk aus der XML-Datei. Wird aufgerufen, nachdem �ber
+	 * den FileChooser eine Datei ausgew�hlt wurde.
 	 *
 	 */
 	private void showNetwork() {
@@ -949,8 +947,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Aktualisiert die Elemente des Canvas, nach einer �nderung. Das Netzwerk
-	 * aus der XML wird angezeigt.
+	 * Aktualisiert die Elemente des Canvas, nach einer �nderung. Das Netzwerk aus
+	 * der XML wird angezeigt.
 	 */
 	private void updateGraphics() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -960,9 +958,8 @@ public class FlowSceneController implements Initializable {
 
 	/**
 	 * Zeichnet die Edges auf das Canvas. Besonders ist dabei zu beachten, dass
-	 * f�r bidirektionale Edges besonders vorgegangen wird: Das Weighting soll
-	 * 2x gezeichnet werden, so dass jeweils Flow/Kapazit�t in Flussrichtung
-	 * zeigen.
+	 * f�r bidirektionale Edges besonders vorgegangen wird: Das Weighting soll 2x
+	 * gezeichnet werden, so dass jeweils Flow/Kapazit�t in Flussrichtung zeigen.
 	 *
 	 */
 

@@ -1,36 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BigFLOW>
 	<members>
-		<member name="Helfer" id="0" x="100" y="20" type="person"></member>
-		<member name="Meldekarte" id="1" x="300" y="120" type="document"></member>
-		<member name="ELW" id="2" x="200" y="220" type="person"></member>
-		<member name="Helfer" id="3" x="250" y="300" type="person"></member>
-		<member name="Meldekarte" id="4" x="270" y="420" type="document"></member>
-		<member name="ELW" id="5" x="150" y="610" type="person"></member>
-		<member name="ELW 3" id="6" x="430" y="470" type="person"></member>
-		<member name="Personallisten" id="7" x="550" y="470" type="document"></member>
-		<member name="Personal verwalten" id="8" x="750" y="170" type="activity"></member>
-		<member name="Personallisten" id="9" x="950" y="20" type="document"></member>
-		<member name="Auftrag für Ausweise" id="10" x="1050" y="220" type="document"></member>
-		<member name="Marschbefehl" id="11" x="1050" y="390" type="document"></member>
-		<member name="Mannschaft" id="12" x="1200" y="20" type="person"></member>
+		<member name="Helfer" id="0" x="100" y="200" type="person"></member>
+		<member name="Meldekarte" id="1" x="200" y="200" type="document"></member>
+		<member name="ELW" id="2" x="300" y="200" type="person"></member>
+		<member name="Helfer" id="3" x="100" y="400" type="person"></member>
+		<member name="Meldekarte" id="4" x="200" y="400" type="document"></member>
+		<member name="ELW" id="5" x="300" y="400" type="person"></member>
+		<member name="ELW 3" id="6" x="400" y="300" type="person"></member>
+		<member name="Personallisten" id="7" x="500" y="300" type="document"></member>
+		<member name="Personal verwalten" id="8" x="650" y="300" type="activity"></member>
+		<member name="Personallisten" id="9" x="800" y="200" type="document"></member>
+		<member name="Auftrag für Ausweise" id="10" x="800" y="300" type="document"></member>
+		<member name="Marschbefehl" id="11" x="800" y="400" type="document"></member>
+		<member name="Mannschaft" id="12" x="800" y="500" type="person"></member>
 		
 		
-		<member name="Lagebesprechung" id="13" x="600" y="610" type="activity"></member>
+		<member name="Lagebesprechung" id="13" x="2000" y="1000" type="activity"></member>
 		
 		
-		<member name="DV 100" id="14" x="850" y="610" type="document"></member>
-		<member name="Live Bild" id="15" x="1200" y="610" type="person"></member>
-		<member name="S-Funktionen" id="16" x="750" y="520" type="person"></member>
-		<member name="Kontingentführer" id="17" x="900" y="520" type="person"></member>
-		<member name="Lagebesprechung" id="18" x="900" y="520" type="person"></member>
-		<member name="Fachinformationen" id="19" x="900" y="520" type="person"></member>
-		<member name="Entscheidungsfindung" id="20" x="900" y="520" type="activity"></member>
-		<member name="Checklisten" id="21" x="900" y="520" type="document"></member>
-		<member name="SEG Führer" id="22" x="900" y="520" type="document"></member>
+		<member name="DV 100" id="14" x="1000" y="0" type="document"></member>
+		<member name="Live Bild" id="15" x="1100" y="100" type="person"></member>
+		<member name="S-Funktionen" id="16" x="1100" y="200" type="person"></member>
+		<member name="Kontingentführer" id="17" x="1100" y="300" type="person"></member>
+		<member name="Lagebesprechung" id="18" x="1100" y="400" type="person"></member>
+		<member name="Fachinformationen" id="19" x="1100" y="500" type="person"></member>
+		<member name="Entscheidungsfindung" id="20" x="1250" y="300" type="activity"></member>
+		<member name="Checklisten" id="21" x="1300" y="600" type="document"></member>
+		<member name="SEG Führer" id="22" x="1400" y="300" type="document"></member>
 		
-		<member name="Click-Dummy" id="23" x="900" y="520" type="document"></member>
-		<member name="Click-Dummy" id="24" x="900" y="520" type="document"></member>
+		
+		<member name="Wetterinformationen" id="23" x="100" y="1000" type="document"></member>
+		<member name="Facebook" id="24" x="100" y="1100" type="document"></member>
+		<member name="Twitter" id="25" x="100" y="1200" type="document"></member>
+		<member name="Medien" id="26" x="100" y="1300" type="document"></member>
+		<member name="Lage beobachten und melden" id="27" x="300" y="1250" type="activity"></member>
+		<member name="Lage" id="28" x="450" y="1250" type="document"></member>
+		<member name="Regierung" id="29" x="700" y="1250" type="person"></member>
+		
+		
+		<member name="Anforderungen" id="30" x="200" y="1550" type="person"></member>
+		<member name="Anforderungen bearbeiten" id="31" x="450" y="1550" type="activity"></member>
+		<member name="ELW" id="32" x="600" y="1550" type="person"></member>
+		<member name="Einheiten" id="33" x="700" y="1550" type="person"></member>
+		
+		
+		<member name="S-Funktionen" id="34" x="900" y="1550" type="person"></member>
+		<member name="Helfer" id="35" x="900" y="1650" type="person"></member>
+		<member name="Sicherstellung der Versorgung, Logistik, Unterkunft, Verpflegung" id="36" x="1300" y="1600" type="activity"></member>
+		<member name="Bestellung (Mail)" id="37" x="1600" y="1500" type="person"></member>
+		<member name="ELW" id="38" x="1600" y="1600" type="person"></member>
+		<member name="Lieferanten" id="39" x="1600" y="1700" type="person"></member>
+		<member name="S-Funktionen anderer Stäbe" id="40" x="1600" y="1800" type="person"></member>
+		<member name="Kreisverband" id="41" x="1600" y="1900" type="person"></member>
+		<member name="Listen (Open Office)" id="42" x="1200" y="1750" type="document"></member>
 	</members>
 	<egdes>
 		<edge from="Helfer" from_id="0" to="Meldekarte" to_id="1" id="0"></edge>
@@ -51,13 +74,49 @@
 		<edge from="DV 100" from_id="14" to="Personal verwalten" to_id="8" id="15"></edge>
 		<edge from="DV 100" from_id="14" to="Entscheidungsfindung" to_id="20" id="16"></edge>
 		
-		<edge from="DV 100" from_id="14" to="Entscheidungsfindung" to_id="20" id="17"></edge>
-		<edge from="DV 100" from_id="14" to="Entscheidungsfindung" to_id="20" id="18"></edge>
-		<edge from="DV 100" from_id="14" to="Entscheidungsfindung" to_id="20" id="19"></edge>
-		<edge from="DV 100" from_id="14" to="Entscheidungsfindung" to_id="20" id="20"></edge>
-		<edge from="DV 100" from_id="14" to="Entscheidungsfindung" to_id="20" id="21"></edge>
-		<edge from="DV 100" from_id="14" to="Entscheidungsfindung" to_id="20" id="22"></edge>
-		<edge from="DV 100" from_id="14" to="Entscheidungsfindung" to_id="20" id="23"></edge>
 		
+		<edge from="Live Bild" from_id="15" to="Entscheidungsfindung" to_id="20" id="17"></edge>
+		<edge from="S-Funktionen" from_id="16" to="Entscheidungsfindung" to_id="20" id="18"></edge>
+		<edge from="Entscheidungsfindung" from_id="20" to="S-Funktionen" to_id="16" id="20"></edge>
+		<edge from="Kontingentführer" from_id="17" to="Entscheidungsfindung" to_id="20" id="19"></edge>
+		<edge from="Entscheidungsfindung" from_id="20" to="Kontingentführer" to_id="17" id="20"></edge>
+		<edge from="Kontingentführer" from_id="17" to="Lagebesprechung" to_id="18" id="20"></edge>
+		<edge from="Lagebesprechung" from_id="18" to="Entscheidungsfindung" to_id="20" id="20"></edge>
+		<edge from="Fachinformationen" from_id="19" to="Entscheidungsfindung" to_id="20" id="21"></edge>
+		<edge from="Checklisten" from_id="21" to="Entscheidungsfindung" to_id="20" id="22"></edge>
+		<edge from="Entscheidungsfindung" from_id="20" to="SEG Führer" to_id="22" id="23"></edge>
+		<edge from="Entscheidungsfindung" from_id="20" to="Lagebesprechung" to_id="13" id="24"></edge>
+		<edge from="Lagebesprechung" from_id="13" to="Entscheidungsfindung" to_id="20" id="25"></edge>
+		<edge from="Entscheidungsfindung" from_id="20" to="SEG Führer" to_id="22" id="26"></edge>
+		
+		
+		<edge from="Wetterinformationen" from_id="23" to="Lage beobachten und melden" to_id="27" id="27"></edge>
+		<edge from="Facebook" from_id="24" to="Lage beobachten und melden" to_id="27" id="28"></edge>
+		<edge from="Twitter" from_id="25" to="Lage beobachten und melden" to_id="27" id="29"></edge>
+		<edge from="Medien" from_id="26" to="Lage beobachten und melden" to_id="27" id="30"></edge>
+		<edge from="Lage beobachten und melden" from_id="27" to="Lage" to_id="28" id="31"></edge>
+		<edge from="Lage beobachten und melden" from_id="27" to="Lagebesprechung" to_id="13" id="32"></edge>
+		<edge from="Lagebesprechung" from_id="13" to="Lage beobachten und melden" to_id="27" id="33"></edge>
+		<edge from="Lage" from_id="28" to="Regierung" to_id="29" id="34"></edge>
+		
+		
+		<edge from="Anforderungen" from_id="30" to="Anforderungen bearbeiten" to_id="31" id="34"></edge>
+		<edge from="Anforderungen bearbeiten" from_id="31" to="ELW" to_id="32" id="35"></edge>
+		<edge from="ELW" from_id="32" to="Einheiten" to_id="33" id="36"></edge>
+		<edge from="Anforderungen bearbeiten" from_id="31" to="Lagebesprechung" to_id="13" id="37"></edge>
+		<edge from="Lagebesprechung" from_id="13" to="Anforderungen bearbeiten" to_id="31" id="38"></edge>
+		
+		
+		<edge from="S-Funktionen" from_id="34" to="Sicherstellung der Versorgung, Logistik, Unterkunft, Verpflegung" to_id="36" id="39"></edge>
+		<edge from="Helfer" from_id="35" to="Sicherstellung der Versorgung, Logistik, Unterkunft, Verpflegung" to_id="36" id="40"></edge>
+		<edge from="Listen (Open Office)" from_id="42" to="Sicherstellung der Versorgung, Logistik, Unterkunft, Verpflegung" to_id="36" id="41"></edge>
+		<edge from="Sicherstellung der Versorgung, Logistik, Unterkunft, Verpflegung" from_id="36" to="Bestellung (Mail)" to_id="37" id="42"></edge>
+		<edge from="Sicherstellung der Versorgung, Logistik, Unterkunft, Verpflegung" from_id="36" to="ELW" to_id="38" id="43"></edge>
+		<edge from="Sicherstellung der Versorgung, Logistik, Unterkunft, Verpflegung" from_id="36" to="Lieferanten" to_id="39" id="44"></edge>
+		<edge from="Sicherstellung der Versorgung, Logistik, Unterkunft, Verpflegung" from_id="36" to="S-Funktionen anderer Stäbe" to_id="40" id="45"></edge>
+		<edge from="Sicherstellung der Versorgung, Logistik, Unterkunft, Verpflegung" from_id="36" to="Kreisverband" to_id="41" id="46"></edge>
+		<edge from="Sicherstellung der Versorgung, Logistik, Unterkunft, Verpflegung" from_id="36" to="Lagebesprechung" to_id="13" id="47"></edge>
+		<edge from="Lagebesprechung" from_id="13" to="Sicherstellung der Versorgung, Logistik, Unterkunft, Verpflegung" to_id="36" id="48"></edge>
+		<edge from="ELW" from_id="38" to="Bestellung (Mail)" to_id="37" id="49"></edge>
 	</egdes>
 </BigFLOW>
