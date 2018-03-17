@@ -6,6 +6,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import algorithm.util.BreadthFirstSearch;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
@@ -33,6 +34,7 @@ public class InformationExpense {
 	private int numElements[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 	private Network network;
 	private Vertex center;
+	private double maxReachablePercentage;
 	private DecimalFormat dm = new DecimalFormat("#,##0.00");
 
 	private static final DropShadow highlightInformationFlow = new DropShadow(BlurType.GAUSSIAN,
@@ -61,7 +63,7 @@ public class InformationExpense {
 	 * InformationExpense einen Schritt weiter anzeigt.
 	 */
 	public void iterateForewards() {
-		if (percentage < 1.0) {
+		if (percentage < maxReachablePercentage) {
 
 			int s = Integer.parseInt(step.get());
 
@@ -117,9 +119,8 @@ public class InformationExpense {
 	}
 
 	/**
-	 * Helfer Funktion, die eine Liste aus Listen erzeugt. In der i-ten Liste
-	 * sind die Knoten enthalten, die im i-ten Schritt gehighlighted werden
-	 * muessen.
+	 * Helfer Funktion, die eine Liste aus Listen erzeugt. In der i-ten Liste sind
+	 * die Knoten enthalten, die im i-ten Schritt gehighlighted werden muessen.
 	 *
 	 * @param center
 	 * @return
@@ -135,7 +136,20 @@ public class InformationExpense {
 
 		int numElements = 1;
 
-		for (int i = 1; numElements < network.getVertices().size(); i++) {
+		int numReachableElements = 1;
+
+		BreadthFirstSearch bfs = new BreadthFirstSearch(network);
+		for (Vertex v : network.getVertices()) {
+			if (!v.equals(center)) {
+				if (bfs.areConntected(network, center, v)) {
+					numReachableElements++;
+				}
+			}
+		}
+
+		this.maxReachablePercentage = (double) numReachableElements / network.getVertices().size();
+
+		for (int i = 1; numElements < numReachableElements; i++) {
 			List<Vertex> stepIVertexList = new ArrayList<Vertex>();
 			List<Edge> stepIEdgeList = new ArrayList<Edge>();
 			for (Vertex v : resultLists.get(i - 1).getKey()) {
@@ -169,7 +183,7 @@ public class InformationExpense {
 		for (Pair<List<Vertex>, List<Edge>> l2 : list) {
 			List<Vertex> vertexList = l2.getKey();
 			for (Vertex v2 : vertexList) {
-				if (v.getName().equals(v2.getName())) {
+				if (v.getID() == v2.getID()) {
 					return true;
 				}
 			}
@@ -245,8 +259,8 @@ public class InformationExpense {
 	}
 
 	/**
-	 * Funktion, die fuer eine Liste aus Listen die Anzahl der Knoten
-	 * zurueckgibt, die in den ersten $steps Listen enthalten sind.
+	 * Funktion, die fuer eine Liste aus Listen die Anzahl der Knoten zurueckgibt,
+	 * die in den ersten $steps Listen enthalten sind.
 	 *
 	 * @param lists
 	 * @param steps
@@ -265,9 +279,9 @@ public class InformationExpense {
 	}
 
 	/**
-	 * Funktion die zu einer gegebenen Prozentzahl alle Listen von Knoten, die
-	 * in X Steps weniger als Y Prozent der Knoten erreichen berechnet und diese
-	 * in eine CSV schreibt.
+	 * Funktion die zu einer gegebenen Prozentzahl alle Listen von Knoten, die in X
+	 * Steps weniger als Y Prozent der Knoten erreichen berechnet und diese in eine
+	 * CSV schreibt.
 	 */
 	public void safeVerticesNotReachedAsCSV(double percentage) {
 		try {
@@ -298,9 +312,9 @@ public class InformationExpense {
 	}
 
 	/**
-	 * Funktion die zu einer gegebenen Prozentzahl alle Listen von Knoten, die
-	 * in X Steps mindestens Y Prozent der Knoten erreichen berechnet und diese
-	 * in eine CSV schreibt.
+	 * Funktion die zu einer gegebenen Prozentzahl alle Listen von Knoten, die in X
+	 * Steps mindestens Y Prozent der Knoten erreichen berechnet und diese in eine
+	 * CSV schreibt.
 	 */
 	public void safeVerticesReachedAsCSV(double percentage) {
 		try {

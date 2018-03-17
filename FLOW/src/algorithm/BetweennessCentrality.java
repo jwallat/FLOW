@@ -33,9 +33,13 @@ public class BetweennessCentrality {
 	 * Berechnet f√ºr alle Knoten die Closeness und setzt diesen Wert.
 	 */
 	public void compute() {
+		int i = 0;
+		System.out.println("\n\n");
 		for (Vertex v : network.getVertices()) {
 			double betweenness = computeBetweenness(v);
 			v.getBetweennessLabel().setText(df.format(betweenness) + "");
+			i++;
+			System.out.println("Berechne Betweenness Zentralit‰t... " + i + "/" + network.getVertices().size());
 		}
 	}
 
@@ -55,7 +59,6 @@ public class BetweennessCentrality {
 				numPathsContainingV = 0;
 				if (v != s && v != t) {
 					if (bfs.areConntected(network, s, t)) {
-
 						List<List<Edge>> shortestPaths = asp.findShortestPaths(s, t);
 						for (List<Edge> path : shortestPaths) {
 							if (contains(path, v)) {

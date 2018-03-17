@@ -267,9 +267,9 @@ public class FlowSceneController implements Initializable {
 		canvas.autosize();
 
 		gc = canvas.getGraphicsContext2D();
-		gc.setFill(Color.BLUE);
+		// gc.setFill(Color.BLUE);
 		// gc.setFill(Color.WHITE);
-		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		// gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 		SceneGestures sceneGestures = new SceneGestures(pannablePane);
 		stage.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
@@ -852,18 +852,18 @@ public class FlowSceneController implements Initializable {
 	public void computeCentralities() {
 		// berechne zentralitäten
 		ClosenessCentrality cc = new ClosenessCentrality(network);
-		// cc.compute();
+		cc.compute();
 
 		BetweennessCentrality bc = new BetweennessCentrality(network);
-		// bc.compute();
+		bc.compute();
 
 		// Kantengrad eingehend/ausgehend
 		DegreeCentrality dc = new DegreeCentrality(network);
-		// dc.compute();
+		dc.compute();
 
 		// Dichte des Netzwerks
 		Density density = new Density(network);
-		// densityLabel.setText(density.getDensity());
+		densityLabel.setText(density.getDensity());
 	}
 
 	/**

@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BigFLOW>
 	<members>
-		<member name="Helfer" id="0" x="100" y="200" type="person"></member>
-		<member name="Meldekarte" id="1" x="200" y="200" type="document"></member>
-		<member name="ELW" id="2" x="300" y="200" type="person"></member>
-		<member name="Helfer" id="3" x="100" y="400" type="person"></member>
-		<member name="Meldekarte" id="4" x="200" y="400" type="document"></member>
-		<member name="ELW" id="5" x="300" y="400" type="person"></member>
-		<member name="ELW 3" id="6" x="400" y="300" type="person"></member>
-		<member name="Personallisten" id="7" x="500" y="300" type="document"></member>
-		<member name="Personal verwalten" id="8" x="650" y="300" type="activity"></member>
-		<member name="Personallisten" id="9" x="800" y="200" type="document"></member>
-		<member name="Auftrag für Ausweise" id="10" x="800" y="300" type="document"></member>
-		<member name="Marschbefehl" id="11" x="800" y="400" type="document"></member>
-		<member name="Mannschaft" id="12" x="800" y="500" type="person"></member>
+		<member name="Helfer" id="0" x="100" y="600" type="person"></member>
+		<member name="Meldekarte" id="1" x="200" y="600" type="document"></member>
+		<member name="ELW" id="2" x="300" y="600" type="person"></member>
+		<member name="Helfer" id="3" x="100" y="800" type="person"></member>
+		<member name="Meldekarte" id="4" x="200" y="800" type="document"></member>
+		<member name="ELW" id="5" x="300" y="800" type="person"></member>
+		<member name="ELW 3" id="6" x="400" y="700" type="person"></member>
+		<member name="Personallisten" id="7" x="500" y="700" type="document"></member>
+		<member name="Personal verwalten" id="8" x="700" y="700" type="activity"></member>
+		<member name="Personallisten" id="9" x="900" y="600" type="document"></member>
+		<member name="Auftrag für Ausweise" id="10" x="900" y="700" type="document"></member>
+		<member name="Marschbefehl" id="11" x="900" y="800" type="document"></member>
+		<member name="Mannschaft" id="12" x="900" y="900" type="person"></member>
 		
 		
 		<member name="Lagebesprechung" id="13" x="2000" y="1000" type="activity"></member>
 		
 		
-		<member name="DV 100" id="14" x="1000" y="0" type="document"></member>
-		<member name="Live Bild" id="15" x="1100" y="100" type="person"></member>
-		<member name="S-Funktionen" id="16" x="1100" y="200" type="person"></member>
-		<member name="Kontingentführer" id="17" x="1100" y="300" type="person"></member>
-		<member name="Lagebesprechung" id="18" x="1100" y="400" type="person"></member>
-		<member name="Fachinformationen" id="19" x="1100" y="500" type="person"></member>
-		<member name="Entscheidungsfindung" id="20" x="1250" y="300" type="activity"></member>
-		<member name="Checklisten" id="21" x="1300" y="600" type="document"></member>
-		<member name="SEG Führer" id="22" x="1400" y="300" type="document"></member>
+		<member name="DV 100" id="14" x="850" y="300" type="document"></member>
+		<member name="Live Bild" id="15" x="1150" y="200" type="person"></member>
+		<member name="S-Funktionen" id="16" x="1150" y="300" type="person"></member>
+		<member name="Kontingentführer" id="17" x="1150" y="400" type="person"></member>
+		<member name="Lagebesprechung" id="18" x="1150" y="500" type="person"></member>
+		<member name="Fachinformationen" id="19" x="1150" y="600" type="person"></member>
+		<member name="Entscheidungsfindung" id="20" x="1350" y="400" type="activity"></member>
+		<member name="Checklisten" id="21" x="1350" y="500" type="document"></member>
+		<member name="SEG Führer" id="22" x="1550" y="400" type="document"></member>
 		
 		
-		<member name="Wetterinformationen" id="23" x="100" y="1000" type="document"></member>
-		<member name="Facebook" id="24" x="100" y="1100" type="document"></member>
-		<member name="Twitter" id="25" x="100" y="1200" type="document"></member>
-		<member name="Medien" id="26" x="100" y="1300" type="document"></member>
-		<member name="Lage beobachten und melden" id="27" x="300" y="1250" type="activity"></member>
-		<member name="Lage" id="28" x="450" y="1250" type="document"></member>
-		<member name="Regierung" id="29" x="700" y="1250" type="person"></member>
+		<member name="Wetterinformationen" id="23" x="100" y="1150" type="document"></member>
+		<member name="Facebook" id="24" x="100" y="1250" type="document"></member>
+		<member name="Twitter" id="25" x="100" y="1350" type="document"></member>
+		<member name="Medien" id="26" x="100" y="1450" type="document"></member>
+		<member name="Lage beobachten und melden" id="27" x="300" y="1300" type="activity"></member>
+		<member name="Lage" id="28" x="500" y="1300" type="document"></member>
+		<member name="Regierung" id="29" x="600" y="1300" type="person"></member>
 		
 		
 		<member name="Anforderungen" id="30" x="200" y="1550" type="person"></member>
@@ -54,6 +54,63 @@
 		<member name="S-Funktionen anderer Stäbe" id="40" x="1600" y="1800" type="person"></member>
 		<member name="Kreisverband" id="41" x="1600" y="1900" type="person"></member>
 		<member name="Listen (Open Office)" id="42" x="1200" y="1750" type="document"></member>
+		
+		
+		<member name="Kontingentführer" id="43" x="2300" y="1200" type="person"></member>
+		<member name="Kontingent" id="44" x="2500" y="1200" type="person"></member>
+		<member name="Kontingentführer" id="45" x="2300" y="1300" type="person"></member>
+		<member name="Kontingent" id="46" x="2500" y="1300" type="person"></member>
+		<member name="Kontingentführer" id="47" x="2300" y="1400" type="person"></member>
+		<member name="Kontingent" id="48" x="2500" y="1400" type="person"></member>
+		
+		
+		<member name="Facebook" id="49" x="2100" y="1600" type="document"></member>
+		<member name="Google" id="50" x="2100" y="1700" type="document"></member>
+		<member name="Twitter" id="51" x="2100" y="1800" type="document"></member>
+		<member name="Sichtung und Überprüfung der Medien" id="52" x="2300" y="1700" type="activity"></member>
+		<member name="Korrigierte Artikel" id="53" x="2500" y="1600" type="document"></member>
+		<member name="Presseverteiler" id="54" x="2500" y="1800" type="document"></member>
+		<member name="Presse" id="55" x="2700" y="1700" type="person"></member>
+		
+		
+		<member name="Helferschaft" id="56" x="2750" y="1300" type="person"></member>
+		<member name="Berufserfahrung" id="57" x="3000" y="1200" type="person"></member>
+		<member name="Einträge für Gipfelpost erarbeiten" id="58" x="3000" y="1300" type="activity"></member>
+		<member name="Bilder von Einsätzen" id="59" x="3200" y="1200" type="document"></member>
+		<member name="Interne Redaktion (GELZ)" id="60" x="3300" y="1300" type="person"></member>
+		
+		
+		<member name="Presse" id="61" x="2600" y="800" type="person"></member>
+		<member name="Presse herumführen" id="62" x="2700" y="800" type="activity"></member>
+		<member name="Helfer (Instuktionen)" id="63" x="2950" y="650" type="person"></member>
+		<member name="Factsheet" id="64" x="2900" y="750" type="document"></member>
+		<member name="Grundbegriffe" id="65" x="2900" y="850" type="document"></member>
+		<member name="Eckdaten" id="66" x="2900" y="950" type="document"></member>
+		<member name="Presse" id="67" x="3050" y="800" type="person"></member>
+		
+		<member name="Presse" id="68" x="2600" y="300" type="person"></member>
+		<member name="S-Funktionen (Lagemeldung)" id="69" x="2600" y="400" type="person"></member>
+		<member name="Helfer" id="70" x="2600" y="500" type="person"></member>
+		<member name="Rechte für/an Fotos" id="71" x="2800" y="300" type="document"></member>
+		<member name="Pressearbeit" id="72" x="2800" y="400" type="activity"></member>
+		<member name="Ckeckliste für Pressearbeit" id="73" x="2750" y="550" type="document"></member>
+		<member name="Checkliste von Experten" id="74" x="2850" y="500" type="document"></member>
+		<member name="Bilder" id="75" x="3000" y="350" type="document"></member>
+		<member name="Facebook" id="76" x="3000" y="450" type="document"></member>
+		<member name="Presse" id="77" x="3100" y="400" type="person"></member>
+		
+		
+		<member name="Einsatzbefehl" id="78" x="1700" y="150" type="document"></member>
+		<member name="S-Funktionen" id="79" x="1700" y="250" type="person"></member>
+		<member name="Einsatzbefehl" id="80" x="1900" y="100" type="document"></member>
+		<member name="Information und Kommunikation" id="81" x="2000" y="200" type="activity"></member>
+		<member name="Software" id="82" x="1950" y="300" type="document"></member>
+		<member name="Standards für E-Mail-Verkehr" id="83" x="2000" y="030" type="document"></member>
+		<member name="Kommunikationsplan" id="84" x="2100" y="100" type="document"></member>
+		<member name="Einsatzbefehl" id="85" x="2300" y="100" type="document"></member>
+		<member name="Telekom" id="86" x="2300" y="200" type="person"></member>
+		<member name="E-Mail-Verzeichnis" id="87" x="2300" y="300" type="document"></member>
+		<member name="Einsatztagebuch" id="88" x="2300" y="400" type="document"></member>
 	</members>
 	<egdes>
 		<edge from="Helfer" from_id="0" to="Meldekarte" to_id="1" id="0"></edge>
@@ -62,7 +119,7 @@
 		<edge from="Helfer" from_id="3" to="Meldekarte" to_id="4" id="3"></edge>
 		<edge from="Meldekarte" from_id="4" to="ELW" to_id="5" id="4"></edge>
 		<edge from="ELW" from_id="5" to="ELW 3" to_id="6" id="5"></edge>
-		<edge from="ELW 3" from_id="6" to="Personallisten" to_id="7" id="6"></edge>
+		<edge from="ELW 3" from_id="6" to="Personallisten XXX" to_id="7" id="6"></edge>
 		<edge from="Personallisten" from_id="7" to="Personal verwalten" to_id="8" id="7"></edge>
 		<edge from="Personal verwalten" from_id="8" to="Personallisten" to_id="9" id="8"></edge>
 		<edge from="Personal verwalten" from_id="8" to="Auftrag für Ausweise" to_id="10" id="9"></edge>
@@ -118,5 +175,85 @@
 		<edge from="Sicherstellung der Versorgung, Logistik, Unterkunft, Verpflegung" from_id="36" to="Lagebesprechung" to_id="13" id="47"></edge>
 		<edge from="Lagebesprechung" from_id="13" to="Sicherstellung der Versorgung, Logistik, Unterkunft, Verpflegung" to_id="36" id="48"></edge>
 		<edge from="ELW" from_id="38" to="Bestellung (Mail)" to_id="37" id="49"></edge>
+		
+		
+		<edge from="Lagebesprechung" from_id="13" to="Kontingentführer" to_id="43" id="50"></edge>
+		<edge from="Kontingentführer" from_id="43" to="Lagebesprechung" to_id="13" id="51"></edge>
+		<edge from="Kontingentführer" from_id="43" to="Kontingent" to_id="44" id="52"></edge>
+		<edge from="Kontingent" from_id="44" to="Kontingentführer" to_id="43" id="53"></edge>
+		
+		<edge from="Lagebesprechung" from_id="13" to="Kontingentführer" to_id="45" id="54"></edge>
+		<edge from="Kontingentführer" from_id="45" to="Lagebesprechung" to_id="13" id="55"></edge>
+		<edge from="Kontingentführer" from_id="45" to="Kontingent" to_id="46" id="56"></edge>
+		<edge from="Kontingent" from_id="46" to="Kontingentführer" to_id="45" id="57"></edge>
+		
+		<edge from="Lagebesprechung" from_id="13" to="Kontingentführer" to_id="47" id="58"></edge>
+		<edge from="Kontingentführer" from_id="47" to="Lagebesprechung" to_id="13" id="59"></edge>
+		<edge from="Kontingentführer" from_id="47" to="Kontingent" to_id="48" id="60"></edge>
+		<edge from="Kontingent" from_id="48" to="Kontingentführer" to_id="47" id="61"></edge>
+		
+		
+		<edge from="Facebook" from_id="49" to="Sichtung und Überprüfung der Medien" to_id="52" id="62"></edge>
+		<edge from="Google" from_id="50" to="Sichtung und Überprüfung der Medien" to_id="52" id="63"></edge>
+		<edge from="Twitter" from_id="51" to="Sichtung und Überprüfung der Medien" to_id="52" id="64"></edge>
+		<edge from="Sichtung und Überprüfung der Medien" from_id="52" to="Korrigierte Artikel" to_id="53" id="65"></edge>
+		<edge from="Sichtung und Überprüfung der Medien" from_id="52" to="Presseverteiler" to_id="54" id="66"></edge>
+		<edge from="Sichtung und Überprüfung der Medien" from_id="52" to="Presse" to_id="55" id="67"></edge>
+		<edge from="Sichtung und Überprüfung der Medien" from_id="52" to="Lagebesprechung" to_id="13" id="68"></edge>
+		<edge from="Lagebesprechung" from_id="13" to="Sichtung und Überprüfung der Medien" to_id="52" id="69"></edge>
+		<edge from="Korrigierte Artikel" from_id="53" to="Presse" to_id="55" id="70"></edge>
+		<edge from="Presseverteiler" from_id="54" to="Presse" to_id="55" id="71"></edge>
+		
+		
+		<edge from="Helferschaft" from_id="56" to="Einträge für Gipfelpost erarbeiten" to_id="58" id="72"></edge>
+		<edge from="Berufserfahrung" from_id="57" to="Einträge für Gipfelpost erarbeiten" to_id="58" id="73"></edge>
+		<edge from="Lagebesprechung" from_id="13" to="Einträge für Gipfelpost erarbeiten" to_id="58" id="74"></edge>
+		<edge from="Einträge für Gipfelpost erarbeiten" from_id="58" to="Lagebesprechung" to_id="13" id="75"></edge>
+		<edge from="Einträge für Gipfelpost erarbeiten" from_id="58" to="Helferschaft" to_id="56" id="76"></edge>
+		<edge from="Einträge für Gipfelpost erarbeiten" from_id="58" to="Bilder von Einsätzen" to_id="59" id="77"></edge>
+		<edge from="Einträge für Gipfelpost erarbeiten" from_id="58" to="Interne Redaktion (GELZ)" to_id="60" id="78"></edge>
+		<edge from="Bilder von Einsätzen" from_id="59" to="Interne Redaktion (GELZ)" to_id="60" id="79"></edge>
+		
+		
+		<edge from="Presse" from_id="61" to="Presse herumführen" to_id="62" id="80"></edge>
+		<edge from="Presse herumführen" from_id="62" to="Lagebesprechung" to_id="13" id="81"></edge>
+		<edge from="Presse herumführen" from_id="62" to="Helfer (Instuktionen)" to_id="63" id="82"></edge>
+		<edge from="Presse herumführen" from_id="62" to="Factsheet" to_id="64" id="83"></edge>
+		<edge from="Presse herumführen" from_id="62" to="Grundbegriffe" to_id="65" id="84"></edge>
+		<edge from="Presse herumführen" from_id="62" to="Eckdaten" to_id="66" id="85"></edge>
+		<edge from="Presse herumführen" from_id="62" to="Presse" to_id="67" id="86"></edge>
+		<edge from="Lagebesprechung" from_id="13" to="Presse herumführen" to_id="62" id="87"></edge>
+		<edge from="Factsheet" from_id="64" to="Presse" to_id="67" id="88"></edge>
+		<edge from="Grundbegriffe" from_id="65" to="Presse" to_id="67" id="89"></edge>
+		<edge from="Eckdaten" from_id="66" to="Presse" to_id="67" id="90"></edge>
+		<edge from="Presse" from_id="67" to="Presse herumführen" to_id="62" id="91"></edge>
+		
+		
+		<edge from="Presse" from_id="68" to="Pressearbeit" to_id="72" id="92"></edge>
+		<edge from="S-Funktionen (Lagemeldung)" from_id="69" to="Pressearbeit" to_id="72" id="93"></edge>
+		<edge from="Helfer" from_id="70" to="Pressearbeit" to_id="72" id="94"></edge>
+		<edge from="Helfer" from_id="70" to="S-Funktionen (Lagemeldung)" to_id="69" id="95"></edge>
+		<edge from="Rechte für/an Fotos" from_id="71" to="Pressearbeit" to_id="72" id="96"></edge>
+		<edge from="Pressearbeit" from_id="72" to="Lagebesprechung" to_id="13" id="97"></edge>
+		<edge from="Lagebesprechung" from_id="13" to="Pressearbeit" to_id="72" id="98"></edge>
+		<edge from="Checkliste für Pressearbeit" from_id="73" to="Pressearbeit" to_id="72" id="99"></edge>
+		<edge from="Checklisten von Experten" from_id="74" to="Pressearbeit" to_id="72" id="100"></edge>
+		<edge from="Pressearbeit" from_id="72" to="Bilder" to_id="75" id="101"></edge>
+		<edge from="Pressearbeit" from_id="72" to="Presse" to_id="77" id="102"></edge>
+		<edge from="Pressearbeit" from_id="72" to="Facebook" to_id="76" id="103"></edge>
+		<edge from="Bilder" from_id="75" to="Presse" to_id="77" id="104"></edge>
+		
+		<edge from="Einsatzbefehl" from_id="78" to="Information und Kommunikation" to_id="81" id="105"></edge>
+		<edge from="S-Funktionen" from_id="79" to="Information und Kommunikation" to_id="81" id="106"></edge>
+		<edge from="Einsatzbefehl" from_id="80" to="Information und Kommunikation" to_id="81" id="107"></edge>
+		<edge from="Software" from_id="82" to="Information und Kommunikation" to_id="81" id="108"></edge>
+		<edge from="Standards für E-Mail-Verkehr" from_id="83" to="Information und Kommunikation" to_id="81" id="109"></edge>
+		<edge from="Kommunikationsplan" from_id="84" to="Information und Kommunikation" to_id="81" id="110"></edge>
+		<edge from="Lagebesprechung" from_id="13" to="Information und Kommunikation" to_id="81" id="111"></edge>
+		<edge from="Information und Kommunikation" from_id="81" to="Lagebesprechung" to_id="13" id="112"></edge>
+		<edge from="Information und Kommunikation" from_id="81" to="Einsatzbefehl" to_id="85" id="113"></edge>
+		<edge from="Information und Kommunikation" from_id="81" to="Telekom" to_id="86" id="114"></edge>
+		<edge from="Information und Kommunikation" from_id="81" to="E-Mail-Verzeichnis" to_id="87" id="115"></edge>
+		<edge from="Information und Kommunikation" from_id="81" to="Einsatztagebuch" to_id="88" id="116"></edge>
 	</egdes>
 </BigFLOW>

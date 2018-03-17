@@ -188,10 +188,15 @@ public class Parser extends DefaultHandler {
 
 		Vertex from;
 		Vertex to;
-		if (atts.getValue("from_id") != "" && atts.getValue("to_id") != "") {
-			from = network.getVertexByID(Integer.parseInt(atts.getValue("from_id")));
-			to = network.getVertexByID(Integer.parseInt(atts.getValue("to_id")));
-		} else {
+		try {
+			if (atts.getValue("from_id") != "" && atts.getValue("to_id") != "") {
+				from = network.getVertexByID(Integer.parseInt(atts.getValue("from_id")));
+				to = network.getVertexByID(Integer.parseInt(atts.getValue("to_id")));
+			} else {
+				from = network.getVertexByName(atts.getValue("from"));
+				to = network.getVertexByName(atts.getValue("to"));
+			}
+		} catch (Exception e) {
 			from = network.getVertexByName(atts.getValue("from"));
 			to = network.getVertexByName(atts.getValue("to"));
 		}

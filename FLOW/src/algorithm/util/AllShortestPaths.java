@@ -11,7 +11,8 @@ import model.Vertex;
 
 /**
  * Klasse die verwendet wird um alle kürzesten Pfade zwischen zwei Knoten zu
- * berechnen. Dies ist notwendig für die Berechnung der Betweenness Zentralität.
+ * berechnen. Dies ist notwendig für die Berechnung der Betweenness
+ * Zentralität.
  *
  * @author jwall
  *
@@ -29,8 +30,7 @@ public class AllShortestPaths {
 	}
 
 	/**
-	 * Rekursive Methode, die alle zykel-freien Pfade zwischen 2 Knoten
-	 * berechnet.
+	 * Rekursive Methode, die alle zykel-freien Pfade zwischen 2 Knoten berechnet.
 	 *
 	 * @param start
 	 *            - Startknoten
@@ -52,8 +52,8 @@ public class AllShortestPaths {
 		if (current != goal) {
 			for (Edge e : network.getEdges()) {
 				if (e.getOrigin() == current) {
-					if (!path.stream().anyMatch(edge -> (e.getDestination().getName().equals(edge.getOrigin().getName())
-							|| (e.getDestination().getName().equals(edge.getDestination().getName()))))) {
+					if (!path.stream().anyMatch(edge -> (e.getDestination().getID() == edge.getOrigin().getID())
+							|| (e.getDestination().getID() == edge.getDestination().getID()))) {
 						ArrayList<Edge> newPath = new ArrayList<Edge>();
 						newPath.addAll(path);
 						newPath.add(e);
