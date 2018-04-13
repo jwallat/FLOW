@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BigFLOW>
+	<members>
+		<member name="Esprit.PO" id="0" x="0" y="800" type="person"></member>
+		<member name="Arvato.PO" id="1" x="0" y="1000" type="person"></member>
+		<member name="Stakeholder" id="2" x="0" y="1200" type="person"></member>
+		<member name="ID6 Stories Schreiben" id="3" x="300" y="1000" type="activity"></member>
+		<member name="Template" id="4" x="300" y="800" type="document"></member>
+		<member name="Stories" id="5" x="600" y="900" type="document"></member>
+		<member name="JIRA" id="6" x="600" y="1100" type="document"></member>
+		<member name="Arvato.PO" id="7" x="650" y="1150" type="person"></member>
+		<member name="ID3 Backlog Refinement" id="8" x="900" y="1000" type="activity"></member>
+		<member name="SCRUM" id="9" x="900" y="800" type="document"></member>
+		<member name="Stakeholder" id="10" x="900" y="1200" type="person"></member>
+		<member name="Team" id="11" x="1200" y="900" type="person"></member>
+		<member name="JIRA" id="12" x="1200" y="1100" type="document"></member>
+		<member name="Kapazitätsplanung" id="13" x="1200" y="1200" type="document"></member>
+		<member name="SCRUM-Master" id="14" x="1200" y="1300" type="person"></member>
+		<member name="ID4 Planing Poker" id="15" x="1500" y="1000" type="activity"></member>
+		<member name="Kartenspiel" id="16" x="1450" y="800" type="document"></member>
+		<member name="Regeln" id="17" x="1550" y="800" type="document"></member>		
+		<member name="JIRA" id="18" x="1800" y="1000" type="document"></member>		
+		<member name="Arvato.PO" id="19" x="1800" y="1100" type="person"></member>		
+		<member name="ID5 Planing I/II" id="20" x="2100" y="1000" type="activity"></member>		
+		<member name="Team" id="21" x="2100" y="600" type="person"></member>		
+		<member name="Kopfzuteilung" id="22" x="2100" y="800" type="person"></member>		
+		<member name="Team Member" id="23" x="2100" y="1400" type="person"></member>		
+		<member name="Mitschrift" id="24" x="2100" y="1200" type="document"></member>		
+		<member name="JIRA" id="25" x="2400" y="1000" type="document"></member>
+		
+		<member name="Arvato.PO" id="26" x="2700" y="900" type="person"></member>		
+		<member name="Esprit.PO" id="27" x="2700" y="1100" type="person"></member>		
+		<member name="ID2 Abnahme Review" id="28" x="3000" y="1000" type="activity"></member>		
+		<member name="SCRUM-Master" id="29" x="3000" y="600" type="person"></member>		
+		<member name="Agenda" id="30" x="3000" y="800" type="document"></member>		
+		<member name="Stakeholder" id="31" x="3000" y="1200" type="person"></member>		
+		<member name="Team" id="32" x="3300" y="900" type="person"></member>		
+		<member name="JIRA" id="33" x="3300" y="1100" type="document"></member>
+		
+		<member name="Externe" id="34" x="3500" y="800" type="person"></member>		
+		<member name="Entwickler" id="35" x="3500" y="900" type="person"></member>		
+		<member name="Direktoren" id="36" x="3500" y="1000" type="person"></member>		
+		<member name="??Hinweise??" id="37" x="3700" y="900" type="person"></member>		
+		<member name="Team" id="38" x="3500" y="1100" type="person"></member>		
+		<member name="Release-Plan" id="39" x="3700" y="1100" type="document"></member>		
+		<member name="ID1 Entscheiden, Fragenstellen, Alternativen aussuchen" id="40" x="4100" y="1000" type="activity"></member>		
+		<member name="Arvato.PO" id="41" x="3950" y="800" type="person"></member>		
+		<member name="Esprit.PO" id="42" x="4050" y="800" type="person"></member>		
+		<member name="Template" id="43" x="4150" y="800" type="document"></member>		
+		<member name="JIRA" id="44" x="4250" y="800" type="document"></member>		
+		<member name="JIRA" id="45" x="3950" y="1200" type="document"></member>		
+		<member name="Confluence" id="46" x="4050" y="1200" type="document"></member>		
+		<member name="Slack" id="47" x="4150" y="1200" type="document"></member>
+		<member name="Team" id="48" x="4400" y="950" type="person"></member>		
+		<member name="JIRA" id="49" x="4400" y="1050" type="document"></member>
+		
+		<member name="FlipChart" id="50" x="5000" y="1000" type="document"></member>		
+		<member name="ID7 Retrospective" id="51" x="5300" y="1000" type="activity"></member>		
+		<member name="SCRUM-Master" id="52" x="5300" y="800" type="person"></member>		
+		<member name="Protokoll" id="53" x="5600" y="950" type="document"></member>		
+		<member name="Diskussion" id="54" x="5600" y="1050" type="activity"></member>		
+	</members>
+	<egdes>
+		<edge from="Esprit.PO" from_id="0" to="ID6 Stories Schreiben" to_id="3" id="0"></edge>
+		<edge from="Arvato.PO" from_id="1" to="ID6 Stories Schreiben" to_id="3" id="1"></edge>
+		<edge from="Stakeholder" from_id="2" to="ID6 Stories Schreiben" to_id="3" id="2"></edge>
+		<edge from="Template" from_id="4" to="ID6 Stories Schreiben" to_id="3" id="3"></edge>
+		<edge from="ID6 Stories Schreiben" from_id="3" to="Stories" to_id="5" id="4"></edge>
+		<edge from="ID6 Stories Schreiben" from_id="3" to="JIRA" to_id="6" id="5"></edge>
+		<edge from="Stories" from_id="5" to="ID3 Backlog Refinement" to_id="8" id="6"></edge>
+		<edge from="JIRA" from_id="6" to="ID3 Backlog Refinement" to_id="8" id="7"></edge>
+		<edge from="Arvato.PO" from_id="7" to="ID3 Backlog Refinement" to_id="8" id="8"></edge>
+		<edge from="SCRUM" from_id="9" to="ID3 Backlog Refinement" to_id="8" id="9"></edge>
+		<edge from="Stakeholder" from_id="10" to="ID3 Backlog Refinement" to_id="8" id="10"></edge>
+		<edge from="ID3 Backlog Refinement" from_id="8" to="Team" to_id="11" id="11"></edge>
+		<edge from="ID3 Backlog Refinement" from_id="8" to="JIRA" to_id="12" id="12"></edge>
+		<edge from="SCRUM-Master" from_id="14" to="Kapazitätsplanung" to_id="13" id="13"></edge>
+		<edge from="Kapazitätsplanung" from_id="13" to="ID4 Planing Poker" to_id="15" id="14"></edge>
+		<edge from="Kapazitätsplanung" from_id="13" to="ID5 PLaning I/II" to_id="20" id="15"></edge>
+		<edge from="Team" from_id="11" to="ID4 Planing Poker" to_id="15" id="16"></edge>
+		<edge from="JIRA" from_id="12" to="ID4 Planing Poker" to_id="15" id="17"></edge>
+		<edge from="Kartenspiel" from_id="16" to="ID4 Planing Poker" to_id="15" id="18"></edge>
+		<edge from="Regeln" from_id="20" to="ID4 Planing Poker" to_id="15" id="20"></edge>
+		<edge from="ID4 Planing Poker" from_id="15" to="JIRA" to_id="18" id="21"></edge>
+		<edge from="JIRA" from_id="18" to="ID5 PLaning I/II" to_id="20" id="22"></edge>
+		<edge from="Arvato.PO" from_id="19" to="ID5 Planing I/II" to_id="20" id="23"></edge>
+		<edge from="Team" from_id="21" to="Kopfzuteilung" to_id="22" id="24"></edge>
+		<edge from="Kopfzuteilung" from_id="22" to="ID5 Planing I/II" to_id="20" id="25"></edge>
+		<edge from="Team Member" from_id="24" to="Mitschrift" to_id="23" id="26"></edge>
+		<edge from="Mitschrift" from_id="23" to="ID5 Planing I/II" to_id="20" id="27"></edge>
+		<edge from="ID5 Plaing I/II" from_id="20" to="JIRA" to_id="25" id="28"></edge>
+		
+		
+		<edge from="Arvato.PO" from_id="26" to="ID2 Abnahme Review" to_id="28" id="29"></edge>
+		<edge from="Esprit.PO" from_id="27" to="ID2 Abnahme Review" to_id="28" id="30"></edge>
+		<edge from="SCRUM-Master" from_id="29" to="Agenda" to_id="30" id="31"></edge>
+		<edge from="Agenda" from_id="30" to="ID2 Abnahme Review" to_id="28" id="32"></edge>
+		<edge from="Stakeholder" from_id="31" to="ID2 Abnahme Review" to_id="28" id="33"></edge>
+		<edge from="ID2 Abnahme Review" from_id="28" to="Team" to_id="32" id="34"></edge>
+		<edge from="ID2 Abnahme Review" from_id="28" to="JIRA" to_id="33" id="35"></edge>
+		
+		
+		<edge from="Externe" from_id="34" to="??Hinweise??" to_id="37" id="36"></edge>
+		<edge from="Entwickler" from_id="35" to="??Hinweise??" to_id="37" id="37"></edge>
+		<edge from="Direktoren" from_id="36" to="??Hinweise??" to_id="37" id="38"></edge>
+		<edge from="Team" from_id="38" to="Release-Plan" to_id="39" id="39"></edge>
+		<edge from="??Hinweise??" from_id="37" to="ID1 Entscheiden, Fragenstellen, Alternativen aussuchen" to_id="40" id="40"></edge>
+		<edge from="Release-Plan" from_id="39" to="ID1 Entscheiden, Fragenstellen, Alternativen aussuchen" to_id="40" id="41"></edge>
+		<edge from="Arvato.PO" from_id="41" to="ID1 Entscheiden, Fragenstellen, Alternativen aussuchen" to_id="40" id="42"></edge>
+		<edge from="Esprit.PO" from_id="42" to="ID1 Entscheiden, Fragenstellen, Alternativen aussuchen" to_id="40" id="43"></edge>
+		<edge from="Template" from_id="43" to="ID1 Entscheiden, Fragenstellen, Alternativen aussuchen" to_id="40" id="44"></edge>
+		<edge from="JIRA" from_id="44" to="ID1 Entscheiden, Fragenstellen, Alternativen aussuchen" to_id="40" id="45"></edge>
+		<edge from="JIRA" from_id="45" to="ID1 Entscheiden, Fragenstellen, Alternativen aussuchen" to_id="40" id="46"></edge>
+		<edge from="Confluence" from_id="46" to="ID1 Entscheiden, Fragenstellen, Alternativen aussuchen" to_id="40" id="47"></edge>
+		<edge from="Slack" from_id="47" to="ID1 Entscheiden, Fragenstellen, Alternativen aussuchen" to_id="40" id="48"></edge>
+		<edge from="ID1 Entscheiden, Fragenstellen, Alternativen aussuchen" from_id="40" to="Team" to_id="48" id="49"></edge>
+		<edge from="ID1 Entscheiden, Fragenstellen, Alternativen aussuchen" from_id="40" to="JIRA" to_id="49" id="50"></edge>
+		
+		
+		<edge from="FlipChart" from_id="50" to="ID7 Retrospective" to_id="51" id="51"></edge>
+		<edge from="SCRUM-Master" from_id="52" to="ID7 Retrospective" to_id="51" id="52"></edge>
+		<edge from="ID7 Retrospective" from_id="51" to="Protokoll" to_id="53" id="53"></edge>		
+		<edge from="ID7 Retrospective" from_id="51" to="Diskussion" to_id="54" id="54"></edge>
+	</egdes>
+</BigFLOW>
