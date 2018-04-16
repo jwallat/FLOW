@@ -80,7 +80,7 @@
 		<member name="Interne Redaktion (GELZ)" id="60" x="3300" y="1300" type="person"></member>
 		
 		
-		<member name="Presse" id="61" x="2600" y="800" type="person"></member>
+		<member name="Presse" id="61" x="2500" y="800" type="person"></member>
 		<member name="Presse herumführen" id="62" x="2700" y="800" type="activity"></member>
 		<member name="Helfer (Instuktionen)" id="63" x="2950" y="650" type="person"></member>
 		<member name="Factsheet" id="64" x="2900" y="750" type="document"></member>
