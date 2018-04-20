@@ -62,6 +62,7 @@ public class ClosenessCentrality {
 			}
 		}
 		double avgPathLength = sumPathLengths / numPaths;
-		return (1 / avgPathLength);
+		double closeness = (1 / avgPathLength);
+		return (closeness > 0) ? closeness : 0.0;
 	}
 }
