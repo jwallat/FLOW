@@ -20,9 +20,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FlowSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FlowSceneController">
    <top>
-      <HBox BorderPane.alignment="TOP_LEFT">
+      <HBox fx:id="outerHBox" minHeight="0.0" minWidth="0.0" BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
@@ -45,9 +45,9 @@
       </HBox>
    </top>
    <center>
-      <HBox fx:id="hBox" BorderPane.alignment="CENTER">
+      <HBox fx:id="hBox" minHeight="0.0" minWidth="0.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane fx:id="anchor" prefHeight="625.0" prefWidth="1200.0">
+            <AnchorPane fx:id="anchor" minHeight="0.0" minWidth="0.0" prefHeight="625.0" prefWidth="1200.0">
                <children>
                   <TitledPane fx:id="informationPane" prefHeight="625.0" prefWidth="213.0" text="Information" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <content>

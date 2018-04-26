@@ -15,6 +15,8 @@ import algorithm.EdmondsKarp;
 import algorithm.FlowSpace;
 import algorithm.InformationExpense;
 import control.Parser;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -66,6 +68,9 @@ public class FlowSceneController implements Initializable {
 
 	@FXML
 	private MenuBar menuBar;
+
+	@FXML
+	private HBox outerHBox;
 
 	@FXML
 	private HBox hBox;
@@ -235,9 +240,27 @@ public class FlowSceneController implements Initializable {
 
 		stage.setMaximized(true);
 
+		stage.getScene().getWindow().widthProperty().addListener(new ChangeListener<Number>() {
+			public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth,
+					Number newSceneWidth) {
+				System.out.println("Width: " + newSceneWidth);
+				System.out.println("hBox: " + hBox.getWidth() + " pref: " + hBox.getPrefWidth());
+				System.out.println("outer: " + outerHBox.getWidth());
+				hBox.setPrefWidth(stage.getScene().getWidth());
+				hBox.setMaxHeight(stage.getScene().getHeight());
+				hBox.autosize();
+				pannablePane.autosize();
+				anchor.autosize();
+			}
+		});
+
 		// Order Elements and set size-Properties
 		hBox.setPrefWidth(stage.getScene().getWidth());
+		// hBox.prefWidthProperty().bind(stage.getScene().widthProperty());
+		// hBox.prefWidthProperty().bind(stage.getScene().getWindow().widthProperty());
 		hBox.setPrefHeight(stage.getScene().getHeight());
+		// hBox.prefHeightProperty().bind(stage.getScene().heightProperty());
+		// hBox.prefHeightProperty().bind(stage.heightProperty());
 		hBox.autosize();
 		hBox.toBack();
 
@@ -247,26 +270,28 @@ public class FlowSceneController implements Initializable {
 		pannablePane = new PannablePane();
 		anchor.getChildren().add(pannablePane);
 
-		anchor.setPrefWidth(hBox.getWidth());
-		anchor.setPrefHeight(hBox.getHeight());
+		// anchor.setPrefWidth(hBox.getWidth());
+		anchor.prefWidthProperty().bind(hBox.widthProperty());
+		// anchor.setPrefHeight(hBox.getHeight());
+		anchor.prefHeightProperty().bind(hBox.heightProperty());
 		anchor.autosize();
 		anchor.toBack();
 
-		pannablePane.setPrefWidth(anchor.widthProperty().get());
-		pannablePane.setPrefHeight(anchor.heightProperty().get());
+		pannablePane.prefWidthProperty().bind(anchor.widthProperty());
+		pannablePane.prefHeightProperty().bind(anchor.heightProperty());
 		pannablePane.autosize();
 
 		pannablePane.toFront();
 		informationPane.toFront();
 
-		canvas = new Canvas();
-		pannablePane.getChildren().add(canvas);
+		// canvas = new Canvas();
+		// pannablePane.getChildren().add(canvas);
 
-		canvas.widthProperty().bind(pannablePane.widthProperty());
-		canvas.heightProperty().bind(pannablePane.heightProperty());
-		canvas.autosize();
+		// canvas.widthProperty().bind(pannablePane.widthProperty());
+		// canvas.heightProperty().bind(pannablePane.heightProperty());
+		// canvas.autosize();
 
-		gc = canvas.getGraphicsContext2D();
+		// gc = canvas.getGraphicsContext2D();
 		// gc.setFill(Color.BLUE);
 		// gc.setFill(Color.WHITE);
 		// gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
