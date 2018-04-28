@@ -32,6 +32,15 @@ public class SwitchButton extends Label {
 					fsc.toggleFLOWNotation();
 				}
 			});
+		} else if (mode.equals("paths")) {
+			switchBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent t) {
+					switchedOn.set(!switchedOn.get());
+					fsc.pathsToggleButtonClicked();
+				}
+			});
 		} else if (mode.equals("centrality")) {
 			switchBtn.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
@@ -40,7 +49,9 @@ public class SwitchButton extends Label {
 					fsc.centralityToggleButtonClicked();
 				}
 			});
-		} else if (mode.equals("weights")) {
+		} else if (mode.equals("weights"))
+
+		{
 			switchBtn.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent t) {

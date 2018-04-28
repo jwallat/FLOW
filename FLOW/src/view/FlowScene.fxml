@@ -141,6 +141,12 @@
                                                 </HBox>
                                                 <HBox>
                                                    <children>
+                                                      <Label text="Show all Paths:" />
+                                                      <HBox fx:id="pathsToggleButtonHBox" alignment="CENTER" prefHeight="25.0" prefWidth="100.0" />
+                                                   </children>
+                                                </HBox>
+                                                <HBox>
+                                                   <children>
                                                       <Button mnemonicParsing="false" onAction="#selectSourceAndSink" text="Select vertices" />
                                                       <HBox alignment="CENTER" prefHeight="25.0" prefWidth="100.0">
                                                          <children>

@@ -29,6 +29,7 @@ public class Edge {
 	private int id;
 	private double capacity;
 	private boolean isDashed = false;
+	private boolean isOnAPath = false;
 	private double flow;
 	private double flowDistance;
 	private Color edgeColor = Color.BLACK;
@@ -300,5 +301,13 @@ public class Edge {
 
 	public void setDashed(boolean isDashed) {
 		this.isDashed = isDashed;
+	}
+
+	public boolean isOnAPath() {
+		return isOnAPath;
+	}
+
+	public void setOnAPath(boolean isOnAPath) {
+		this.isOnAPath = isOnAPath;
 	}
 }

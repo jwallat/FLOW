@@ -61,6 +61,10 @@ public class FlowSpace {
 		System.out.println("Num allPaths: " + allPaths.size());
 		allPaths.stream().forEach(System.out::println);
 
+		for (List<Edge> l : allPaths) {
+			l.stream().forEach(e -> e.setOnAPath(true));
+		}
+
 		// Algorithms
 		List<Path> pathElements = new ArrayList<Path>();
 
@@ -111,8 +115,7 @@ public class FlowSpace {
 	}
 
 	/**
-	 * Rekursive Methode, die alle zykel-freien Pfade zwischen 2 Knoten
-	 * berechnet.
+	 * Rekursive Methode, die alle zykel-freien Pfade zwischen 2 Knoten berechnet.
 	 *
 	 * @param start
 	 *            - Startknoten

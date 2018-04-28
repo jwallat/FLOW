@@ -59,7 +59,7 @@ import util.SwitchButton;
 
 /**
  * Kontroller zur FlowScene.fxml. Hier werden alle Interaktionen mit dem UI
- * ermöglicht.
+ * ermoeglicht.
  *
  * @author Jonas Wallat
  *
@@ -91,6 +91,11 @@ public class FlowSceneController implements Initializable {
 	private HBox toggleButtonHBox;
 
 	private SwitchButton switchButton;
+
+	@FXML
+	private HBox pathsToggleButtonHBox;
+
+	private SwitchButton pathsSwitchButton;
 
 	@FXML
 	private HBox weightsToggleButtonHBox;
@@ -211,6 +216,9 @@ public class FlowSceneController implements Initializable {
 		this.switchButton = new SwitchButton(this, "flow");
 		toggleButtonHBox.getChildren().add(switchButton);
 
+		this.pathsSwitchButton = new SwitchButton(this, "paths");
+		pathsToggleButtonHBox.getChildren().add(pathsSwitchButton);
+
 		this.centralitySwitchButton = new SwitchButton(this, "centrality");
 		centralityToggleButtonHBox.getChildren().add(centralitySwitchButton);
 
@@ -230,7 +238,7 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * �bergibt die Stage, sodass der FileChooser verwendet werden kann.
+	 * Uebergibt die Stage, sodass der FileChooser verwendet werden kann.
 	 *
 	 * @param stage
 	 *            Stage der FlowScene.fxml
@@ -825,6 +833,16 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
+	 * Funktion die ausgef�hrt wird, wenn der Paths-switch geklickt wird. Ist der
+	 * switch aktiviert sollen alle Pfade zwischen den Knoten hervorgehoben werden.
+	 * Ist er deaktiviert sollen nur die Pfade hervorgehoben werden, die auch in der
+	 * MaxFLOW-Berechnung Informationen transportieren.
+	 */
+	public void pathsToggleButtonClicked() {
+		calculateButtonClicked();
+	}
+
+	/**
 	 * Funktion die ausgeführt wird, wenn der Centrality-switch geklicket wird.
 	 */
 	public void centralityToggleButtonClicked() {
@@ -959,6 +977,7 @@ public class FlowSceneController implements Initializable {
 	private void resetNetworkFlow() {
 		for (Edge e : network.getEdges()) {
 			e.setFlow(0);
+			e.setOnAPath(false);
 		}
 	}
 
@@ -976,7 +995,7 @@ public class FlowSceneController implements Initializable {
 	 * der XML wird angezeigt.
 	 */
 	private void updateGraphics() {
-		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		// gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		clearLines();
 		showEdges();
 	}
@@ -1010,16 +1029,29 @@ public class FlowSceneController implements Initializable {
 					e.show(pannablePane);
 				}
 			} else {
-				if (e.getFlow() > 0) {
-					if (highlightFlow) {
-						e.setColor(Color.ORANGE);
+				if (pathsSwitchButton.switchOnProperty().get() == false) {
+					if (e.getFlow() > 0) {
+						if (highlightFlow) {
+							e.setColor(Color.ORANGE);
+						} else {
+							e.setColor(Color.BLACK);
+						}
 					} else {
-						e.setColor(Color.BLACK);
+						e.setColor(Color.GREY);
 					}
+					e.show(pannablePane);
 				} else {
-					e.setColor(Color.GREY);
+					if (/* e in allPaths */e.isOnAPath()) {
+						if (highlightFlow) {
+							e.setColor(Color.ORANGE);
+						} else {
+							e.setColor(Color.BLACK);
+						}
+					} else {
+						e.setColor(Color.GREY);
+					}
+					e.show(pannablePane);
 				}
-				e.show(pannablePane);
 			}
 
 			weightingDrawn = false;
