@@ -1,0 +1,1 @@
+Diese Datei befindet sich hier, damit der Ordner ins git gepusht wird.
