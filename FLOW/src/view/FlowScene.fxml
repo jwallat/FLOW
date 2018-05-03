@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FlowSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FlowSceneController">
    <top>
       <HBox fx:id="outerHBox" minHeight="0.0" minWidth="0.0" BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
@@ -280,6 +280,7 @@
                                                       <CheckBox fx:id="closenessCheckBox" mnemonicParsing="false" onAction="#centralityToggleButtonClicked" selected="true" text="Closeness" />
                                                       <CheckBox fx:id="betweennessCheckBox" mnemonicParsing="false" onAction="#centralityToggleButtonClicked" selected="true" text="Betweenness" />
                                                       <CheckBox fx:id="degreeCheckBox" mnemonicParsing="false" onAction="#centralityToggleButtonClicked" selected="true" text="Degree" />
+                                                      <CheckBox fx:id="highlightCentralitiesCheckBox" mnemonicParsing="false" onAction="#highlightCentralitiesCheckBoxClicked" text="Highlight extreme Centralities" />
                                                    </children>
                                                 </VBox>
                                              </children>

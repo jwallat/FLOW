@@ -117,6 +117,9 @@ public class FlowSceneController implements Initializable {
 	private CheckBox degreeCheckBox;
 
 	@FXML
+	private CheckBox highlightCentralitiesCheckBox;
+
+	@FXML
 	private Label densityLabel;
 
 	@FXML
@@ -249,6 +252,7 @@ public class FlowSceneController implements Initializable {
 		stage.setMaximized(true);
 
 		stage.getScene().getWindow().widthProperty().addListener(new ChangeListener<Number>() {
+			@Override
 			public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth,
 					Number newSceneWidth) {
 				System.out.println("Width: " + newSceneWidth);
@@ -661,9 +665,9 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Klicken des "Go"-Buttons ausgeführt wird. Dabei werden die
-	 * angebenen Parameter gelesen und alle Knoten, die in $steps nicht mindestens
-	 * $prozent der gesamten Knoten erreichen ausgegeben.
+	 * Funktion die bei Klicken des "Go"-Buttons ausgeführt wird. Dabei werden
+	 * die angebenen Parameter gelesen und alle Knoten, die in $steps nicht
+	 * mindestens $prozent der gesamten Knoten erreichen ausgegeben.
 	 */
 	public void reachedLessGoButtonClicked() {
 		clearVertexHighlights();
@@ -709,8 +713,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Klicken des "Go"-Buttons ausgeführt wird. Dabei werden die
-	 * angebenen Parameter gelesen und alle Knoten, die in $steps mindestens
+	 * Funktion die bei Klicken des "Go"-Buttons ausgeführt wird. Dabei werden
+	 * die angebenen Parameter gelesen und alle Knoten, die in $steps mindestens
 	 * $prozent der gesamten Knoten erreichen ausgegeben.
 	 */
 	public void reachedMoreGoButtonClicked() {
@@ -794,9 +798,10 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die ausgeführt wird, wenn der FLOW-Notations switch geklickt wird.
-	 * Werden zur Zeit die Konten in der FLOW-Notation angezeigt, dann wird auf die
-	 * normale, schlichtere Visualisierung gewechselt und umgekehrt.
+	 * Funktion die ausgeführt wird, wenn der FLOW-Notations switch geklickt
+	 * wird. Werden zur Zeit die Konten in der FLOW-Notation angezeigt, dann
+	 * wird auf die normale, schlichtere Visualisierung gewechselt und
+	 * umgekehrt.
 	 */
 	public void toggleFLOWNotation() {
 
@@ -833,10 +838,10 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die ausgef�hrt wird, wenn der Paths-switch geklickt wird. Ist der
-	 * switch aktiviert sollen alle Pfade zwischen den Knoten hervorgehoben werden.
-	 * Ist er deaktiviert sollen nur die Pfade hervorgehoben werden, die auch in der
-	 * MaxFLOW-Berechnung Informationen transportieren.
+	 * Funktion die ausgef�hrt wird, wenn der Paths-switch geklickt wird. Ist
+	 * der switch aktiviert sollen alle Pfade zwischen den Knoten hervorgehoben
+	 * werden. Ist er deaktiviert sollen nur die Pfade hervorgehoben werden, die
+	 * auch in der MaxFLOW-Berechnung Informationen transportieren.
 	 */
 	public void pathsToggleButtonClicked() {
 		calculateButtonClicked();
@@ -882,7 +887,23 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die ausgeführt wird wenn der Weightings-SwitchButton geklickt wird.
+	 * Funktion die beim Klicken der Highlight Centralities-CheckBox ausgeführt
+	 * wird. Ist diese markiert sollen extreme Zentralitäten gehighlighted
+	 * werden. Wird diese CheckBox abgewählt, soll das Highlighting entfernt
+	 * werden. Die Bedingung, welche Zentralitäten extrem sind, soll hier durch
+	 * eine Formel eingesetzt werden können.
+	 */
+	public void highlightCentralitiesCheckBoxClicked() {
+		// entferne alle Zentralitätshighlights
+
+		// Spezifiziere neue Bedingung
+
+		// Highlighte alles Zentralitäten auf die, die Bedingung zutrifft
+	}
+
+	/**
+	 * Funktion die ausgeführt wird wenn der Weightings-SwitchButton geklickt
+	 * wird.
 	 */
 	public void weightsToggleButtonClicked() {
 		updateGraphics();
@@ -944,8 +965,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Visualisiert das Netzwerk aus der XML-Datei. Wird aufgerufen, nachdem �ber
-	 * den FileChooser eine Datei ausgew�hlt wurde.
+	 * Visualisiert das Netzwerk aus der XML-Datei. Wird aufgerufen, nachdem
+	 * �ber den FileChooser eine Datei ausgew�hlt wurde.
 	 *
 	 */
 	private void showNetwork() {
@@ -991,8 +1012,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Aktualisiert die Elemente des Canvas, nach einer �nderung. Das Netzwerk aus
-	 * der XML wird angezeigt.
+	 * Aktualisiert die Elemente des Canvas, nach einer �nderung. Das Netzwerk
+	 * aus der XML wird angezeigt.
 	 */
 	private void updateGraphics() {
 		// gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -1002,8 +1023,9 @@ public class FlowSceneController implements Initializable {
 
 	/**
 	 * Zeichnet die Edges auf das Canvas. Besonders ist dabei zu beachten, dass
-	 * f�r bidirektionale Edges besonders vorgegangen wird: Das Weighting soll 2x
-	 * gezeichnet werden, so dass jeweils Flow/Kapazit�t in Flussrichtung zeigen.
+	 * f�r bidirektionale Edges besonders vorgegangen wird: Das Weighting soll
+	 * 2x gezeichnet werden, so dass jeweils Flow/Kapazit�t in Flussrichtung
+	 * zeigen.
 	 *
 	 */
 
