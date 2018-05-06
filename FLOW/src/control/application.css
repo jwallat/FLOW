@@ -27,6 +27,36 @@
 	-fx-background-radius: 4px, 0 ;
 }
 
+#betweenness_highlighted {
+	-fx-background-color: -fx-background;
+	-fx-opacity: 0.8; 
+	-fx-font-size: 10pt;
+	-fx-font-weight: bold;
+	-fx-text-fill: purple;
+	-fx-font-family: "Courier New", Times, sanf-serif;
+	-fx-background-radius: 4px, 0 ;
+}
+
+#closeness_highlighted {
+	-fx-background-color: -fx-background;
+	-fx-opacity: 0.8; 
+	-fx-font-size: 10pt;
+	-fx-font-weight: bold;
+	-fx-text-fill: green;
+	-fx-font-family: "Courier New", Times, sanf-serif;
+	-fx-background-radius: 4px, 0 ;
+}
+
+#degree_highlighted {
+	-fx-background-color: -fx-background;
+	-fx-opacity: 0.8; 
+	-fx-font-size: 10pt;
+	-fx-font-weight: bold;
+	-fx-text-fill: blue;
+	-fx-font-family: "Courier New", Times, sanf-serif;
+	-fx-background-radius: 4px, 0 ;
+}
+
 #myHBox {
 	-fx-border-width: 0.0 0.0 1.0 0.0;
 	-fx-border-color: black;

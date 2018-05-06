@@ -45,7 +45,6 @@ public abstract class Vertex {
 		this.nameLabel = new Label(name);
 		this.nameLabel.setId("name-label");
 
-		// set stuff for other info-label
 		this.closenessLabel = new Label("");
 		this.closenessLabel.setId("centrality");
 

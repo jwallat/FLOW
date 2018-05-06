@@ -5,7 +5,7 @@ import model.Network;
 import model.Vertex;
 
 /**
- * Klasse, die genutzt wird um die Degree Zentralität aller Knoten zu berechnen
+ * Klasse, die genutzt wird um die Degree Zentralitaet aller Knoten zu berechnen
  * und zu setzen.
  *
  * @author jwall
@@ -20,7 +20,7 @@ public class DegreeCentrality {
 	}
 
 	/**
-	 * Berechnet für alle Knoten den ein und ausgehenden Grad und setzt diesen
+	 * Berechnet fuer alle Knoten den ein und ausgehenden Grad und setzt diesen
 	 * Wert.
 	 */
 	public void compute() {

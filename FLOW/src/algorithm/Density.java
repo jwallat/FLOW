@@ -20,8 +20,8 @@ public class Density {
 	}
 
 	/**
-	 * Methode, welche die Density des Netzwerks berechnet. Density ist dabei
-	 * das Verhltnis der Zahl vorhandener Kanten zu der Zahl möglicher Kanten.
+	 * Methode, welche die Density des Netzwerks berechnet. Density ist dabei das
+	 * Verhltnis der Zahl vorhandener Kanten zu der Zahl moeglicher Kanten.
 	 */
 	public String getDensity() {
 		int numVertices = network.getVertices().size();

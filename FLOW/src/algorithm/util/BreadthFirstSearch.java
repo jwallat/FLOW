@@ -29,8 +29,7 @@ public class BreadthFirstSearch {
 	 * Konstruktor
 	 *
 	 * @param network
-	 *            Das Netzwerk auf dem die Breitensuche durchgehf�hrt werden
-	 *            soll
+	 *            Das Netzwerk auf dem die Breitensuche durchgehfuehrt werden soll
 	 */
 	public BreadthFirstSearch(Network network) {
 		// this.network = network;
@@ -41,10 +40,9 @@ public class BreadthFirstSearch {
 	}
 
 	/**
-	 * Der eigentliche Algorithmus der Breitensuche. Konstruiert gleichzeitig
-	 * das visitedNetwork, ein Graph in dem alle besuchten Knoten/Kanten
-	 * vorhanden sind. Dieses wird ben�tigt um sp�ter den genauen Pfad zu
-	 * finden.
+	 * Der eigentliche Algorithmus der Breitensuche. Konstruiert gleichzeitig das
+	 * visitedNetwork, ein Graph in dem alle besuchten Knoten/Kanten vorhanden sind.
+	 * Dieses wird benoetigt um spaeter den genauen Pfad zu finden.
 	 *
 	 * @param start
 	 *            Knoten von dem die Breitensuche starten soll
@@ -109,7 +107,7 @@ public class BreadthFirstSearch {
 	}
 
 	/**
-	 * Gibt einen boolschen Wert zur�ck, der angibt ob die �bergebenen Knoten
+	 * Gibt einen boolschen Wert zurueck, der angibt ob die uebergebenen Knoten
 	 * verbunden sin.
 	 *
 	 * @param start

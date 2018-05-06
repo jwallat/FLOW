@@ -41,7 +41,7 @@ public class FlowSpace {
 	}
 
 	/**
-	 * Diese Methode enth�lt den eigentlichen Algorithmus.
+	 * Diese Methode enthaelt den eigentlichen Algorithmus.
 	 *
 	 * @param source
 	 *            Sender
@@ -156,7 +156,7 @@ public class FlowSpace {
 	}
 
 	/**
-	 * Gibt die berechnete FLOW Distanz zwischen Sender und Empf�nger zur�ck.
+	 * Gibt die berechnete FLOW Distanz zwischen Sender und Empfaenger zurueck.
 	 *
 	 * @return
 	 */
@@ -165,7 +165,7 @@ public class FlowSpace {
 	}
 
 	/**
-	 * Gibt einen boolschen Wert zur�ck, der angibt ob die �bergebenen Knoten
+	 * Gibt einen boolschen Wert zurueck, der angibt ob die uebergebenen Knoten
 	 * verbunden sin.
 	 *
 	 * @param source

@@ -10,7 +10,7 @@ import model.Network;
 import model.Vertex;
 
 /**
- * Klasse die die Betweenness Zentralität für alle Knoten berechnet und setzt.
+ * Klasse die die Betweenness Zentralität fuer alle Knoten berechnet und setzt.
  *
  * @author jwall
  *
@@ -30,7 +30,7 @@ public class BetweennessCentrality {
 	}
 
 	/**
-	 * Berechnet für alle Knoten die Closeness und setzt diesen Wert.
+	 * Berechnet fuer alle Knoten die Closeness und setzt diesen Wert.
 	 */
 	public void compute() {
 		int i = 0;
@@ -44,7 +44,7 @@ public class BetweennessCentrality {
 	}
 
 	/**
-	 * Berechnet die Closeness für den Knoten v und gibt sie zurück.
+	 * Berechnet die Closeness fuer den Knoten v und gibt sie zurueck.
 	 *
 	 * @param v
 	 * @return

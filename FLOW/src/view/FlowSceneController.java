@@ -22,8 +22,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -79,10 +77,6 @@ public class FlowSceneController implements Initializable {
 	private AnchorPane anchor;
 
 	private PannablePane pannablePane;
-
-	private Canvas canvas;
-
-	private GraphicsContext gc;
 
 	@FXML
 	private TitledPane informationPane;
@@ -315,7 +309,7 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * �ffnet einen FileChooser fuer XML-Dateien.
+	 * Oeffnet einen FileChooser fuer XML-Dateien.
 	 *
 	 */
 	public void openFile() {
@@ -323,7 +317,6 @@ public class FlowSceneController implements Initializable {
 		if (network != null) {
 			clearVertices();
 			clearLines();
-			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		}
 
 		FileChooser fc = new FileChooser();
@@ -353,7 +346,7 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die das Programm beendet. Sie wird �ber das UI aufgerufen.
+	 * Funktion die das Programm beendet. Sie wird ueber das UI aufgerufen.
 	 *
 	 */
 	public void close() {
@@ -361,9 +354,10 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Auswahl des Radiobuttons ausgef�hrt wird. Die beiden
-	 * Radiobuttons schlie�en sich gegenseitig aus und geben an, welche
-	 * Information auf den Kanten angezeigt wird.
+	 * Funktion die bei Auswahl des Visualized-Weightings Radiobuttons ausgefuehrt
+	 * wird. Die drei Radiobuttons schliessen sich gegenseitig aus und geben an,
+	 * welche Information auf den Kanten angezeigt wird. Der Enum VisualizationType
+	 * wird entsprechend gesetzt.
 	 *
 	 */
 	public void networkFlowRadioButtonClicked() {
@@ -382,9 +376,10 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Auswahl des Radiobuttons ausgef�hrt wird. Die beiden
-	 * Radiobuttons schlie�en sich gegenseitig aus und geben an, welche
-	 * Information auf den Kanten angezeigt wird.
+	 * Funktion die bei Auswahl des Radiobuttons ausgefuehrt wird. Die beiden
+	 * Radiobuttons schliessen sich gegenseitig aus und geben an, welche Information
+	 * auf den Kanten angezeigt wird. Der Enum VisualizationType wird entsprechend
+	 * gesetzt.
 	 *
 	 */
 	public void flowDistanceRadioButtonClicked() {
@@ -402,9 +397,9 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Auswahl des Radiobuttons ausgef�hrt wird. Die drei
-	 * Radiobuttons schlie�en sich gegenseitig aus und geben an, welche
-	 * Information auf den Kanten angezeigt wird.
+	 * Funktion die bei Auswahl des Radiobuttons ausgefuehrt wird. Die drei
+	 * Radiobuttons schliessen sich gegenseitig aus und geben an, welche Information
+	 * auf den Kanten angezeigt wird.
 	 *
 	 */
 	public void waterPipeRadioButtonClicked() {
@@ -422,9 +417,9 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * �ffnet das InformationPane und l�sst den Nutzer Source/Sink mit klick
-	 * ausw�hlen. Wird ausgef�hrt, wenn der "select vertices" Button geklickt
-	 * wird.
+	 * Oeffnet das InformationPane und laesst den Nutzer Source/Sink mit klick
+	 * auswaehlen. Wird ausgefuehrt, wenn der "select vertices" Button geklickt
+	 * wird. Das Netzwerk wird zusaetzlich in den Ausgangszustand zurueckgefuehrt.
 	 *
 	 */
 	@FXML
@@ -511,7 +506,9 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Klick auf den "Calculate"-Button aufgerufen wird.
+	 * Funktion die bei Klick auf den "Calculate"-Button aufgerufen wird. Daraufhin
+	 * werden sowohl der MaxFLOW als auch FLOW-Space berechnet und entsprechend in
+	 * InoformationPane angezeigt.
 	 *
 	 */
 	public void calculateButtonClicked() {
@@ -548,7 +545,7 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Klick des Toggle-Buttons ausgef�hrt wird.
+	 * Funktion die bei Klick des highlightFlow Toggle-Buttons ausgefuehrt wird.
 	 *
 	 */
 	public void highlightFlowButtonClicked() {
@@ -561,8 +558,7 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Klick des Info-Expansion-Forewards-Buttons ausgef�hrt
-	 * wird.
+	 * Funktion die bei Klick des Info-Expansion-Forewards-Buttons ausgefuehrt wird.
 	 */
 	public void infoExpansionForewardsButtonClicked() {
 		if (iE != null) {
@@ -573,8 +569,7 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Klick des Info-Expansion-Backwards-Buttons ausgef�hrt
-	 * wird.
+	 * Funktion die bei Klick des Info-Expansion-Backwards-Buttons ausgefuehrt wird.
 	 */
 	public void infoExpansionBackwardsButtonClicked() {
 		if (iE != null) {
@@ -585,9 +580,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Klicken des "Select Source" Buttons ausgef�hrt wird. Es
-	 * die hier ausgew�hlte Source wird f�r die Informationsausbreitung
-	 * verwendet.
+	 * Funktion die bei Klicken des "Select Source" Buttons ausgefuehrt wird. Es die
+	 * hier ausgewaehlte Source wird fuer die Informationsausbreitung verwendet.
 	 */
 	public void selectInformationSource() {
 		if (network == null) {
@@ -665,9 +659,9 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Klicken des "Go"-Buttons ausgeführt wird. Dabei werden
-	 * die angebenen Parameter gelesen und alle Knoten, die in $steps nicht
-	 * mindestens $prozent der gesamten Knoten erreichen ausgegeben.
+	 * Funktion die bei Klicken des "Go"-Buttons ausgefuehrt wird. Dabei werden die
+	 * angebenen Parameter gelesen und alle Knoten, die in $steps nicht mindestens
+	 * $prozent der gesamten Knoten erreichen ausgegeben.
 	 */
 	public void reachedLessGoButtonClicked() {
 		clearVertexHighlights();
@@ -713,8 +707,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die bei Klicken des "Go"-Buttons ausgeführt wird. Dabei werden
-	 * die angebenen Parameter gelesen und alle Knoten, die in $steps mindestens
+	 * Funktion die bei Klicken des "Go"-Buttons ausgefuehrt wird. Dabei werden die
+	 * angebenen Parameter gelesen und alle Knoten, die in $steps mindestens
 	 * $prozent der gesamten Knoten erreichen ausgegeben.
 	 */
 	public void reachedMoreGoButtonClicked() {
@@ -761,9 +755,9 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Click-Methode die ausgef�hrt wenn der computeOutput-Button geklickt wird.
-	 * Daraufhin werden Listen berechnet, in den f�r die gegebene Prozentzahl
-	 * f�r alle Schritte jeweils alle Knoten aufgelistet werden, die weniger
+	 * Click-Methode die ausgefuehrt wenn der computeOutput-Button geklickt wird.
+	 * Daraufhin werden Listen berechnet, in den fuer die gegebene Prozentzahl fuer
+	 * alle Schritte jeweils alle Knoten aufgelistet werden, die weniger
 	 * als/mindestens die gegebene Prozentzahl aller Knoten erreichen.
 	 *
 	 */
@@ -798,10 +792,9 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die ausgeführt wird, wenn der FLOW-Notations switch geklickt
-	 * wird. Werden zur Zeit die Konten in der FLOW-Notation angezeigt, dann
-	 * wird auf die normale, schlichtere Visualisierung gewechselt und
-	 * umgekehrt.
+	 * Funktion die ausgefuehrt wird, wenn der FLOW-Notations switch geklickt wird.
+	 * Werden zur Zeit die Konten in der FLOW-Notation angezeigt, dann wird auf die
+	 * normale, schlichtere Visualisierung gewechselt und umgekehrt.
 	 */
 	public void toggleFLOWNotation() {
 
@@ -838,17 +831,17 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die ausgef�hrt wird, wenn der Paths-switch geklickt wird. Ist
-	 * der switch aktiviert sollen alle Pfade zwischen den Knoten hervorgehoben
-	 * werden. Ist er deaktiviert sollen nur die Pfade hervorgehoben werden, die
-	 * auch in der MaxFLOW-Berechnung Informationen transportieren.
+	 * Funktion die ausgefuehrt wird, wenn der Paths-switch geklickt wird. Ist der
+	 * switch aktiviert sollen alle Pfade zwischen den Knoten hervorgehoben werden.
+	 * Ist er deaktiviert sollen nur die Pfade hervorgehoben werden, die auch in der
+	 * MaxFLOW-Berechnung Informationen transportieren.
 	 */
 	public void pathsToggleButtonClicked() {
 		calculateButtonClicked();
 	}
 
 	/**
-	 * Funktion die ausgeführt wird, wenn der Centrality-switch geklicket wird.
+	 * Funktion die ausgefuehrt wird, wenn der Centrality-switch geklicket wird.
 	 */
 	public void centralityToggleButtonClicked() {
 
@@ -887,23 +880,56 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Funktion die beim Klicken der Highlight Centralities-CheckBox ausgeführt
-	 * wird. Ist diese markiert sollen extreme Zentralitäten gehighlighted
-	 * werden. Wird diese CheckBox abgewählt, soll das Highlighting entfernt
-	 * werden. Die Bedingung, welche Zentralitäten extrem sind, soll hier durch
-	 * eine Formel eingesetzt werden können.
+	 * Funktion die beim Klicken der Highlight Centralities-CheckBox ausgefuehrt
+	 * wird. Ist diese markiert sollen extreme Zentralitaeten gehighlighted werden.
+	 * Wird diese CheckBox abgewaehlt, soll das Highlighting entfernt werden. Die
+	 * Bedingung, welche Zentralitaeten extrem sind, soll hier durch eine Formel
+	 * eingesetzt werden koennen.
 	 */
 	public void highlightCentralitiesCheckBoxClicked() {
-		// entferne alle Zentralitätshighlights
+		// entferne alle Zentralitaetshighlights
+		for (Vertex v : network.getVertices()) {
+			v.getBetweennessLabel().setId("centrality");
+			v.getClosenessLabel().setId("centrality");
+			v.getDegreeLabel().setId("centrality");
+		}
 
-		// Spezifiziere neue Bedingung
+		if (highlightCentralitiesCheckBox.isSelected()) {
+			// Spezifiziere neue Bedingungen
+			// @Jil: An dieser Stelle musst du deine Highlight-Bedingungen spezifizieren.
+			// Wenn du Bedingungen wie "nur die top 10% der hoechsten
+			// Closeness-Zentralit�ten" abfragen moechtest, m�sstest du �ber alle Knoten
+			// iterieren und den Zahlenwert der Closeness-Zentralit�t f�r deine
+			// Anfrage bestimmen.
+			double betweennessThreshold = 0.3;
+			double closenessThreshold = 0.05;
+			int degreeThresholdIn = 4;
+			int degreeThresholdOut = 10;
 
-		// Highlighte alles Zentralitäten auf die, die Bedingung zutrifft
+			// Highlighte alles Zentralitaeten auf die, die Bedingung zutrifft
+			for (Vertex v : network.getVertices()) {
+				double betweennessCentrality = Double.valueOf(v.getBetweennessLabel().getText().replaceAll(",", "."));
+				double closenessCentrality = Double.valueOf(v.getClosenessLabel().getText().replaceAll(",", "."));
+				int degreeIn = Integer
+						.valueOf(v.getDegreeLabel().getText().substring(1, v.getDegreeLabel().getText().indexOf(",")));
+				int degreeOut = Integer.valueOf(v.getDegreeLabel().getText().substring(
+						v.getDegreeLabel().getText().indexOf(",") + 1, v.getDegreeLabel().getText().indexOf(")")));
+
+				if (betweennessCentrality >= betweennessThreshold) {
+					v.getBetweennessLabel().setId("betweenness_highlighted");
+				}
+				if (closenessCentrality >= closenessThreshold) {
+					v.getClosenessLabel().setId("closeness_highlighted");
+				}
+				if (degreeIn >= degreeThresholdIn || degreeOut >= degreeThresholdOut) {
+					v.getDegreeLabel().setId("degree_highlighted");
+				}
+			}
+		}
 	}
 
 	/**
-	 * Funktion die ausgeführt wird wenn der Weightings-SwitchButton geklickt
-	 * wird.
+	 * Funktion die ausgefuehrt wird wenn der Weightings-SwitchButton geklickt wird.
 	 */
 	public void weightsToggleButtonClicked() {
 		updateGraphics();
@@ -965,8 +991,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Visualisiert das Netzwerk aus der XML-Datei. Wird aufgerufen, nachdem
-	 * �ber den FileChooser eine Datei ausgew�hlt wurde.
+	 * Visualisiert das Netzwerk aus der XML-Datei. Wird aufgerufen, nachdem ueber
+	 * den FileChooser eine Datei ausgewaehlt wurde.
 	 *
 	 */
 	private void showNetwork() {
@@ -992,8 +1018,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Setzt das Netzwerk auf den Ausgangszustand zur�ck. Dabei werden alle
-	 * Informationsfl�sse gel�scht.
+	 * Setzt das Netzwerk auf den Ausgangszustand zurueck. Dabei werden alle
+	 * Informationsfluesse geloescht.
 	 */
 	private void resetNetworkFlow() {
 		for (Edge e : network.getEdges()) {
@@ -1012,26 +1038,17 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Aktualisiert die Elemente des Canvas, nach einer �nderung. Das Netzwerk
-	 * aus der XML wird angezeigt.
+	 * Aktualisiert die Elemente des Canvas, nach einer Aenderung. Das Netzwerk aus
+	 * der XML wird angezeigt.
 	 */
 	private void updateGraphics() {
-		// gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		clearLines();
 		showEdges();
 	}
 
 	/**
-	 * Zeichnet die Edges auf das Canvas. Besonders ist dabei zu beachten, dass
-	 * f�r bidirektionale Edges besonders vorgegangen wird: Das Weighting soll
-	 * 2x gezeichnet werden, so dass jeweils Flow/Kapazit�t in Flussrichtung
-	 * zeigen.
-	 *
-	 */
-
-	/**
 	 * Funktion die die Edges visualisiert, indem die Kanten als Shape zum Pane
-	 * hinzugef�gt werden.
+	 * hinzugefuegt werden.
 	 */
 	private void showEdges(String... mode) {
 
@@ -1154,8 +1171,8 @@ public class FlowSceneController implements Initializable {
 	}
 
 	/**
-	 * Methode die aufgerufen wird wenn der RadioButton f�r das Anzeigen des
-	 * Kanalsystems ausgew�hlt wurde. Hier werden die Kanten als
+	 * Methode die aufgerufen wird wenn der RadioButton fuer das Anzeigen des
+	 * Kanalsystems ausgewaehlt wurde. Hier werden die Kanten als
 	 *
 	 */
 	private void drawWaterPipes() {

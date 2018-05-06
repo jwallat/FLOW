@@ -7,7 +7,8 @@ import model.Edge;
 import model.Vertex;
 
 /**
- * Helfer-Klasse die die n�tigen Informationen des Pfades zur Berechnung der FLOW-Distanz in einem Objekt kapselt.
+ * Helfer-Klasse die die noetigen Informationen des Pfades zur Berechnung des
+ * FLOW-Space in einem Objekt kapselt.
  * 
  * @author jwall
  *
@@ -18,9 +19,9 @@ public class Path {
 	private int pathLenght;
 	private List<Vertex> intersections = new ArrayList<Vertex>();
 	private List<List<Edge>> containedPaths = new ArrayList<List<Edge>>();
-	
+
 	public Path() {
-		
+
 	}
 
 	public void addPath(List<Edge> path) {
@@ -28,11 +29,11 @@ public class Path {
 			containedPaths.add(path);
 		}
 	}
-	
+
 	public List<List<Edge>> getContainedPaths() {
 		return this.containedPaths;
 	}
-	
+
 	public double getPathValue() {
 		return pathValue;
 	}
@@ -48,17 +49,17 @@ public class Path {
 	public void setPathLenght(int pathLenght) {
 		this.pathLenght = pathLenght;
 	}
-	
+
 	public boolean containsIntersection(Vertex v) {
 		return intersections.contains(v);
 	}
-	
+
 	public void addIntersection(Vertex v) {
 		if (!intersections.contains(v)) {
 			this.intersections.add(v);
 		}
 	}
-	
+
 	public List<Vertex> getIntersections() {
 		return this.intersections;
 	}

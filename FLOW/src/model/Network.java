@@ -7,7 +7,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Model-Klasse, die alle aus dem Parsen der XML-Datei gewonnenen Informationen
- * enthält.
+ * enthaelt.
  * 
  * @author jwall
  *
@@ -94,7 +94,7 @@ public class Network {
 	}
 
 	/**
-	 * Fügt den Kanten des Netzwerks die Kapazitäten hinzu, die aus dem
+	 * Fuegt den Kanten des Netzwerks die Kapazitaeten hinzu, die aus dem
 	 * FLOW-Netzwerk ableitbar sind: Mensch --> Mensch: 1/0,3 --> 333 Mensch -->
 	 * Document: 1/0,5 --> 200 Dokument --> Mensch: 1/0,6 --> 166 Dokument -->
 	 * Dokument: 1/1 --> 100

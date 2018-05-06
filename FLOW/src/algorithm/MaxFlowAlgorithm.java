@@ -5,9 +5,9 @@ import model.Network;
 import model.Vertex;
 
 /**
- * Abstrakte Klasse für die Verwendung von Maximal-Fluss Algorithmen zur
+ * Abstrakte Klasse fuer die Verwendung von Maximal-Fluss Algorithmen zur
  * berechnung des MaxFLOW. Sollte die Effizienz des Edmonds-Karp Algorithmus
- * nicht mehr ausreichen, können andere Algorithmen implementiert werden. In
+ * nicht mehr ausreichen, koennen andere Algorithmen implementiert werden. In
  * diesem Fall sollten die neuen Implentierungen diese Abstrakte Klasse
  * erweitern.
  *
@@ -43,7 +43,7 @@ public abstract class MaxFlowAlgorithm {
 	}
 
 	/**
-	 * Gibt einen boolschen Wert zur�ck, der angibt ob die �bergebenen Knoten
+	 * Gibt einen boolschen Wert zurueck, der angibt ob die uebergebenen Knoten
 	 * verbunden sin.
 	 *
 	 * @param start
@@ -58,7 +58,7 @@ public abstract class MaxFlowAlgorithm {
 	}
 
 	/**
-	 * Funktion die den berechneten maximalen Fluss Wert zur�ck gibt.
+	 * Funktion die den berechneten maximalen Fluss Wert zurueck gibt.
 	 *
 	 * @return
 	 */

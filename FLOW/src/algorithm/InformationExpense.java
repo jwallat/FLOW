@@ -17,8 +17,8 @@ import model.Network;
 import model.Vertex;
 
 /**
- * Klasse, die die Funktionalität der Informationsausbreitung (Information
- * Expense) enthält. Aufgerufen werden Funnktionen dieser Klasse aus dem
+ * Klasse, die die Funktionalitaet der Informationsausbreitung (Information
+ * Expense) enthaelt. Aufgerufen werden Funnktionen dieser Klasse aus dem
  * FlowSceneController bei Interaktion mit der GUI.
  *
  * @author jwall

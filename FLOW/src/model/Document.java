@@ -7,7 +7,7 @@ import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
 
 /**
- * Implementation der Vertex-Klasse f�r Dokumente.
+ * Implementation der Vertex-Klasse fuer Dokumente.
  *
  * @author jwall
  *
@@ -40,7 +40,6 @@ public class Document extends Vertex {
 		this.shape.setFill(Color.WHITE);
 
 		this.img = new Image("file:///" + System.getProperty("user.dir") + "/resource/icons/document_2.png");
-		// this.shape.setFill(new ImagePattern(this.img));
 	}
 
 	@Override

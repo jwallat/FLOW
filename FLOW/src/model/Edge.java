@@ -42,8 +42,6 @@ public class Edge {
 		this.setId(id);
 
 		this.shapes = new ArrayList<Node>();
-		// this.line = new Line(origin.getX(), origin.getY(),
-		// destination.getX(), destination.getY());
 	}
 
 	public Vertex getOrigin() {
@@ -120,7 +118,6 @@ public class Edge {
 
 	public void show(PannablePane pane) {
 		showLineShape(pane);
-		// edgeColor = Color.BLACK;
 	}
 
 	private void showLineShape(PannablePane pane) {
@@ -173,7 +170,7 @@ public class Edge {
 	 * Hilfsfunktion zum Anzeigen der Kantengewichte.
 	 *
 	 * @param pane
-	 *            - Parent dem das Label hinzugef�gt wird
+	 *            - Parent dem das Label hinzugefuegt wird
 	 * @param x1
 	 *            - X-Position des Senders
 	 * @param y1
@@ -231,7 +228,7 @@ public class Edge {
 	 * Hilfsfunktion zum Anzeigen der bidirektionalen Kantengewichte.
 	 *
 	 * @param pane
-	 *            - parent dem das Label hinzugef�gt wird
+	 *            - parent dem das Label hinzugefuegt wird
 	 * @param x1
 	 *            - X-Position des Senders
 	 * @param y1

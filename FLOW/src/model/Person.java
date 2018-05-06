@@ -7,7 +7,7 @@ import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
 
 /**
- * Implementation der Vertex-Klasse f�r Personen.
+ * Implementation der Vertex-Klasse fuer Personen.
  *
  * @author jwall
  *
@@ -38,7 +38,6 @@ public class Person extends Vertex {
 		this.shape.setFill(Color.WHITE);
 
 		this.img = new Image("file:///" + System.getProperty("user.dir") + "/resource/icons/person_4.png");
-		// this.shape.setFill(new ImagePattern(this.img));
 	}
 
 	@Override
