@@ -208,7 +208,7 @@ public class FlowSceneController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// Fügt dem MenuPanel auf der rechten seite einen Switch button zum an
+		// Faegt dem MenuPanel auf der rechten seite einen Switch button zum an
 		// und ausstellen der FLOW-Notation hinzu.
 		this.switchButton = new SwitchButton(this, "flow");
 		toggleButtonHBox.getChildren().add(switchButton);
@@ -222,7 +222,7 @@ public class FlowSceneController implements Initializable {
 		this.weightsSwitchButton = new SwitchButton(this, "weights");
 		weightsToggleButtonHBox.getChildren().add(weightsSwitchButton);
 
-		// Initialisiere die Legende der Zentralitäten
+		// Initialisiere die Legende der Zentralitaeten
 		try {
 			this.legendImageView = new ImageView(
 					"file:///" + System.getProperty("user.dir") + "/resource/icons/legend.png");
@@ -262,11 +262,7 @@ public class FlowSceneController implements Initializable {
 
 		// Order Elements and set size-Properties
 		hBox.setPrefWidth(stage.getScene().getWidth());
-		// hBox.prefWidthProperty().bind(stage.getScene().widthProperty());
-		// hBox.prefWidthProperty().bind(stage.getScene().getWindow().widthProperty());
 		hBox.setPrefHeight(stage.getScene().getHeight());
-		// hBox.prefHeightProperty().bind(stage.getScene().heightProperty());
-		// hBox.prefHeightProperty().bind(stage.heightProperty());
 		hBox.autosize();
 		hBox.toBack();
 
@@ -276,9 +272,7 @@ public class FlowSceneController implements Initializable {
 		pannablePane = new PannablePane();
 		anchor.getChildren().add(pannablePane);
 
-		// anchor.setPrefWidth(hBox.getWidth());
 		anchor.prefWidthProperty().bind(hBox.widthProperty());
-		// anchor.setPrefHeight(hBox.getHeight());
 		anchor.prefHeightProperty().bind(hBox.heightProperty());
 		anchor.autosize();
 		anchor.toBack();
@@ -289,18 +283,6 @@ public class FlowSceneController implements Initializable {
 
 		pannablePane.toFront();
 		informationPane.toFront();
-
-		// canvas = new Canvas();
-		// pannablePane.getChildren().add(canvas);
-
-		// canvas.widthProperty().bind(pannablePane.widthProperty());
-		// canvas.heightProperty().bind(pannablePane.heightProperty());
-		// canvas.autosize();
-
-		// gc = canvas.getGraphicsContext2D();
-		// gc.setFill(Color.BLUE);
-		// gc.setFill(Color.WHITE);
-		// gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 		SceneGestures sceneGestures = new SceneGestures(pannablePane);
 		stage.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
@@ -450,7 +432,7 @@ public class FlowSceneController implements Initializable {
 			centerVertexLabel.setText("");
 		}
 
-		// setze alles zur�ck
+		// setze alles zurueck
 		resetNetworkFlow();
 		clearVertexHighlights();
 		updateGraphics();
@@ -498,7 +480,6 @@ public class FlowSceneController implements Initializable {
 			shape.setOnMouseExited(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
-					// shape.setEffect(null);
 					stage.getScene().setCursor(Cursor.DEFAULT);
 				}
 			});
@@ -606,15 +587,13 @@ public class FlowSceneController implements Initializable {
 			sink = null;
 		}
 
-		// setze alles zur�ck
+		// setze alles zurueck
 		clearVertexHighlights();
 		resetNetworkFlow();
 		updateGraphics();
 
 		maxFlowLabel.setText("");
 		flowDistanceLabel.setText("");
-
-		// stepCounterLabel.setText("0");
 
 		informationPane.expandedProperty().set(true);
 
@@ -766,8 +745,6 @@ public class FlowSceneController implements Initializable {
 			double percentage = Double.parseDouble(percentageTextField.getText());
 
 			if (percentage <= 100) {
-				// List<Vertex> list = iE.getVerticesNotReached(step, percentage
-				// / 100.0);
 				InformationExpense iE = new InformationExpense(network, null);
 				iE.safeVerticesReachedAsCSV(percentage / 100.0);
 				iE.safeVerticesNotReachedAsCSV(percentage / 100.0);
@@ -805,7 +782,7 @@ public class FlowSceneController implements Initializable {
 					v.getShape().setFill(new ImagePattern(v.getImg()));
 				}
 			}
-			// TODO- line styles zu gestrichelt - zumindest wenn die Quelle ein
+			// line styles zu gestrichelt - zumindest wenn die Quelle ein
 			// Dokument ist
 			for (Edge e : network.getEdges()) {
 				if (e.getOrigin().getType().equals("document")) {
@@ -818,7 +795,7 @@ public class FlowSceneController implements Initializable {
 			for (Vertex v : network.getVertices()) {
 				v.getShape().setFill(Color.WHITE);
 			}
-			// TODO- line styles zurücksetzen
+			// line styles zuruecksetzen
 			for (Edge e : network.getEdges()) {
 				if (e.getOrigin().getType().equals("document")) {
 					e.setDashed(false);
@@ -852,9 +829,7 @@ public class FlowSceneController implements Initializable {
 				pannablePane.getChildren().remove(v.getDegreeLabel());
 			}
 
-			// if (legendHBox.getChildren().contains(legendImageView)) {
 			legendHBox.getChildren().remove(legendImageView);
-			// }
 
 			// show centralities
 			if (centralitySwitchButton.switchOnProperty().get() == true) {
@@ -940,7 +915,7 @@ public class FlowSceneController implements Initializable {
 	 * Betweenness-, Closenesszentralität und den Grad eines Knotens berechnet.
 	 */
 	public void computeCentralities() {
-		// berechne zentralitäten
+		// berechne zentralitaeten
 		ClosenessCentrality cc = new ClosenessCentrality(network);
 		cc.compute();
 
@@ -978,7 +953,6 @@ public class FlowSceneController implements Initializable {
 
 		try {
 			for (Edge e : network.getEdges()) {
-				// e.getShape().getTransforms().clear();
 				for (Node n : e.getShapes()) {
 					n.getTransforms().clear();
 					pannablePane.getChildren().remove(n);
@@ -1116,7 +1090,7 @@ public class FlowSceneController implements Initializable {
 		}
 
 		// bringe nicht verwendete kanten in den hintergrund, damit sie nicht
-		// �ber
+		// ueber
 		// interessanten kanten liegen: Layering soll wie folgt sein (von oben
 		// nach
 		// unten):
@@ -1162,7 +1136,7 @@ public class FlowSceneController implements Initializable {
 			v.getDegreeLabel().toFront();
 		}
 
-		// entferne Edge-Labels wenn toggleButton nicht ausgewählt
+		// entferne Edge-Labels wenn toggleButton nicht ausgewaehlt
 		if (!weightsSwitchButton.switchOnProperty().get()) {
 			for (Edge e : network.getEdges()) {
 				pannablePane.getChildren().remove(e.getWeightingLabel());
@@ -1177,7 +1151,7 @@ public class FlowSceneController implements Initializable {
 	 */
 	private void drawWaterPipes() {
 
-		// Verteile die Kapazit�ten auf eine strokeWidth zwischen 5 und 15
+		// Verteile die Kapazitaeten auf eine strokeWidth zwischen 5 und 15
 		int minWidth = 6;
 		int maxWidth = 14;
 
